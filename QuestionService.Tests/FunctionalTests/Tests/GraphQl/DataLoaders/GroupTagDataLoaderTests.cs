@@ -10,7 +10,7 @@ public class GroupTagDataLoaderTests(FunctionalTestWebAppFactory factory) : Base
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Success()
+    public async Task LoadRequiredAsync_ExistingQuestionId_ReturnsGroupedTags()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -26,7 +26,7 @@ public class GroupTagDataLoaderTests(FunctionalTestWebAppFactory factory) : Base
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_NoTags()
+    public async Task LoadRequiredAsync_NonExistentQuestionId_ReturnsEmptyResult()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

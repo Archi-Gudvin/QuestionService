@@ -10,7 +10,7 @@ public class ViewServiceTests
 {
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_Success()
+    public async Task IncrementViewsAsync_ValidIpAddress_ReturnsSuccess()
     {
         //Arrange
         var dto = new IncrementViewsDto(1, null, "0.0.0.0", "someFingerprint");
@@ -25,7 +25,7 @@ public class ViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_InvalidDataFormat()
+    public async Task IncrementViewsAsync_InvalidIpAddress_ReturnsInvalidDataFormat()
     {
         //Arrange
         var dto = new IncrementViewsDto(1, null, "WrongIp", "someFingerprint");
@@ -41,7 +41,7 @@ public class ViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_Success()
+    public async Task SyncViewsToDatabaseAsync_ExistingViews_ReturnsSuccess()
     {
         //Arrange
         var viewService = new ViewServiceFactory().GetDatabaseService();
@@ -56,7 +56,7 @@ public class ViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_NoSyncedViews()
+    public async Task SyncViewsToDatabaseAsync_EmptySetValues_ReturnsNoSyncedViews()
     {
         //Arrange
         var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetEmptySetValuesDatabaseConfiguration())
@@ -72,7 +72,7 @@ public class ViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_NoSyncedViews_When_KeysInvalid()
+    public async Task SyncViewsToDatabaseAsync_InvalidSetKeys_ReturnsNoSyncedViews()
     {
         //Arrange
         var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetInvalidSetKeysDatabaseConfiguration())
@@ -88,7 +88,7 @@ public class ViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_NoSyncedViews_When_ValuesInvalid()
+    public async Task SyncViewsToDatabaseAsync_InvalidSetValues_ReturnsNoSyncedViews()
     {
         //Arrange
         var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetInvalidSetValuesDatabaseConfiguration())
@@ -104,7 +104,7 @@ public class ViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_SpamFiltered()
+    public async Task SyncViewsToDatabaseAsync_SpamViews_ReturnsFilteredSyncedViews()
     {
         //Arrange
         var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetSpamDatabaseConfiguration())

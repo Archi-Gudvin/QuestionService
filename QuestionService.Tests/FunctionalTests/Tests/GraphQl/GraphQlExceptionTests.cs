@@ -14,7 +14,7 @@ public class GraphQlExceptionTests(GraphQlExceptionFunctionalTestWebAppFactory f
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetAll_ShouldBe_ServerError()
+    public async Task GetAll_UnhandledServiceException_ReturnsInternalServerError()
     {
         //Arrange
         var requestBody = new { query = GraphQlHelper.RequestAllQuery };

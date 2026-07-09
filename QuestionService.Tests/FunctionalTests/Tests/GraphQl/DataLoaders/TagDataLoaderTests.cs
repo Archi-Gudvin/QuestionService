@@ -9,7 +9,7 @@ public class TagDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunct
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Success()
+    public async Task Load_ExistingTagId_ReturnsTag()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -25,7 +25,7 @@ public class TagDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunct
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Null()
+    public async Task Load_NonExistentTagId_ReturnsNull()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

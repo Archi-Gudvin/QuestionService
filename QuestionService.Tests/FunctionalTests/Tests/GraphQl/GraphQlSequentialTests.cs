@@ -18,7 +18,7 @@ public class GraphQlSequentialTests(FunctionalTestWebAppFactory factory) : Seque
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetTags_ShouldBe_TagsNotFound()
+    public async Task GetTags_NoTagsInDb_ReturnsTagsNotFoundError()
     {
         //Arrange
         await DeleteTagsAsync();

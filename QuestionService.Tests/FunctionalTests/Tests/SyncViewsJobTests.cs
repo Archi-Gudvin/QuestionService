@@ -15,7 +15,7 @@ public class SyncViewsJobTests(FunctionalTestWebAppFactory factory) : Sequential
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task RunReputationResetJob_ShouldBe_Ok()
+    public async Task RunAsync_PendingViewsInCache_ReturnsSuccess()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -35,7 +35,7 @@ public class SyncViewsJobTests(FunctionalTestWebAppFactory factory) : Sequential
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task RunReputationResetJob_ShouldBe_NoSyncedViews()
+    public async Task RunAsync_InvalidCachedViews_ReturnsNoSyncedViews()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

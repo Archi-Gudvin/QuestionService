@@ -11,7 +11,7 @@ public class QuestionServiceTests
 {
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task AskQuestion_ShouldBe_Success()
+    public async Task AskQuestionAsync_ValidData_ReturnsSuccess()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -28,7 +28,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task AskQuestion_ShouldBe_InvalidTags()
+    public async Task AskQuestionAsync_EmptyTags_ReturnsInvalidTags()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -46,7 +46,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task AskQuestion_ShouldBe_UserNotFound()
+    public async Task AskQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -64,7 +64,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task AskQuestion_ShouldBe_TagsNotFound()
+    public async Task AskQuestionAsync_NonExistentTags_ReturnsTagsNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -82,7 +82,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_Success()
+    public async Task EditQuestionAsync_ValidData_ReturnsSuccess()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -99,7 +99,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_LengthOutOfRange()
+    public async Task EditQuestionAsync_EmptyTitle_ReturnsInvalidTitle()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -117,7 +117,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_UserNotFound()
+    public async Task EditQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -135,7 +135,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_QuestionNotFound()
+    public async Task EditQuestionAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -153,7 +153,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_OperationForbidden()
+    public async Task EditQuestionAsync_NotOwnerInitiator_ReturnsOperationForbidden()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -171,7 +171,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_TagsNotFound()
+    public async Task EditQuestionAsync_NonExistentTags_ReturnsTagsNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -189,7 +189,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DeleteQuestion_ShouldBe_Success()
+    public async Task DeleteQuestionAsync_ValidData_ReturnsSuccess()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -206,7 +206,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DeleteQuestion_ShouldBe_UserNotFound()
+    public async Task DeleteQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -224,7 +224,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DeleteQuestion_ShouldBe_QuestionNotFound()
+    public async Task DeleteQuestionAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -242,7 +242,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DeleteQuestion_ShouldBe_OperationForbidden()
+    public async Task DeleteQuestionAsync_NotOwnerInitiator_ReturnsOperationForbidden()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -260,7 +260,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_Success()
+    public async Task UpvoteQuestionAsync_ValidData_ReturnsSuccess()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -277,7 +277,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_Success_WithDownvoteGiven()
+    public async Task UpvoteQuestionAsync_ExistingDownvote_ReturnsSuccess()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -294,7 +294,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_UserNotFound()
+    public async Task UpvoteQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -312,7 +312,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_QuestionNotFound()
+    public async Task UpvoteQuestionAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -330,7 +330,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_CannotVoteForOwnPost()
+    public async Task UpvoteQuestionAsync_OwnPost_ReturnsCannotVoteForOwnPost()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -348,7 +348,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_VoteTypeNotFound()
+    public async Task UpvoteQuestionAsync_EmptyVoteTypeRepository_ReturnsVoteTypeNotFound()
     {
         //Arrange
         var questionService =
@@ -367,7 +367,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_TooLowReputation()
+    public async Task UpvoteQuestionAsync_LowReputationInitiator_ReturnsTooLowReputation()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -385,7 +385,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_VoteAlreadyGiven()
+    public async Task UpvoteQuestionAsync_ExistingUpvote_ReturnsVoteAlreadyGiven()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -403,7 +403,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_Success()
+    public async Task DownvoteQuestionAsync_ValidData_ReturnsSuccess()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -420,7 +420,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_Success_WithUpvoteGiven()
+    public async Task DownvoteQuestionAsync_ExistingUpvote_ReturnsSuccess()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -437,7 +437,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_UserNotFound()
+    public async Task DownvoteQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -455,7 +455,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_QuestionNotFound()
+    public async Task DownvoteQuestionAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -473,7 +473,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_CannotVoteForOwnPost()
+    public async Task DownvoteQuestionAsync_OwnPost_ReturnsCannotVoteForOwnPost()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -491,7 +491,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_TooLowReputation()
+    public async Task DownvoteQuestionAsync_LowReputationInitiator_ReturnsTooLowReputation()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -509,7 +509,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_VoteTypeNotFound()
+    public async Task DownvoteQuestionAsync_EmptyVoteTypeRepository_ReturnsVoteTypeNotFound()
     {
         //Arrange
         var questionService =
@@ -528,7 +528,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_VoteAlreadyGiven()
+    public async Task DownvoteQuestionAsync_ExistingDownvote_ReturnsVoteAlreadyGiven()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -546,7 +546,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task RemoveQuestionVote_ShouldBe_Success()
+    public async Task RemoveQuestionVoteAsync_ValidData_ReturnsSuccess()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -564,7 +564,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task RemoveQuestionVote_ShouldBe_UserNotFound()
+    public async Task RemoveQuestionVoteAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -582,7 +582,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task RemoveQuestionVote_ShouldBe_QuestionNotFound()
+    public async Task RemoveQuestionVoteAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();
@@ -600,7 +600,7 @@ public class QuestionServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task RemoveQuestionVote_ShouldBe_VoteNotFound()
+    public async Task RemoveQuestionVoteAsync_NonExistentVote_ReturnsVoteNotFound()
     {
         //Arrange
         var questionService = new QuestionServiceFactory().GetService();

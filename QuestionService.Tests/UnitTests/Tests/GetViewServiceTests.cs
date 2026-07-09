@@ -8,7 +8,7 @@ public class GetViewServiceTests
 {
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetAll_ShouldBe_Success()
+    public async Task GetAllAsync_ExistingViews_ReturnsSuccess()
     {
         //Arrange
         var getViewService = new CacheGetViewServiceFactory().GetService();
@@ -23,7 +23,7 @@ public class GetViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_Success()
+    public async Task GetByIdsAsync_ExistingIds_ReturnsSuccess()
     {
         //Arrange
         var viewIds = new List<long> { 1, 2, 0 };
@@ -39,7 +39,7 @@ public class GetViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_ViewNotFound()
+    public async Task GetByIdsAsync_SingleNonExistentId_ReturnsViewNotFound()
     {
         //Arrange
         var viewIds = new List<long> { 0 };
@@ -56,7 +56,7 @@ public class GetViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_ViewsNotFound()
+    public async Task GetByIdsAsync_MultipleNonExistentIds_ReturnsViewsNotFound()
     {
         //Arrange
         var viewIds = new List<long> { 0, 0 };
@@ -73,7 +73,7 @@ public class GetViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetUsersViews_ShouldBe_Success()
+    public async Task GetUsersViewsAsync_ExistingUserIds_ReturnsSuccess()
     {
         //Arrange
         var userIds = new List<long> { 1, 2, 0 };
@@ -89,7 +89,7 @@ public class GetViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetUsersViews_ShouldBe_ViewsNotFound()
+    public async Task GetUsersViewsAsync_NonExistentUserId_ReturnsViewsNotFound()
     {
         //Arrange
         var userIds = new List<long> { 0 };
@@ -106,7 +106,7 @@ public class GetViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsViews_ShouldBe_Success()
+    public async Task GetQuestionsViewsAsync_ExistingQuestionIds_ReturnsSuccess()
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
@@ -122,7 +122,7 @@ public class GetViewServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsViews_ShouldBe_ViewsNotFound()
+    public async Task GetQuestionsViewsAsync_NonExistentQuestionId_ReturnsViewsNotFound()
     {
         //Arrange
         var questionIds = new List<long> { 0 };

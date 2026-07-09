@@ -27,7 +27,7 @@ public class ExceptionTests : ExceptionFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task AskQuestion_ShouldBe_InternalServerError()
+    public async Task AskQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         var dto = new AskQuestionDto("NewQuestion", "NewQuestionNewQuestionNewQuestion", [".NET"]);
@@ -46,7 +46,7 @@ public class ExceptionTests : ExceptionFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_InternalServerError()
+    public async Task EditQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 1;
@@ -66,7 +66,7 @@ public class ExceptionTests : ExceptionFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task DeleteQuestion_ShouldBe_InternalServerError()
+    public async Task DeleteQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 1;
@@ -85,7 +85,7 @@ public class ExceptionTests : ExceptionFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_InternalServerError()
+    public async Task DownvoteQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 2;
@@ -104,7 +104,7 @@ public class ExceptionTests : ExceptionFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_InternalServerError()
+    public async Task UpvoteQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 3;
@@ -123,7 +123,7 @@ public class ExceptionTests : ExceptionFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task RemoveQuestionVote_ShouldBe_InternalServerError()
+    public async Task RemoveQuestionVote_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 2;
@@ -142,7 +142,7 @@ public class ExceptionTests : ExceptionFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Ok()
+    public async Task GetQuestionById_CacheReadFailure_ReturnsOk()
     {
         //Arrange
         var requestBody = new { query = GraphQlHelper.RequestQuestionByIdQuery(2) };

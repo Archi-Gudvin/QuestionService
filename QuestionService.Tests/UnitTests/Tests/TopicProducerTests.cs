@@ -8,7 +8,7 @@ public class TopicProducerTests
 {
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task Produce_ShouldBe_ArgumentException()
+    public async Task ProduceAsync_NonBaseEventArgument_ThrowsArgumentException()
     {
         //Arrange
         var producer = new TopicProducer<BaseEvent>(null); //passing null for exception

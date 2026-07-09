@@ -9,7 +9,7 @@ public class RedisCacheProviderTests
 {
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task SetsAdd_ShouldBe_Exception()
+    public async Task SetsAddAsync_FalseRedisResponse_ThrowsRedisException()
     {
         //Arrange
         var cache = new RedisCacheProvider(
@@ -30,7 +30,7 @@ public class RedisCacheProviderTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task StringSet_ShouldBe_Exception()
+    public async Task StringSetAsync_FalseRedisResponse_ThrowsRedisException()
     {
         //Arrange
         var cache = new RedisCacheProvider(

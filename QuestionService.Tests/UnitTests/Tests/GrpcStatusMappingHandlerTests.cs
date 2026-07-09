@@ -8,7 +8,7 @@ public class GrpcStatusMappingHandlerTests
 {
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task Send_ShouldBe_Ok()
+    public async Task SendAsync_GrpcStatusOk_ReturnsOk()
     {
         //Arrange
         var handler = new TestableGrpcStatusMappingHandler();
@@ -23,7 +23,7 @@ public class GrpcStatusMappingHandlerTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task Send_ShouldBe_BadRequest()
+    public async Task SendAsync_GrpcStatusInvalidArgument_ReturnsBadRequest()
     {
         //Arrange
         var handler = new TestableGrpcStatusMappingHandler("3");

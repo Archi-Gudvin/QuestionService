@@ -10,7 +10,7 @@ public class GroupUserVoteDataLoaderTests(FunctionalTestWebAppFactory factory) :
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Success()
+    public async Task Load_ExistingUserId_ReturnsVotes()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -26,7 +26,7 @@ public class GroupUserVoteDataLoaderTests(FunctionalTestWebAppFactory factory) :
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_NoVotes()
+    public async Task Load_NonExistentUserId_ReturnsEmptyResult()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

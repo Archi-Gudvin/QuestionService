@@ -9,7 +9,7 @@ public class VoteTypeDataLoaderTests(FunctionalTestWebAppFactory factory) : Base
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Success()
+    public async Task Load_ExistingVoteTypeId_ReturnsVoteType()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -25,7 +25,7 @@ public class VoteTypeDataLoaderTests(FunctionalTestWebAppFactory factory) : Base
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Null()
+    public async Task Load_NonExistentVoteTypeId_ReturnsNull()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

@@ -25,7 +25,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task AskQuestion_ShouldBe_Created()
+    public async Task AskQuestion_ValidQuestion_ReturnsCreated()
     {
         //Arrange
         var dto = new AskQuestionDto("NewQuestion", "NewQuestionNewQuestionNewQuestion", [".NET"]);
@@ -43,7 +43,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task AskQuestion_ShouldBe_NotFound()
+    public async Task AskQuestion_NonExistentUser_ReturnsNotFound()
     {
         //Arrange
         var token = TokenHelper.GetRsaToken("WrongUser", 0, [
@@ -71,7 +71,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_Ok()
+    public async Task EditQuestion_ExistingQuestion_ReturnsOk()
     {
         //Arrange
         const long questionId = 1;
@@ -90,7 +90,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_NotFound()
+    public async Task EditQuestion_NonExistentQuestion_ReturnsNotFound()
     {
         //Arrange
         const long questionId = 0;
@@ -110,7 +110,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task DeleteQuestion_ShouldBe_Ok()
+    public async Task DeleteQuestion_ExistingQuestion_ReturnsOk()
     {
         //Arrange
         const long questionId = 1;
@@ -128,7 +128,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task DeleteQuestion_ShouldBe_NotFound()
+    public async Task DeleteQuestion_NonExistentQuestion_ReturnsNotFound()
     {
         //Arrange
         const long questionId = 0;
@@ -147,7 +147,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_Ok()
+    public async Task DownvoteQuestion_ExistingQuestion_ReturnsOk()
     {
         //Arrange
         const long questionId = 2;
@@ -165,7 +165,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_NotFound()
+    public async Task DownvoteQuestion_NonExistentQuestion_ReturnsNotFound()
     {
         //Arrange
         const long questionId = 0;
@@ -184,7 +184,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_Ok()
+    public async Task UpvoteQuestion_ExistingQuestion_ReturnsOk()
     {
         //Arrange
         const long questionId = 3;
@@ -202,7 +202,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_NotFound()
+    public async Task UpvoteQuestion_NonExistentQuestion_ReturnsNotFound()
     {
         //Arrange
         const long questionId = 0;
@@ -221,7 +221,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task RemoveQuestionVote_ShouldBe_Ok()
+    public async Task RemoveQuestionVote_ExistingVote_ReturnsOk()
     {
         //Arrange
         const long questionId = 2;
@@ -239,7 +239,7 @@ public class QuestionServiceTests : SequentialFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task RemoveQuestionVote_ShouldBe_NotFound()
+    public async Task RemoveQuestionVote_NonExistentQuestion_ReturnsNotFound()
     {
         //Arrange
         const long questionId = 0;

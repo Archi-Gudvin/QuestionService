@@ -10,7 +10,7 @@ public class GroupViewDataLoaderTests(FunctionalTestWebAppFactory factory) : Bas
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Success()
+    public async Task Load_ExistingQuestionId_ReturnsViews()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -26,7 +26,7 @@ public class GroupViewDataLoaderTests(FunctionalTestWebAppFactory factory) : Bas
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_NoViews()
+    public async Task Load_NonExistentQuestionId_ReturnsEmptyResult()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

@@ -22,7 +22,7 @@ public class ViewServiceTests : BaseFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_NoContent()
+    public async Task IncrementViews_ValidRequest_ReturnsNoContent()
     {
         //Arrange
         const long questionId = 1;
@@ -40,7 +40,7 @@ public class ViewServiceTests : BaseFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_BadRequest_When_IpIsNull()
+    public async Task IncrementViews_MissingIpHeader_ReturnsBadRequest()
     {
         //Arrange
         const long questionId = 1;
@@ -57,7 +57,7 @@ public class ViewServiceTests : BaseFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_BadRequest_When_FingerprintIsNull()
+    public async Task IncrementViews_MissingFingerprintHeader_ReturnsBadRequest()
     {
         //Arrange
         const long questionId = 1;
@@ -74,7 +74,7 @@ public class ViewServiceTests : BaseFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_BadRequest()
+    public async Task IncrementViews_FingerprintTooLong_ReturnsBadRequest()
     {
         //Arrange
         const long questionId = 1;

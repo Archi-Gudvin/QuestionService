@@ -1,4 +1,3 @@
-using QuestionService.Tests.FunctionalTests.Configurations.TestServices;
 using QuestionService.Tests.UnitTests.Configurations;
 using Xunit;
 
@@ -8,7 +7,7 @@ public class OutboxBackgroundServiceTests
 {
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task ExecuteBackgroundJob_ShouldBe_NoException()
+    public async Task ExecuteAsync_NullException_DoesNotThrow()
     {
         //Arrange
         var outboxService =

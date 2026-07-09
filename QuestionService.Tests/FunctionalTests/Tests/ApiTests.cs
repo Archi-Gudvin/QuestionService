@@ -12,7 +12,7 @@ public class ApiTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task RequestForbiddenResource_ShouldBe_Forbidden_When_ClaimsNotValid()
+    public async Task PutQuestion_InvalidClaims_ReturnsForbidden()
     {
         //Arrange
         const string forbiddenUrl = "/api/v1.0/question";
@@ -30,7 +30,7 @@ public class ApiTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task RequestForbiddenResource_ShouldBe_Unauthorized()
+    public async Task PostQuestion_MissingToken_ReturnsUnauthorized()
     {
         //Arrange
         const string forbiddenUrl = "/api/v1.0/question";
@@ -47,7 +47,7 @@ public class ApiTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task RequestForbiddenResource_ShouldBe_Forbidden()
+    public async Task PostTag_InsufficientRole_ReturnsForbidden()
     {
         //Arrange
         var token = TokenHelper.GetRsaToken("testuser1", 1, [
@@ -69,7 +69,7 @@ public class ApiTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task RequestSwagger_ShouldBe_Success()
+    public async Task GetSwagger_ValidRequest_ReturnsSuccess()
     {
         //Arrange
         const string swaggerUrl = "/swagger/v1/swagger.json";

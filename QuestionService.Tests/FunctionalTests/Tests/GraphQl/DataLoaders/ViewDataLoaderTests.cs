@@ -9,7 +9,7 @@ public class ViewDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunc
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Success()
+    public async Task Load_ExistingViewId_ReturnsView()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -25,7 +25,7 @@ public class ViewDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunc
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Null()
+    public async Task Load_NonExistentViewId_ReturnsNull()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

@@ -10,7 +10,7 @@ public class GroupUserViewDataLoaderTests(FunctionalTestWebAppFactory factory) :
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Success()
+    public async Task LoadRequiredAsync_ExistingUserId_ReturnsGroupedQuestions()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -26,7 +26,7 @@ public class GroupUserViewDataLoaderTests(FunctionalTestWebAppFactory factory) :
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_NoQuestions()
+    public async Task LoadRequiredAsync_NonExistentUserId_ReturnsEmptyResult()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

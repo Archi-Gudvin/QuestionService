@@ -8,7 +8,7 @@ public class GetVoteTypeServiceTests
 {
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetAll_ShouldBe_Success()
+    public async Task GetAllAsync_ExistingVoteTypes_ReturnsSuccess()
     {
         //Arrange
         var getVoteTypeService = new CacheGetVoteTypeServiceFactory().GetService();
@@ -23,7 +23,7 @@ public class GetVoteTypeServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_Success()
+    public async Task GetByIdsAsync_ExistingIds_ReturnsSuccess()
     {
         // Arrange
         var ids = new List<long> { 1, 2, 0 };
@@ -39,7 +39,7 @@ public class GetVoteTypeServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_VoteTypeNotFound()
+    public async Task GetByIdsAsync_SingleNonExistentId_ReturnsVoteTypeNotFound()
     {
         // Arrange
         var ids = new List<long> { 0 };
@@ -56,7 +56,7 @@ public class GetVoteTypeServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_VoteTypesNotFound()
+    public async Task GetByIdsAsync_MultipleNonExistentIds_ReturnsVoteTypesNotFound()
     {
         // Arrange
         var ids = new List<long> { 0, 0 };

@@ -9,7 +9,7 @@ public class GetVoteServiceTests
 {
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetAll_ShouldBe_Success()
+    public async Task GetAllAsync_ExistingVotes_ReturnsSuccess()
     {
         //Arrange
         var getVoteService = new CacheGetVoteServiceFactory().GetService();
@@ -24,7 +24,7 @@ public class GetVoteServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByDtos_ShouldBe_Success()
+    public async Task GetByDtosAsync_ExistingDtos_ReturnsSuccess()
     {
         //Arrange
         var dtos = new List<VoteDto>
@@ -45,7 +45,7 @@ public class GetVoteServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByDtos_ShouldBe_VoteNotFound()
+    public async Task GetByDtosAsync_SingleNonExistentDto_ReturnsVoteNotFound()
     {
         //Arrange
         var dtos = new List<VoteDto>
@@ -65,7 +65,7 @@ public class GetVoteServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByDtos_ShouldBe_VotesNotFound()
+    public async Task GetByDtosAsync_MultipleNonExistentDtos_ReturnsVotesNotFound()
     {
         //Arrange
         var dtos = new List<VoteDto>
@@ -86,7 +86,7 @@ public class GetVoteServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsVotes_ShouldBe_Success()
+    public async Task GetQuestionsVotesAsync_ExistingQuestionIds_ReturnsSuccess()
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
@@ -102,7 +102,7 @@ public class GetVoteServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsVotes_ShouldBe_VotesNotFound()
+    public async Task GetQuestionsVotesAsync_NonExistentQuestionId_ReturnsVotesNotFound()
     {
         //Arrange
         var questionIds = new List<long> { 0 };
@@ -119,7 +119,7 @@ public class GetVoteServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetUsersVotes_ShouldBe_Success()
+    public async Task GetUsersVotesAsync_ExistingUserIds_ReturnsSuccess()
     {
         //Arrange
         var userIds = new List<long> { 1, 2, 0 };
@@ -135,7 +135,7 @@ public class GetVoteServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetUsersVotes_ShouldBe_VotesNotFound()
+    public async Task GetUsersVotesAsync_NonExistentUserId_ReturnsVotesNotFound()
     {
         //Arrange
         var userIds = new List<long> { 0 };
@@ -152,7 +152,7 @@ public class GetVoteServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetVoteTypesVotes_ShouldBe_Success()
+    public async Task GetVoteTypesVotesAsync_ExistingVoteTypeIds_ReturnsSuccess()
     {
         // Arrange
         var voteTypeIds = new List<long> { 1, 2, 0 };
@@ -168,7 +168,7 @@ public class GetVoteServiceTests
 
     [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetVoteTypesVotes_ShouldBe_VotesNotFound()
+    public async Task GetVoteTypesVotesAsync_NonExistentVoteTypeId_ReturnsVotesNotFound()
     {
         // Arrange
         var voteTypeIds = new List<long> { 0 };

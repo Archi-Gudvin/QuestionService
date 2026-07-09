@@ -20,7 +20,7 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Ok()
+    public async Task GetQuestionById_CacheHit_ReturnsQuestionWithTags()
     {
         //Arrange
         var requestBody = new { query = GraphQlHelper.RequestQuestionByIdQuery(2) };
@@ -41,7 +41,7 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Null()
+    public async Task GetQuestionById_NonExistentIdCacheHit_ReturnsNull()
     {
         //Arrange
         var requestBody = new { query = GraphQlHelper.RequestQuestionByIdQuery(0) };
@@ -61,7 +61,7 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Ok_With_WrongEntryInCache()
+    public async Task GetQuestionById_CorruptedCacheEntry_ReturnsQuestionWithTags()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -86,7 +86,7 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetGroupedById_ShouldBe_Null()
+    public async Task GetQuestionsTagsAsync_NonExistentQuestionId_ReturnsEmptyCollection()
     {
         //Arrange
         const long questionId = 0;

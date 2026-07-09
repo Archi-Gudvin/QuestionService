@@ -10,7 +10,7 @@ public class GrpcTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest
 {
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Ok()
+    public async Task GetQuestionById_ExistingQuestionId_ReturnsQuestion()
     {
         //Arrange
         const long questionId = 1;
@@ -27,7 +27,7 @@ public class GrpcTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_QuestionNotFound()
+    public async Task GetQuestionById_NonExistentQuestionId_ThrowsRpcException()
     {
         //Arrange
         const long questionId = 0;
@@ -46,7 +46,7 @@ public class GrpcTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionsById_ShouldBe_Ok()
+    public async Task GetQuestionsById_MixOfExistingAndNonExistentIds_ReturnsExistingQuestions()
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
@@ -67,7 +67,7 @@ public class GrpcTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest
 
     [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionsById_ShouldBe_QuestionsNotFound()
+    public async Task GetQuestionsById_AllNonExistentIds_ThrowsRpcException()
     {
         //Arrange
         var questionIds = new List<long> { 0, -1 };
