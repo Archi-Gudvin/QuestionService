@@ -2,12 +2,13 @@ using QuestionService.Cache.Providers;
 using QuestionService.Tests.UnitTests.Configurations;
 using StackExchange.Redis;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class RedisCacheProviderTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task SetsAddAsync_FalseRedisResponse_ThrowsRedisException()
     {
@@ -28,7 +29,6 @@ public class RedisCacheProviderTests
         await Assert.ThrowsAsync<RedisException>(action);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task StringSetAsync_FalseRedisResponse_ThrowsRedisException()
     {

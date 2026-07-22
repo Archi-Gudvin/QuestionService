@@ -11,9 +11,11 @@ using QuestionService.Tests.FunctionalTests.Base.Exception;
 using QuestionService.Tests.FunctionalTests.Configurations.GraphQl.Responses;
 using QuestionService.Tests.FunctionalTests.Helper;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class ExceptionTests : ExceptionFunctionalTest
 {
     public ExceptionTests(ExceptionFunctionalTestWebAppFactory factory) : base(factory)
@@ -25,7 +27,6 @@ public class ExceptionTests : ExceptionFunctionalTest
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task AskQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
@@ -44,7 +45,6 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task EditQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
@@ -64,7 +64,6 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task DeleteQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
@@ -83,7 +82,6 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task DownvoteQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
@@ -102,7 +100,6 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task UpvoteQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
@@ -121,7 +118,6 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task RemoveQuestionVote_TransactionCommitFailure_ReturnsInternalServerError()
     {
@@ -140,7 +136,6 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetQuestionById_CacheReadFailure_ReturnsOk()
     {

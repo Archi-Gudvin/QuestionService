@@ -1,12 +1,13 @@
 using QuestionService.Application.Resources;
 using QuestionService.Tests.UnitTests.Factories;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class GetVoteTypeServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetAllAsync_ExistingVoteTypes_ReturnsSuccess()
     {
@@ -21,7 +22,6 @@ public class GetVoteTypeServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByIdsAsync_ExistingIds_ReturnsSuccess()
     {
@@ -37,7 +37,6 @@ public class GetVoteTypeServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByIdsAsync_SingleNonExistentId_ReturnsVoteTypeNotFound()
     {
@@ -54,7 +53,6 @@ public class GetVoteTypeServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByIdsAsync_MultipleNonExistentIds_ReturnsVoteTypesNotFound()
     {

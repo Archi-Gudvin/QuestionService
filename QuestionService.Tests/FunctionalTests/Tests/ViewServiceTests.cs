@@ -6,9 +6,11 @@ using QuestionService.Domain.Results;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Helper;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class ViewServiceTests : BaseFunctionalTest
 {
     public ViewServiceTests(FunctionalTestWebAppFactory factory) : base(factory)
@@ -20,7 +22,6 @@ public class ViewServiceTests : BaseFunctionalTest
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task IncrementViews_ValidRequest_ReturnsNoContent()
     {
@@ -38,7 +39,6 @@ public class ViewServiceTests : BaseFunctionalTest
         Assert.True(string.IsNullOrEmpty(body));
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task IncrementViews_MissingIpHeader_ReturnsBadRequest()
     {
@@ -55,7 +55,6 @@ public class ViewServiceTests : BaseFunctionalTest
         Assert.Equal("IP Address is not provided", body);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task IncrementViews_MissingFingerprintHeader_ReturnsBadRequest()
     {
@@ -72,7 +71,6 @@ public class ViewServiceTests : BaseFunctionalTest
         Assert.Equal("Fingerprint is not provided", body);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task IncrementViews_FingerprintTooLong_ReturnsBadRequest()
     {

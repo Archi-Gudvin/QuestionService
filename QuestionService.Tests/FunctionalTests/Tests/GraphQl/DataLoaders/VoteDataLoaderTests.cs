@@ -3,12 +3,13 @@ using QuestionService.Domain.Dtos.Vote;
 using QuestionService.GraphQl.DataLoaders;
 using QuestionService.Tests.FunctionalTests.Base;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests.GraphQl.DataLoaders;
 
+[FunctionalTest]
 public class VoteDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task Load_ExistingVoteKey_ReturnsVote()
     {
@@ -24,7 +25,6 @@ public class VoteDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunc
         Assert.NotNull(result);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task Load_NonExistentVoteKey_ReturnsNull()
     {

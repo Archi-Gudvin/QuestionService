@@ -4,12 +4,13 @@ using QuestionService.Domain.Entities;
 using QuestionService.Tests.Configurations;
 using QuestionService.Tests.UnitTests.Factories;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class QuestionServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task AskQuestionAsync_ValidData_ReturnsSuccess()
     {
@@ -26,7 +27,6 @@ public class QuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task AskQuestionAsync_EmptyTags_ReturnsInvalidTags()
     {
@@ -44,7 +44,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task AskQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
@@ -62,7 +61,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task AskQuestionAsync_NonExistentTags_ReturnsTagsNotFound()
     {
@@ -80,7 +78,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task EditQuestionAsync_ValidData_ReturnsSuccess()
     {
@@ -97,7 +94,6 @@ public class QuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task EditQuestionAsync_EmptyTitle_ReturnsInvalidTitle()
     {
@@ -115,7 +111,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task EditQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
@@ -133,7 +128,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task EditQuestionAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
@@ -151,7 +145,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task EditQuestionAsync_NotOwnerInitiator_ReturnsOperationForbidden()
     {
@@ -169,7 +162,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task EditQuestionAsync_NonExistentTags_ReturnsTagsNotFound()
     {
@@ -187,7 +179,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DeleteQuestionAsync_ValidData_ReturnsSuccess()
     {
@@ -204,7 +195,6 @@ public class QuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DeleteQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
@@ -222,7 +212,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DeleteQuestionAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
@@ -240,7 +229,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DeleteQuestionAsync_NotOwnerInitiator_ReturnsOperationForbidden()
     {
@@ -258,7 +246,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpvoteQuestionAsync_ValidData_ReturnsSuccess()
     {
@@ -275,7 +262,6 @@ public class QuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpvoteQuestionAsync_ExistingDownvote_ReturnsSuccess()
     {
@@ -292,7 +278,6 @@ public class QuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpvoteQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
@@ -310,7 +295,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpvoteQuestionAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
@@ -328,7 +312,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpvoteQuestionAsync_OwnPost_ReturnsCannotVoteForOwnPost()
     {
@@ -346,7 +329,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpvoteQuestionAsync_EmptyVoteTypeRepository_ReturnsVoteTypeNotFound()
     {
@@ -365,7 +347,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpvoteQuestionAsync_LowReputationInitiator_ReturnsTooLowReputation()
     {
@@ -383,7 +364,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpvoteQuestionAsync_ExistingUpvote_ReturnsVoteAlreadyGiven()
     {
@@ -401,7 +381,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DownvoteQuestionAsync_ValidData_ReturnsSuccess()
     {
@@ -418,7 +397,6 @@ public class QuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DownvoteQuestionAsync_ExistingUpvote_ReturnsSuccess()
     {
@@ -435,7 +413,6 @@ public class QuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DownvoteQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
@@ -453,7 +430,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DownvoteQuestionAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
@@ -471,7 +447,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DownvoteQuestionAsync_OwnPost_ReturnsCannotVoteForOwnPost()
     {
@@ -489,7 +464,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DownvoteQuestionAsync_LowReputationInitiator_ReturnsTooLowReputation()
     {
@@ -507,7 +481,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DownvoteQuestionAsync_EmptyVoteTypeRepository_ReturnsVoteTypeNotFound()
     {
@@ -526,7 +499,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DownvoteQuestionAsync_ExistingDownvote_ReturnsVoteAlreadyGiven()
     {
@@ -544,7 +516,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task RemoveQuestionVoteAsync_ValidData_ReturnsSuccess()
     {
@@ -562,7 +533,6 @@ public class QuestionServiceTests
     }
 
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task RemoveQuestionVoteAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
@@ -580,7 +550,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task RemoveQuestionVoteAsync_NonExistentQuestion_ReturnsQuestionNotFound()
     {
@@ -598,7 +567,6 @@ public class QuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task RemoveQuestionVoteAsync_NonExistentVote_ReturnsVoteNotFound()
     {

@@ -9,16 +9,17 @@ using QuestionService.Tests.FunctionalTests.Configurations.GraphQl.Responses;
 using QuestionService.Tests.FunctionalTests.Helper;
 using StackExchange.Redis;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
     // Only functional tests are provided for cache services' success scenarios.
     // This is because cache data mirrors the database, and manually copying test DB data into multiple cache keys/values is impractical and confusing.
     // In functional tests, data is automatically copied from the DB to the cache as needed, following all key/value rules.
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetQuestionById_CacheHit_ReturnsQuestionWithTags()
     {
@@ -39,7 +40,6 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
         Assert.NotNull(result.Data.Question.Tags);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetQuestionById_NonExistentIdCacheHit_ReturnsNull()
     {
@@ -59,7 +59,6 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
         Assert.Null(result!.Data.Question);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetQuestionById_CorruptedCacheEntry_ReturnsQuestionWithTags()
     {
@@ -84,7 +83,6 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
         Assert.NotNull(result.Data.Question.Tags);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetQuestionsTagsAsync_NonExistentQuestionId_ReturnsEmptyCollection()
     {

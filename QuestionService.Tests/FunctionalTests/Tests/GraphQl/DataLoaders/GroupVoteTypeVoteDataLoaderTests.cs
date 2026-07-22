@@ -3,12 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 using QuestionService.GraphQl.DataLoaders;
 using QuestionService.Tests.FunctionalTests.Base;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests.GraphQl.DataLoaders;
 
+[FunctionalTest]
 public class GroupVoteTypeVoteDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task Load_ExistingVoteTypeId_ReturnsVotes()
     {
@@ -24,7 +25,6 @@ public class GroupVoteTypeVoteDataLoaderTests(FunctionalTestWebAppFactory factor
         Assert.Equal(3, result.Length);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task Load_NonExistentVoteTypeId_ReturnsEmptyResult()
     {

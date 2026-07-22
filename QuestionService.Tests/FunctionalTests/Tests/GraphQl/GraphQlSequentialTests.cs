@@ -10,13 +10,14 @@ using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Configurations.GraphQl.Responses;
 using QuestionService.Tests.FunctionalTests.Helper;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests.GraphQl;
 
 [Collection(nameof(GraphQlSequentialTests))]
+[FunctionalTest]
 public class GraphQlSequentialTests(FunctionalTestWebAppFactory factory) : SequentialFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetTags_NoTagsInDb_ReturnsTagsNotFoundError()
     {

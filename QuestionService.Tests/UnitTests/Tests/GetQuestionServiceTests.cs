@@ -1,12 +1,13 @@
 using QuestionService.Application.Resources;
 using QuestionService.Tests.UnitTests.Factories;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class GetQuestionServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetAllAsync_ExistingQuestions_ReturnsSuccess()
     {
@@ -22,7 +23,6 @@ public class GetQuestionServiceTests
     }
 
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByIdsAsync_ExistingIds_ReturnsSuccess()
     {
@@ -38,7 +38,6 @@ public class GetQuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByIdsAsync_SingleNonExistentId_ReturnsQuestionNotFound()
     {
@@ -55,7 +54,6 @@ public class GetQuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByIdsAsync_MultipleNonExistentIds_ReturnsQuestionsNotFound()
     {
@@ -72,7 +70,6 @@ public class GetQuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetQuestionsWithTagsAsync_ExistingTagIds_ReturnsSuccess()
     {
@@ -88,7 +85,6 @@ public class GetQuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetQuestionsWithTagsAsync_NonExistentTagIds_ReturnsQuestionsNotFound()
     {
@@ -105,7 +101,6 @@ public class GetQuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetUsersQuestionsAsync_ExistingUserIds_ReturnsSuccess()
     {
@@ -121,7 +116,6 @@ public class GetQuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetUsersQuestionsAsync_NonExistentUserIds_ReturnsQuestionsNotFound()
     {

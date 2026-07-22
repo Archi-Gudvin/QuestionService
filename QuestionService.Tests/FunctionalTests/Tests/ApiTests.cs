@@ -5,12 +5,13 @@ using QuestionService.Domain.Dtos.ExternalEntity;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Helper;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class ApiTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task PutQuestion_InvalidClaims_ReturnsForbidden()
     {
@@ -28,7 +29,6 @@ public class ApiTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(
         Assert.Equal("Invalid claims", body);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task PostQuestion_MissingToken_ReturnsUnauthorized()
     {
@@ -45,7 +45,6 @@ public class ApiTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(
         Assert.NotNull(body);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task PostTag_InsufficientRole_ReturnsForbidden()
     {
@@ -67,7 +66,6 @@ public class ApiTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(
         Assert.NotNull(body);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetSwagger_ValidRequest_ReturnsSuccess()
     {

@@ -10,10 +10,12 @@ using QuestionService.Domain.Results;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Helper;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
 [Collection(nameof(QuestionServiceTests))]
+[FunctionalTest]
 public class QuestionServiceTests : SequentialFunctionalTest
 {
     public QuestionServiceTests(FunctionalTestWebAppFactory factory) : base(factory)
@@ -23,7 +25,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task AskQuestion_ValidQuestion_ReturnsCreated()
     {
@@ -41,7 +42,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task AskQuestion_NonExistentUser_ReturnsNotFound()
     {
@@ -69,7 +69,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task EditQuestion_ExistingQuestion_ReturnsOk()
     {
@@ -88,7 +87,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task EditQuestion_NonExistentQuestion_ReturnsNotFound()
     {
@@ -108,7 +106,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task DeleteQuestion_ExistingQuestion_ReturnsOk()
     {
@@ -126,7 +123,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task DeleteQuestion_NonExistentQuestion_ReturnsNotFound()
     {
@@ -145,7 +141,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task DownvoteQuestion_ExistingQuestion_ReturnsOk()
     {
@@ -163,7 +158,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task DownvoteQuestion_NonExistentQuestion_ReturnsNotFound()
     {
@@ -182,7 +176,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task UpvoteQuestion_ExistingQuestion_ReturnsOk()
     {
@@ -200,7 +193,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task UpvoteQuestion_NonExistentQuestion_ReturnsNotFound()
     {
@@ -219,7 +211,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task RemoveQuestionVote_ExistingVote_ReturnsOk()
     {
@@ -237,7 +228,6 @@ public class QuestionServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task RemoveQuestionVote_NonExistentQuestion_ReturnsNotFound()
     {

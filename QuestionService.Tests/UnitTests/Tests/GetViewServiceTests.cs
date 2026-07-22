@@ -1,12 +1,13 @@
 using QuestionService.Application.Resources;
 using QuestionService.Tests.UnitTests.Factories;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class GetViewServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetAllAsync_ExistingViews_ReturnsSuccess()
     {
@@ -21,7 +22,6 @@ public class GetViewServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByIdsAsync_ExistingIds_ReturnsSuccess()
     {
@@ -37,7 +37,6 @@ public class GetViewServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByIdsAsync_SingleNonExistentId_ReturnsViewNotFound()
     {
@@ -54,7 +53,6 @@ public class GetViewServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByIdsAsync_MultipleNonExistentIds_ReturnsViewsNotFound()
     {
@@ -71,7 +69,6 @@ public class GetViewServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetUsersViewsAsync_ExistingUserIds_ReturnsSuccess()
     {
@@ -87,7 +84,6 @@ public class GetViewServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetUsersViewsAsync_NonExistentUserId_ReturnsViewsNotFound()
     {
@@ -104,7 +100,6 @@ public class GetViewServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetQuestionsViewsAsync_ExistingQuestionIds_ReturnsSuccess()
     {
@@ -120,7 +115,6 @@ public class GetViewServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetQuestionsViewsAsync_NonExistentQuestionId_ReturnsViewsNotFound()
     {

@@ -2,12 +2,13 @@ using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.Vote;
 using QuestionService.Tests.UnitTests.Factories;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class GetVoteServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetAllAsync_ExistingVotes_ReturnsSuccess()
     {
@@ -22,7 +23,6 @@ public class GetVoteServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByDtosAsync_ExistingDtos_ReturnsSuccess()
     {
@@ -43,7 +43,6 @@ public class GetVoteServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByDtosAsync_SingleNonExistentDto_ReturnsVoteNotFound()
     {
@@ -63,7 +62,6 @@ public class GetVoteServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetByDtosAsync_MultipleNonExistentDtos_ReturnsVotesNotFound()
     {
@@ -84,7 +82,6 @@ public class GetVoteServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetQuestionsVotesAsync_ExistingQuestionIds_ReturnsSuccess()
     {
@@ -100,7 +97,6 @@ public class GetVoteServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetQuestionsVotesAsync_NonExistentQuestionId_ReturnsVotesNotFound()
     {
@@ -117,7 +113,6 @@ public class GetVoteServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetUsersVotesAsync_ExistingUserIds_ReturnsSuccess()
     {
@@ -133,7 +128,6 @@ public class GetVoteServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetUsersVotesAsync_NonExistentUserId_ReturnsVotesNotFound()
     {
@@ -150,7 +144,6 @@ public class GetVoteServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetVoteTypesVotesAsync_ExistingVoteTypeIds_ReturnsSuccess()
     {
@@ -166,7 +159,6 @@ public class GetVoteServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task GetVoteTypesVotesAsync_NonExistentVoteTypeId_ReturnsVotesNotFound()
     {

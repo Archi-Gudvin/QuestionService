@@ -9,10 +9,12 @@ using QuestionService.Domain.Results;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Helper;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
 [Collection(nameof(TagServiceTests))]
+[FunctionalTest]
 public class TagServiceTests : SequentialFunctionalTest
 {
     public TagServiceTests(FunctionalTestWebAppFactory factory) : base(factory)
@@ -25,7 +27,6 @@ public class TagServiceTests : SequentialFunctionalTest
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task CreateTag_ValidTag_ReturnsCreated()
     {
@@ -43,7 +44,6 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task CreateTag_TagNameTooLong_ReturnsBadRequest()
     {
@@ -62,7 +62,6 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task UpdateTag_ExistingTag_ReturnsOk()
     {
@@ -80,7 +79,6 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task UpdateTag_NonExistentTag_ReturnsNotFound()
     {
@@ -99,7 +97,6 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task DeleteTag_ExistingTag_ReturnsOk()
     {
@@ -117,7 +114,6 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task DeleteTag_NonExistentTag_ReturnsNotFound()
     {

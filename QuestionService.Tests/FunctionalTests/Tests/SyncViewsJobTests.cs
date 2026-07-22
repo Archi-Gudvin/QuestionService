@@ -7,13 +7,14 @@ using QuestionService.Domain.Interfaces.Repository;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Helper;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
 [Collection(nameof(SyncViewsJobTests))]
+[FunctionalTest]
 public class SyncViewsJobTests(FunctionalTestWebAppFactory factory) : SequentialFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task RunAsync_PendingViewsInCache_ReturnsSuccess()
     {
@@ -33,7 +34,6 @@ public class SyncViewsJobTests(FunctionalTestWebAppFactory factory) : Sequential
         Assert.Equal(11, count); // Total 11 views including new ones (consider views of the disabled questions)
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task RunAsync_InvalidCachedViews_ReturnsNoSyncedViews()
     {

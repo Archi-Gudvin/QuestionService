@@ -3,12 +3,13 @@ using QuestionService.Domain.Dtos.View;
 using QuestionService.Tests.UnitTests.Configurations;
 using QuestionService.Tests.UnitTests.Factories;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class ViewServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task IncrementViewsAsync_ValidIpAddress_ReturnsSuccess()
     {
@@ -23,7 +24,6 @@ public class ViewServiceTests
         Assert.True(result.IsSuccess);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task IncrementViewsAsync_InvalidIpAddress_ReturnsInvalidDataFormat()
     {
@@ -39,7 +39,6 @@ public class ViewServiceTests
         Assert.Equal(ErrorMessage.InvalidDataFormat, result.ErrorMessage);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task SyncViewsToDatabaseAsync_ExistingViews_ReturnsSuccess()
     {
@@ -54,7 +53,6 @@ public class ViewServiceTests
         Assert.Equal(7, result.Data.SyncedViewsCount); // There are 7 new views in total
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task SyncViewsToDatabaseAsync_EmptySetValues_ReturnsNoSyncedViews()
     {
@@ -70,7 +68,6 @@ public class ViewServiceTests
         Assert.Equal(0, result.Data.SyncedViewsCount);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task SyncViewsToDatabaseAsync_InvalidSetKeys_ReturnsNoSyncedViews()
     {
@@ -86,7 +83,6 @@ public class ViewServiceTests
         Assert.Equal(0, result.Data.SyncedViewsCount);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task SyncViewsToDatabaseAsync_InvalidSetValues_ReturnsNoSyncedViews()
     {
@@ -102,7 +98,6 @@ public class ViewServiceTests
         Assert.Equal(0, result.Data.SyncedViewsCount);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task SyncViewsToDatabaseAsync_SpamViews_ReturnsFilteredSyncedViews()
     {

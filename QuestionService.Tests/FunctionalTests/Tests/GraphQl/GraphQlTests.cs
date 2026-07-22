@@ -6,12 +6,13 @@ using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Configurations.GraphQl.Responses;
 using QuestionService.Tests.FunctionalTests.Helper;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests.GraphQl;
 
+[FunctionalTest]
 public class GraphQlTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetAll_ValidQuery_ReturnsSuccess()
     {
@@ -52,7 +53,6 @@ public class GraphQlTests(FunctionalTestWebAppFactory factory) : BaseFunctionalT
         Assert.NotEqual(0, result.Data.QuestionVoteTypes.TotalCount);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetAll_InvalidPagination_ReturnsErrors()
     {
@@ -70,7 +70,6 @@ public class GraphQlTests(FunctionalTestWebAppFactory factory) : BaseFunctionalT
         Assert.All(result.Errors, x => Assert.StartsWith(ErrorMessage.InvalidPagination, x.Message));
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetAllByIds_ExistingIds_ReturnsSuccess()
     {
@@ -91,7 +90,6 @@ public class GraphQlTests(FunctionalTestWebAppFactory factory) : BaseFunctionalT
         Assert.NotNull(result.Data.QuestionVoteType);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task GetAllByIds_NonExistentIds_ReturnsNull()
     {
@@ -112,7 +110,6 @@ public class GraphQlTests(FunctionalTestWebAppFactory factory) : BaseFunctionalT
         Assert.Null(result.Data.QuestionVoteType);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task Request_WrongArgument_ReturnsBadRequest()
     {

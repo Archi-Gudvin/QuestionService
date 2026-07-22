@@ -1,11 +1,12 @@
 using QuestionService.Tests.UnitTests.Configurations;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class OutboxBackgroundServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task ExecuteAsync_NullException_DoesNotThrow()
     {

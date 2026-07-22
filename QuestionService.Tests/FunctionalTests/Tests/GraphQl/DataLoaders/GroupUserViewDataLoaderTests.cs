@@ -3,12 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 using QuestionService.GraphQl.DataLoaders;
 using QuestionService.Tests.FunctionalTests.Base;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests.GraphQl.DataLoaders;
 
+[FunctionalTest]
 public class GroupUserViewDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task LoadRequiredAsync_ExistingUserId_ReturnsGroupedQuestions()
     {
@@ -24,7 +25,6 @@ public class GroupUserViewDataLoaderTests(FunctionalTestWebAppFactory factory) :
         Assert.Equal(2, result.Length); // User with id 1 has viewed 2 questions
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
     public async Task LoadRequiredAsync_NonExistentUserId_ReturnsEmptyResult()
     {

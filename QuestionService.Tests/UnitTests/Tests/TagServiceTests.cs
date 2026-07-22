@@ -2,12 +2,13 @@ using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.Tag;
 using QuestionService.Tests.UnitTests.Factories;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class TagServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task CreateTagAsync_ValidData_ReturnsSuccess()
     {
@@ -23,7 +24,6 @@ public class TagServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task CreateTagAsync_TooLongTagName_ReturnsInvalidTagName()
     {
@@ -40,7 +40,6 @@ public class TagServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task CreateTagAsync_ExistingTagName_ReturnsTagAlreadyExists()
     {
@@ -57,7 +56,6 @@ public class TagServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpdateTagAsync_ValidData_ReturnsSuccess()
     {
@@ -73,7 +71,6 @@ public class TagServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpdateTagAsync_TooLongTagDescription_ReturnsInvalidTagDescription()
     {
@@ -91,7 +88,6 @@ public class TagServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task UpdateTagAsync_NonExistentTagId_ReturnsTagNotFound()
     {
@@ -108,7 +104,6 @@ public class TagServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DeleteTagAsync_ExistingTagId_ReturnsSuccess()
     {
@@ -124,7 +119,6 @@ public class TagServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
     public async Task DeleteTagAsync_NonExistentTagId_ReturnsTagNotFound()
     {
