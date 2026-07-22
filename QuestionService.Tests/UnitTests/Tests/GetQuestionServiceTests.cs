@@ -1,5 +1,5 @@
 using QuestionService.Application.Resources;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
 using QuestionService.Tests.Traits;
 
@@ -12,7 +12,7 @@ public class GetQuestionServiceTests
     public async Task GetAllAsync_ExistingQuestions_ReturnsSuccess()
     {
         //Arrange
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetAllAsync();
@@ -28,7 +28,7 @@ public class GetQuestionServiceTests
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetByIdsAsync(questionIds);
@@ -43,7 +43,7 @@ public class GetQuestionServiceTests
     {
         //Arrange
         var questionIds = new List<long> { 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetByIdsAsync(questionIds);
@@ -59,7 +59,7 @@ public class GetQuestionServiceTests
     {
         //Arrange
         var questionIds = new List<long> { 0, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetByIdsAsync(questionIds);
@@ -75,7 +75,7 @@ public class GetQuestionServiceTests
     {
         //Arrange
         var tagIds = new List<long> { 1, 2, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetQuestionsWithTagsAsync(tagIds);
@@ -90,7 +90,7 @@ public class GetQuestionServiceTests
     {
         //Arrange
         var tagIds = new List<long> { 0, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetQuestionsWithTagsAsync(tagIds);
@@ -106,7 +106,7 @@ public class GetQuestionServiceTests
     {
         //Arrange
         var userIds = new List<long> { 1, 2, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetUsersQuestionsAsync(userIds);
@@ -121,7 +121,7 @@ public class GetQuestionServiceTests
     {
         //Arrange
         var userIds = new List<long> { 0, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetUsersQuestionsAsync(userIds);

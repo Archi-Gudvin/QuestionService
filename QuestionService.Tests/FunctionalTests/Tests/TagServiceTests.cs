@@ -7,7 +7,7 @@ using QuestionService.Domain.Dtos.ExternalEntity;
 using QuestionService.Domain.Dtos.Tag;
 using QuestionService.Domain.Results;
 using QuestionService.Tests.FunctionalTests.Base;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using Xunit;
 using QuestionService.Tests.Traits;
 

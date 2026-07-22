@@ -17,7 +17,7 @@ using QuestionService.Outbox.Events;
 using QuestionService.Tests.FunctionalTests.Configurations;
 using QuestionService.Tests.FunctionalTests.Configurations.TestServices;
 using QuestionService.Tests.FunctionalTests.Extensions;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using Testcontainers.PostgreSql;
 using Testcontainers.Redis;
 using WireMock.Server;

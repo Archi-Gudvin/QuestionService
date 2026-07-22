@@ -5,7 +5,7 @@ using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository;
 using QuestionService.Tests.FunctionalTests.Base;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using Xunit;
 using QuestionService.Tests.Traits;
 

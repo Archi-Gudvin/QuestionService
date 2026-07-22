@@ -1,5 +1,5 @@
 using QuestionService.Application.Resources;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
 using QuestionService.Tests.Traits;
 
@@ -12,7 +12,7 @@ public class GetViewServiceTests
     public async Task GetAllAsync_ExistingViews_ReturnsSuccess()
     {
         //Arrange
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetAllAsync();
@@ -27,7 +27,7 @@ public class GetViewServiceTests
     {
         //Arrange
         var viewIds = new List<long> { 1, 2, 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetByIdsAsync(viewIds);
@@ -42,7 +42,7 @@ public class GetViewServiceTests
     {
         //Arrange
         var viewIds = new List<long> { 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetByIdsAsync(viewIds);
@@ -58,7 +58,7 @@ public class GetViewServiceTests
     {
         //Arrange
         var viewIds = new List<long> { 0, 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetByIdsAsync(viewIds);
@@ -74,7 +74,7 @@ public class GetViewServiceTests
     {
         //Arrange
         var userIds = new List<long> { 1, 2, 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetUsersViewsAsync(userIds);
@@ -89,7 +89,7 @@ public class GetViewServiceTests
     {
         //Arrange
         var userIds = new List<long> { 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetUsersViewsAsync(userIds);
@@ -105,7 +105,7 @@ public class GetViewServiceTests
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetQuestionsViewsAsync(questionIds);
@@ -120,7 +120,7 @@ public class GetViewServiceTests
     {
         //Arrange
         var questionIds = new List<long> { 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetQuestionsViewsAsync(questionIds);

@@ -1,6 +1,6 @@
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.Vote;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
 using QuestionService.Tests.Traits;
 
@@ -13,7 +13,7 @@ public class GetVoteServiceTests
     public async Task GetAllAsync_ExistingVotes_ReturnsSuccess()
     {
         //Arrange
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
         var result = await getVoteService.GetAllAsync();
@@ -33,7 +33,7 @@ public class GetVoteServiceTests
             new(2, 3),
             new(0, 0),
         };
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
         var result = await getVoteService.GetByDtosAsync(dtos);
@@ -51,7 +51,7 @@ public class GetVoteServiceTests
         {
             new(0, 0)
         };
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
         var result = await getVoteService.GetByDtosAsync(dtos);
@@ -71,7 +71,7 @@ public class GetVoteServiceTests
             new(0, 0),
             new(0, 0)
         };
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
         var result = await getVoteService.GetByDtosAsync(dtos);
@@ -87,7 +87,7 @@ public class GetVoteServiceTests
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
         var result = await getVoteService.GetQuestionsVotesAsync(questionIds);
@@ -102,7 +102,7 @@ public class GetVoteServiceTests
     {
         //Arrange
         var questionIds = new List<long> { 0 };
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
         var result = await getVoteService.GetQuestionsVotesAsync(questionIds);
@@ -118,7 +118,7 @@ public class GetVoteServiceTests
     {
         //Arrange
         var userIds = new List<long> { 1, 2, 0 };
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
         var result = await getVoteService.GetUsersVotesAsync(userIds);
@@ -133,7 +133,7 @@ public class GetVoteServiceTests
     {
         //Arrange
         var userIds = new List<long> { 0 };
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
         var result = await getVoteService.GetUsersVotesAsync(userIds);
@@ -149,7 +149,7 @@ public class GetVoteServiceTests
     {
         // Arrange
         var voteTypeIds = new List<long> { 1, 2, 0 };
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         // Act
         var result = await getVoteService.GetVoteTypesVotesAsync(voteTypeIds);
@@ -164,7 +164,7 @@ public class GetVoteServiceTests
     {
         // Arrange
         var voteTypeIds = new List<long> { 0 };
-        var getVoteService = new CacheGetVoteServiceFactory().GetService();
+        var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         // Act
         var result = await getVoteService.GetVoteTypesVotesAsync(voteTypeIds);

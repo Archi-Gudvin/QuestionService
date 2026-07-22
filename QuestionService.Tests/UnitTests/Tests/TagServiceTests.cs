@@ -1,6 +1,6 @@
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.Tag;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
 using QuestionService.Tests.Traits;
 
@@ -13,7 +13,7 @@ public class TagServiceTests
     public async Task CreateTagAsync_ValidData_ReturnsSuccess()
     {
         //Arrange
-        var tagService = new TagServiceFactory().GetService();
+        var tagService = new TagServiceSut().GetService();
         var dto = new CreateTagDto("NewTag", "NewTagDescription");
 
         //Act
@@ -28,7 +28,7 @@ public class TagServiceTests
     public async Task CreateTagAsync_TooLongTagName_ReturnsInvalidTagName()
     {
         //Arrange
-        var tagService = new TagServiceFactory().GetService();
+        var tagService = new TagServiceSut().GetService();
         var dto = new CreateTagDto("TooLongTagNameTooLongTagNameTooLongTagName", "NewTagDescription");
 
         //Act
@@ -44,7 +44,7 @@ public class TagServiceTests
     public async Task CreateTagAsync_ExistingTagName_ReturnsTagAlreadyExists()
     {
         //Arrange
-        var tagService = new TagServiceFactory().GetService();
+        var tagService = new TagServiceSut().GetService();
         var dto = new CreateTagDto(".NET", "NewTagDescription");
 
         //Act
@@ -60,7 +60,7 @@ public class TagServiceTests
     public async Task UpdateTagAsync_ValidData_ReturnsSuccess()
     {
         //Arrange
-        var tagService = new TagServiceFactory().GetService();
+        var tagService = new TagServiceSut().GetService();
         var dto = new TagDto(1, ".NET", "NewTagDescription");
 
         //Act
@@ -75,7 +75,7 @@ public class TagServiceTests
     public async Task UpdateTagAsync_TooLongTagDescription_ReturnsInvalidTagDescription()
     {
         //Arrange
-        var tagService = new TagServiceFactory().GetService();
+        var tagService = new TagServiceSut().GetService();
         var dto = new TagDto(1, ".NET",
             "TooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescriptionTooLongTagDescription");
 
@@ -92,7 +92,7 @@ public class TagServiceTests
     public async Task UpdateTagAsync_NonExistentTagId_ReturnsTagNotFound()
     {
         //Arrange
-        var tagService = new TagServiceFactory().GetService();
+        var tagService = new TagServiceSut().GetService();
         var dto = new TagDto(0, "NewTag", "NewTagDescription");
 
         //Act
@@ -108,7 +108,7 @@ public class TagServiceTests
     public async Task DeleteTagAsync_ExistingTagId_ReturnsSuccess()
     {
         //Arrange
-        var tagService = new TagServiceFactory().GetService();
+        var tagService = new TagServiceSut().GetService();
         const long tagId = 3;
 
         //Act
@@ -123,7 +123,7 @@ public class TagServiceTests
     public async Task DeleteTagAsync_NonExistentTagId_ReturnsTagNotFound()
     {
         //Arrange
-        var tagService = new TagServiceFactory().GetService();
+        var tagService = new TagServiceSut().GetService();
         const long tagId = 0;
 
         //Act

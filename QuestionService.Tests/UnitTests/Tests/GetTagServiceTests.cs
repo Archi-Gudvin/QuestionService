@@ -1,5 +1,5 @@
 using QuestionService.Application.Resources;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
 using QuestionService.Tests.Traits;
 
@@ -12,7 +12,7 @@ public class GetTagServiceTests
     public async Task GetAllAsync_ExistingTags_ReturnsSuccess()
     {
         //Arrange
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetAllAsync();
@@ -27,7 +27,7 @@ public class GetTagServiceTests
     {
         //Arrange
         var tagIds = new List<long> { 1, 2, 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetByIdsAsync(tagIds);
@@ -42,7 +42,7 @@ public class GetTagServiceTests
     {
         //Arrange
         var tagIds = new List<long> { 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetByIdsAsync(tagIds);
@@ -58,7 +58,7 @@ public class GetTagServiceTests
     {
         //Arrange
         var tagIds = new List<long> { 0, 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetByIdsAsync(tagIds);
@@ -74,7 +74,7 @@ public class GetTagServiceTests
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetQuestionsTagsAsync(questionIds);
@@ -89,7 +89,7 @@ public class GetTagServiceTests
     {
         //Arrange
         var questionIds = new List<long> { 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetQuestionsTagsAsync(questionIds);

@@ -1,5 +1,5 @@
 using QuestionService.Application.Resources;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
 using QuestionService.Tests.Traits;
 
@@ -12,7 +12,7 @@ public class GetVoteTypeServiceTests
     public async Task GetAllAsync_ExistingVoteTypes_ReturnsSuccess()
     {
         //Arrange
-        var getVoteTypeService = new CacheGetVoteTypeServiceFactory().GetService();
+        var getVoteTypeService = new CacheGetVoteTypeServiceSut().GetService();
 
         //Act
         var result = await getVoteTypeService.GetAllAsync();
@@ -27,7 +27,7 @@ public class GetVoteTypeServiceTests
     {
         // Arrange
         var ids = new List<long> { 1, 2, 0 };
-        var getVoteTypeService = new CacheGetVoteTypeServiceFactory().GetService();
+        var getVoteTypeService = new CacheGetVoteTypeServiceSut().GetService();
 
         // Act
         var result = await getVoteTypeService.GetByIdsAsync(ids);
@@ -42,7 +42,7 @@ public class GetVoteTypeServiceTests
     {
         // Arrange
         var ids = new List<long> { 0 };
-        var getVoteTypeService = new CacheGetVoteTypeServiceFactory().GetService();
+        var getVoteTypeService = new CacheGetVoteTypeServiceSut().GetService();
 
         // Act
         var result = await getVoteTypeService.GetByIdsAsync(ids);
@@ -58,7 +58,7 @@ public class GetVoteTypeServiceTests
     {
         // Arrange
         var ids = new List<long> { 0, 0 };
-        var getVoteTypeService = new CacheGetVoteTypeServiceFactory().GetService();
+        var getVoteTypeService = new CacheGetVoteTypeServiceSut().GetService();
 
         // Act
         var result = await getVoteTypeService.GetByIdsAsync(ids);

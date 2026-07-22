@@ -1,5 +1,5 @@
 using System.Net;
-using QuestionService.Tests.UnitTests.Configurations;
+using QuestionService.Tests.UnitTests.Fixtures;
 using Xunit;
 using QuestionService.Tests.Traits;
 

@@ -9,7 +9,7 @@ using QuestionService.Domain.Dtos.Question;
 using QuestionService.Domain.Results;
 using QuestionService.Tests.FunctionalTests.Base.Exception;
 using QuestionService.Tests.FunctionalTests.Configurations.GraphQl.Responses;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using Xunit;
 using QuestionService.Tests.Traits;
 

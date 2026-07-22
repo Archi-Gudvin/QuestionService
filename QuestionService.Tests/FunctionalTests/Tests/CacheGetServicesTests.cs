@@ -6,7 +6,7 @@ using QuestionService.Application.Services;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Configurations.GraphQl.Responses;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using StackExchange.Redis;
 using Xunit;
 using QuestionService.Tests.Traits;

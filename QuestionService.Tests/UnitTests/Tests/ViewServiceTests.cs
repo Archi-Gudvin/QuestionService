@@ -1,7 +1,7 @@
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.View;
-using QuestionService.Tests.UnitTests.Configurations;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Fixtures;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
 using QuestionService.Tests.Traits;
 
@@ -15,7 +15,7 @@ public class ViewServiceTests
     {
         //Arrange
         var dto = new IncrementViewsDto(1, null, "0.0.0.0", "someFingerprint");
-        var viewService = new ViewServiceFactory().GetService();
+        var viewService = new ViewServiceSut().GetService();
 
         //Act
         var result = await viewService.IncrementViewsAsync(dto);
@@ -29,7 +29,7 @@ public class ViewServiceTests
     {
         //Arrange
         var dto = new IncrementViewsDto(1, null, "WrongIp", "someFingerprint");
-        var viewService = new ViewServiceFactory().GetService();
+        var viewService = new ViewServiceSut().GetService();
 
         //Act
         var result = await viewService.IncrementViewsAsync(dto);
@@ -43,7 +43,7 @@ public class ViewServiceTests
     public async Task SyncViewsToDatabaseAsync_ExistingViews_ReturnsSuccess()
     {
         //Arrange
-        var viewService = new ViewServiceFactory().GetDatabaseService();
+        var viewService = new ViewServiceSut().GetDatabaseService();
 
         //Act
         var result = await viewService.SyncViewsToDatabaseAsync();
@@ -57,7 +57,7 @@ public class ViewServiceTests
     public async Task SyncViewsToDatabaseAsync_EmptySetValues_ReturnsNoSyncedViews()
     {
         //Arrange
-        var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetEmptySetValuesDatabaseConfiguration())
+        var viewService = new ViewServiceSut(RedisDatabaseFixture.GetEmptySetValuesDatabaseConfiguration())
             .GetDatabaseService();
 
         //Act
@@ -72,7 +72,7 @@ public class ViewServiceTests
     public async Task SyncViewsToDatabaseAsync_InvalidSetKeys_ReturnsNoSyncedViews()
     {
         //Arrange
-        var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetInvalidSetKeysDatabaseConfiguration())
+        var viewService = new ViewServiceSut(RedisDatabaseFixture.GetInvalidSetKeysDatabaseConfiguration())
             .GetDatabaseService();
 
         //Act
@@ -87,7 +87,7 @@ public class ViewServiceTests
     public async Task SyncViewsToDatabaseAsync_InvalidSetValues_ReturnsNoSyncedViews()
     {
         //Arrange
-        var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetInvalidSetValuesDatabaseConfiguration())
+        var viewService = new ViewServiceSut(RedisDatabaseFixture.GetInvalidSetValuesDatabaseConfiguration())
             .GetDatabaseService();
 
         //Act
@@ -102,7 +102,7 @@ public class ViewServiceTests
     public async Task SyncViewsToDatabaseAsync_SpamViews_ReturnsFilteredSyncedViews()
     {
         //Arrange
-        var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetSpamDatabaseConfiguration())
+        var viewService = new ViewServiceSut(RedisDatabaseFixture.GetSpamDatabaseConfiguration())
             .GetDatabaseService();
 
         //Act

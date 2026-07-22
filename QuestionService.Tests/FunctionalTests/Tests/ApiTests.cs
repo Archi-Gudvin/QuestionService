@@ -3,7 +3,7 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using QuestionService.Domain.Dtos.ExternalEntity;
 using QuestionService.Tests.FunctionalTests.Base;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using Xunit;
 using QuestionService.Tests.Traits;
 
