@@ -1,12 +1,12 @@
 using HotChocolate.Language;
-using QuestionService.Domain.Dtos.Page;
+using QuestionService.Domain.Dtos.Pagination;
 using QuestionService.Domain.Enums;
 
 namespace QuestionService.GraphQl.Extensions;
 
 public static class HotChocolateExtension
 {
-    public static IEnumerable<OrderDto> ToOrderDto(this ListValueNode? listValueNode)
+    public static IEnumerable<SortOrder> ToSortOrder(this ListValueNode? listValueNode)
     {
         if (listValueNode == null) return [];
 
@@ -19,7 +19,7 @@ public static class HotChocolateExtension
         ];
     }
 
-    private static OrderDto ParseOrderFromField(ObjectFieldNode field)
+    private static SortOrder ParseOrderFromField(ObjectFieldNode field)
     {
         var columnName = field.Name.Value;
 
@@ -31,6 +31,6 @@ public static class HotChocolateExtension
         if (!Enum.TryParse<SortDirection>(directionString, ignoreCase: true, out var direction))
             throw new ArgumentException($"Invalid sort direction '{directionString}' for field '{columnName}'.");
 
-        return new OrderDto(columnName, direction);
+        return new SortOrder(columnName, direction);
     }
 }
