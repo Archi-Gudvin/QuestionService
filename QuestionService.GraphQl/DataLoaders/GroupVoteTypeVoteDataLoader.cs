@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Service;
+using QuestionService.Domain.Results;
+using QuestionService.GraphQl.DataLoaders.Base;
 
 namespace QuestionService.GraphQl.DataLoaders;
 
@@ -8,23 +10,9 @@ public class GroupVoteTypeVoteDataLoader(
     IBatchScheduler batchScheduler,
     DataLoaderOptions options,
     IServiceScopeFactory scopeFactory)
-    : GroupedDataLoader<long, Vote>(batchScheduler, options)
+    : GroupedEntityDataLoader<Vote, long>(batchScheduler, options, scopeFactory)
 {
-    protected override async Task<ILookup<long, Vote>> LoadGroupedBatchAsync(IReadOnlyList<long> keys,
-        CancellationToken cancellationToken)
-    {
-        await using var scope = scopeFactory.CreateAsyncScope();
-        var voteService = scope.ServiceProvider.GetRequiredService<IGetVoteService>();
-
-        var result = await voteService.GetVoteTypesVotesAsync(keys, cancellationToken);
-
-        if (!result.IsSuccess)
-            return Enumerable.Empty<IGrouping<long, Vote>>().ToLookup(_ => 0L, _ => default(Vote)!); // Empty lookup
-
-        var lookup = result.Data
-            .SelectMany(x => x.Value.Select(y => new { x.Key, Vote = y }))
-            .ToLookup(x => x.Key, x => x.Vote);
-
-        return lookup;
-    }
+    protected override Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> FetchAsync(
+        IServiceProvider serviceProvider, IReadOnlyList<long> keys, CancellationToken cancellationToken) =>
+        serviceProvider.GetRequiredService<IGetVoteService>().GetVoteTypesVotesAsync(keys, cancellationToken);
 }

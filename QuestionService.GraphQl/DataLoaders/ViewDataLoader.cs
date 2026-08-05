@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Service;
+using QuestionService.Domain.Results;
+using QuestionService.GraphQl.DataLoaders.Base;
 
 namespace QuestionService.GraphQl.DataLoaders;
 
@@ -8,23 +10,11 @@ public class ViewDataLoader(
     IBatchScheduler batchScheduler,
     DataLoaderOptions options,
     IServiceScopeFactory scopeFactory)
-    : BatchDataLoader<long, View>(batchScheduler, options)
+    : EntityBatchDataLoader<View, long>(batchScheduler, options, scopeFactory)
 {
-    protected override async Task<IReadOnlyDictionary<long, View>> LoadBatchAsync(IReadOnlyList<long> keys,
-        CancellationToken cancellationToken)
-    {
-        await using var scope = scopeFactory.CreateAsyncScope();
-        var viewService = scope.ServiceProvider.GetRequiredService<IGetViewService>();
+    protected override Task<CollectionResult<View>> FetchAsync(IServiceProvider serviceProvider,
+        IReadOnlyList<long> keys, CancellationToken cancellationToken) =>
+        serviceProvider.GetRequiredService<IGetViewService>().GetByIdsAsync(keys, cancellationToken);
 
-        var result = await viewService.GetByIdsAsync(keys, cancellationToken);
-
-        var dictionary = new Dictionary<long, View>();
-
-        if (!result.IsSuccess)
-            return dictionary.AsReadOnly();
-
-        dictionary = result.Data.ToDictionary(x => x.Id, x => x);
-
-        return dictionary.AsReadOnly();
-    }
+    protected override long GetId(View entity) => entity.Id;
 }

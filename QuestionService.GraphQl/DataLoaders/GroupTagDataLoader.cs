@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using QuestionService.Domain.Interfaces.Service;
+using QuestionService.Domain.Results;
+using QuestionService.GraphQl.DataLoaders.Base;
 using Tag = QuestionService.Domain.Entities.Tag;
 
 namespace QuestionService.GraphQl.DataLoaders;
@@ -7,30 +9,13 @@ namespace QuestionService.GraphQl.DataLoaders;
 /// <summary>
 ///     Data loader that stores tags by questions ids
 /// </summary>
-/// <param name="batchScheduler"></param>
-/// <param name="options"></param>
-/// <param name="scopeFactory"></param>
 public class GroupTagDataLoader(
     IBatchScheduler batchScheduler,
     DataLoaderOptions options,
     IServiceScopeFactory scopeFactory)
-    : GroupedDataLoader<long, Tag>(batchScheduler, options)
+    : GroupedEntityDataLoader<Tag, long>(batchScheduler, options, scopeFactory)
 {
-    protected override async Task<ILookup<long, Tag>> LoadGroupedBatchAsync(IReadOnlyList<long> keys,
-        CancellationToken cancellationToken)
-    {
-        await using var scope = scopeFactory.CreateAsyncScope();
-        var tagService = scope.ServiceProvider.GetRequiredService<IGetTagService>();
-
-        var result = await tagService.GetQuestionsTagsAsync(keys, cancellationToken);
-
-        if (!result.IsSuccess)
-            return Enumerable.Empty<IGrouping<long, Tag>>().ToLookup(_ => 0L, _ => default(Tag)!); // Empty lookup
-
-        var lookup = result.Data
-            .SelectMany(x => x.Value.Select(y => new { x.Key, Tag = y }))
-            .ToLookup(x => x.Key, x => x.Tag);
-
-        return lookup;
-    }
+    protected override Task<CollectionResult<KeyValuePair<long, IEnumerable<Tag>>>> FetchAsync(
+        IServiceProvider serviceProvider, IReadOnlyList<long> keys, CancellationToken cancellationToken) =>
+        serviceProvider.GetRequiredService<IGetTagService>().GetQuestionsTagsAsync(keys, cancellationToken);
 }

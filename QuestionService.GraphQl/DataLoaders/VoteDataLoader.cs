@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using QuestionService.Domain.Dtos.Vote;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Service;
+using QuestionService.Domain.Results;
+using QuestionService.GraphQl.DataLoaders.Base;
 
 namespace QuestionService.GraphQl.DataLoaders;
 
@@ -9,23 +11,11 @@ public class VoteDataLoader(
     IBatchScheduler batchScheduler,
     DataLoaderOptions options,
     IServiceScopeFactory scopeFactory)
-    : BatchDataLoader<VoteDto, Vote>(batchScheduler, options)
+    : EntityBatchDataLoader<Vote, VoteDto>(batchScheduler, options, scopeFactory)
 {
-    protected override async Task<IReadOnlyDictionary<VoteDto, Vote>> LoadBatchAsync(IReadOnlyList<VoteDto> keys,
-        CancellationToken cancellationToken)
-    {
-        await using var scope = scopeFactory.CreateAsyncScope();
-        var voteService = scope.ServiceProvider.GetRequiredService<IGetVoteService>();
+    protected override Task<CollectionResult<Vote>> FetchAsync(IServiceProvider serviceProvider,
+        IReadOnlyList<VoteDto> keys, CancellationToken cancellationToken) =>
+        serviceProvider.GetRequiredService<IGetVoteService>().GetByDtosAsync(keys, cancellationToken);
 
-        var result = await voteService.GetByDtosAsync(keys, cancellationToken);
-
-        var dictionary = new Dictionary<VoteDto, Vote>();
-
-        if (!result.IsSuccess)
-            return dictionary.AsReadOnly();
-
-        dictionary = result.Data.ToDictionary(x => new VoteDto(x.QuestionId, x.UserId), x => x);
-
-        return dictionary.AsReadOnly();
-    }
+    protected override VoteDto GetId(Vote entity) => new(entity.QuestionId, entity.UserId);
 }
