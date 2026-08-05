@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using QuestionService.Api.Controllers.Base;
+using QuestionService.Domain.Extensions;
 using QuestionService.Domain.Dtos.View;
 using QuestionService.Domain.Interfaces.Service;
 using QuestionService.Domain.Results;
@@ -50,11 +50,7 @@ public class ViewController(IViewService viewService) : BaseController
 
     private long? GetUserIdIfExists()
     {
-        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (!long.TryParse(userIdClaim, out var userId)) return null;
-
-        return userId;
+        return User.TryGetUserId(out var userId) ? userId : null;
     }
 
     /// <summary>
