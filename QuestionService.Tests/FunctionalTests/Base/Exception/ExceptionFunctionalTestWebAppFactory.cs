@@ -59,7 +59,8 @@ public class ExceptionFunctionalTestWebAppFactory : FunctionalTestWebAppFactory
     {
         var mockResolver = new Mock<ITopicProducerResolver>();
 
-        mockResolver.Setup(x => x.GetProducerForType(It.IsAny<Type>())).Throws(new TestException());
+        mockResolver.Setup(x => x.GetProducerForType(It.IsAny<IServiceProvider>(), It.IsAny<Type>()))
+            .Throws(new TestException());
 
         return mockResolver;
     }
