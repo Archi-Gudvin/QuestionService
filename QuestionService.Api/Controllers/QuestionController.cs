@@ -14,7 +14,8 @@ namespace QuestionService.Api.Controllers;
 ///     Question controller
 /// </summary>
 [Authorize]
-public class QuestionController(IQuestionService questionService) : BaseController
+public class QuestionController(IQuestionService questionService, IQuestionVoteService questionVoteService)
+    : BaseController
 {
     /// <summary>
     ///     Creates a question
@@ -153,7 +154,7 @@ public class QuestionController(IQuestionService questionService) : BaseControll
     {
         var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-        var result = await questionService.DownvoteQuestionAsync(userId, questionId, cancellationToken);
+        var result = await questionVoteService.DownvoteAsync(userId, questionId, cancellationToken);
 
         return HandleBaseResult(result);
     }
@@ -185,7 +186,7 @@ public class QuestionController(IQuestionService questionService) : BaseControll
     {
         var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-        var result = await questionService.UpvoteQuestionAsync(userId, questionId, cancellationToken);
+        var result = await questionVoteService.UpvoteAsync(userId, questionId, cancellationToken);
 
         return HandleBaseResult(result);
     }
@@ -213,7 +214,7 @@ public class QuestionController(IQuestionService questionService) : BaseControll
     {
         var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-        var result = await questionService.RemoveQuestionVoteAsync(userId, questionId, cancellationToken);
+        var result = await questionVoteService.RemoveVoteAsync(userId, questionId, cancellationToken);
 
         return HandleBaseResult(result);
     }

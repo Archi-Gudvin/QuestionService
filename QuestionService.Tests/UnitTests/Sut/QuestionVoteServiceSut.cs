@@ -1,42 +1,41 @@
 using AutoMapper;
-using FluentValidation;
-using QuestionService.Application.Validators;
 using QuestionService.Domain.Dtos.ExternalEntity;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Producer;
 using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository;
 using QuestionService.Domain.Interfaces.Service;
-using QuestionService.Domain.Interfaces.Validation;
 using QuestionService.Tests.Mocks;
 using QuestionService.Tests.UnitTests.Fixtures;
 
 namespace QuestionService.Tests.UnitTests.Sut;
 
-internal class QuestionServiceSut
+internal class QuestionVoteServiceSut
 {
-    private readonly IQuestionService _questionService;
+    private readonly IQuestionVoteService _questionVoteService;
 
     public readonly IBaseEventProducer EventProducer =
         BaseEventProducerFixture.GetBaseEventProducerConfiguration();
 
     public readonly IMapper Mapper = MapperFixture.GetMapperConfiguration();
-    public readonly IBaseRepository<Tag> TagRepository = RepositoryMocks.GetMockTagRepository().Object;
 
     public readonly IUnitOfWork UnitOfWork = RepositoryMocks.GetMockUnitOfWork().Object;
     public readonly IEntityProvider<UserDto> UserProvider = EntityProviderMocks.GetMockUserProvider().Object;
 
-    public readonly IValidator<IValidatableQuestion> Validator =
-        ValidatorFixture<IValidatableQuestion>.GetValidator(new QuestionValidator());
+    public readonly IBaseRepository<VoteType> VoteTypeRepository =
+        RepositoryMocks.GetMockVoteTypeRepository().Object;
 
-    public QuestionServiceSut()
+    public QuestionVoteServiceSut(IBaseRepository<VoteType>? voteTypeRepository = null)
     {
-        _questionService = new Application.Services.QuestionService(UnitOfWork, TagRepository,
-            UserProvider, Mapper, EventProducer, Validator);
+        if (voteTypeRepository != null)
+            VoteTypeRepository = voteTypeRepository;
+
+        _questionVoteService = new Application.Services.QuestionVoteService(UnitOfWork, VoteTypeRepository,
+            UserProvider, Mapper, EventProducer);
     }
 
-    public IQuestionService GetService()
+    public IQuestionVoteService GetService()
     {
-        return _questionService;
+        return _questionVoteService;
     }
 }
