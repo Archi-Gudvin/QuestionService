@@ -1,8 +1,6 @@
 using AutoMapper;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using QuestionService.Application.Enum;
-using QuestionService.Application.Helpers;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.ExternalEntity;
 using QuestionService.Domain.Dtos.Question;
@@ -12,7 +10,6 @@ using QuestionService.Domain.Interfaces.Producer;
 using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository;
 using QuestionService.Domain.Interfaces.Service;
-using QuestionService.Domain.Interfaces.Validation;
 using QuestionService.Domain.Results;
 
 namespace QuestionService.Application.Services;
@@ -22,18 +19,12 @@ public class QuestionService(
     IBaseRepository<Tag> tagRepository,
     IEntityProvider<UserDto> userProvider,
     IMapper mapper,
-    IBaseEventProducer producer,
-    IValidator<IValidatableQuestion> questionValidator)
+    IBaseEventProducer producer)
     : IQuestionService
 {
     public async Task<BaseResult<QuestionDto>> AskQuestionAsync(long initiatorId, AskQuestionDto dto,
         CancellationToken cancellationToken = default)
     {
-        var validation = await questionValidator.ValidateWithMessageAsync(dto, cancellationToken);
-        if (!validation.IsValid)
-            return BaseResult<QuestionDto>.Failure(validation.ErrorMessage, (int)ErrorCodes.InvalidProperty);
-
-
         var user = await userProvider.GetByIdAsync(initiatorId, cancellationToken);
         if (user == null)
             return BaseResult<QuestionDto>.Failure(ErrorMessage.UserNotFound, (int)ErrorCodes.UserNotFound);
@@ -61,10 +52,6 @@ public class QuestionService(
     public async Task<BaseResult<QuestionDto>> EditQuestionAsync(long initiatorId, EditQuestionDto dto,
         CancellationToken cancellationToken = default)
     {
-        var validation = await questionValidator.ValidateWithMessageAsync(dto, cancellationToken);
-        if (!validation.IsValid)
-            return BaseResult<QuestionDto>.Failure(validation.ErrorMessage, (int)ErrorCodes.InvalidProperty);
-
         var initiator = await userProvider.GetByIdAsync(initiatorId, cancellationToken);
         if (initiator == null)
             return BaseResult<QuestionDto>.Failure(ErrorMessage.UserNotFound, (int)ErrorCodes.UserNotFound);

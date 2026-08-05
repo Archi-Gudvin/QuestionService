@@ -26,23 +26,6 @@ public class QuestionServiceTests
     }
 
     [Fact]
-    public async Task AskQuestionAsync_EmptyTags_ReturnsInvalidTags()
-    {
-        //Arrange
-        var questionService = new QuestionServiceSut().GetService();
-        const long initiatorId = 1;
-        var dto = new AskQuestionDto("NewQuestionTitle", "NewQuestionBodyNewQuestionBody", []);
-
-        //Act
-        var result = await questionService.AskQuestionAsync(initiatorId, dto);
-
-        //Assert
-        Assert.False(result.IsSuccess);
-        Assert.Equal(ErrorMessage.InvalidTags, result.ErrorMessage);
-        Assert.Null(result.Data);
-    }
-
-    [Fact]
     public async Task AskQuestionAsync_NonExistentInitiator_ReturnsUserNotFound()
     {
         //Arrange
@@ -90,23 +73,6 @@ public class QuestionServiceTests
         //Assert
         Assert.True(result.IsSuccess);
         Assert.NotNull(result.Data);
-    }
-
-    [Fact]
-    public async Task EditQuestionAsync_EmptyTitle_ReturnsInvalidTitle()
-    {
-        //Arrange
-        var questionService = new QuestionServiceSut().GetService();
-        const long initiatorId = 1;
-        var dto = new EditQuestionDto(1, string.Empty, "NewQuestionBodyNewQuestionBody", [".NET", "Java"]);
-
-        //Act
-        var result = await questionService.EditQuestionAsync(initiatorId, dto);
-
-        //Assert
-        Assert.False(result.IsSuccess);
-        Assert.Equal(ErrorMessage.InvalidTitle, result.ErrorMessage);
-        Assert.Null(result.Data);
     }
 
     [Fact]
