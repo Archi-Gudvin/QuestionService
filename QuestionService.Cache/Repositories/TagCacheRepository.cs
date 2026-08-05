@@ -4,7 +4,6 @@ using QuestionService.Cache.Interfaces;
 using QuestionService.Cache.Repositories.Base;
 using QuestionService.Cache.Settings;
 using QuestionService.Domain.Entities;
-using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 
 namespace QuestionService.Cache.Repositories;

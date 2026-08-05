@@ -1,11 +1,11 @@
 using System.Net;
 using QuestionService.Application.Resources;
 using QuestionService.Cache.Helpers;
+using QuestionService.Cache.Interfaces;
 using QuestionService.Domain.Dtos.View;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Extensions;
 using QuestionService.Domain.Helpers;
-using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 
 namespace QuestionService.Cache.Repositories;

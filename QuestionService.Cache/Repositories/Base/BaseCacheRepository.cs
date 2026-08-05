@@ -1,5 +1,4 @@
 using QuestionService.Cache.Interfaces;
-using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 
 namespace QuestionService.Cache.Repositories.Base;

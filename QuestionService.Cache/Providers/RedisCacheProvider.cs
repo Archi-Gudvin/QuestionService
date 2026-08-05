@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using QuestionService.Domain.Interfaces.Provider;
+using QuestionService.Cache.Interfaces;
 using StackExchange.Redis;
 
 namespace QuestionService.Cache.Providers;
