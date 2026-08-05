@@ -1,4 +1,4 @@
-using QuestionService.Application.Enum;
+using QuestionService.Application.Enums;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.Vote;
 using QuestionService.Domain.Entities;

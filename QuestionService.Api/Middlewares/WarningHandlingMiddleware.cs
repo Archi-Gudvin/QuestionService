@@ -1,6 +1,6 @@
 using System.Globalization;
 using Newtonsoft.Json;
-using QuestionService.Application.Enum;
+using QuestionService.Application.Enums;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Results;
 using ILogger = Serilog.ILogger;

@@ -1,7 +1,7 @@
 using FluentValidation;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using QuestionService.Application.Enum;
+using QuestionService.Application.Enums;
 using QuestionService.Application.Helpers;
 using QuestionService.Domain.Comparers;
 using QuestionService.Domain.Dtos.ExternalEntity;

@@ -1,5 +1,5 @@
 using FluentValidation;
-using QuestionService.Application.Enum;
+using QuestionService.Application.Enums;
 using QuestionService.Application.Helpers;
 using QuestionService.Domain.Dtos.Question;
 using QuestionService.Domain.Interfaces.Service;
