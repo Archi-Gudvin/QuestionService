@@ -2,14 +2,15 @@ using Microsoft.Extensions.DependencyInjection;
 using QuestionService.GraphQl.DataLoaders;
 using QuestionService.Tests.FunctionalTests.Base;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests.GraphQl.DataLoaders;
 
+[FunctionalTest]
 public class TagDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Success()
+    public async Task Load_ExistingTagId_ReturnsTag()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -23,9 +24,8 @@ public class TagDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunct
         Assert.NotNull(result);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Null()
+    public async Task Load_NonExistentTagId_ReturnsNull()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

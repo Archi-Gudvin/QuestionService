@@ -3,14 +3,15 @@ using Microsoft.Extensions.DependencyInjection;
 using QuestionService.GraphQl.DataLoaders;
 using QuestionService.Tests.FunctionalTests.Base;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests.GraphQl.DataLoaders;
 
+[FunctionalTest]
 public class GroupTagDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_Success()
+    public async Task LoadRequiredAsync_ExistingQuestionId_ReturnsGroupedTags()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -24,9 +25,8 @@ public class GroupTagDataLoaderTests(FunctionalTestWebAppFactory factory) : Base
         Assert.Single(result); // Question with id 1 has 1 tag
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task Load_ShouldBe_NoTags()
+    public async Task LoadRequiredAsync_NonExistentQuestionId_ReturnsEmptyResult()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

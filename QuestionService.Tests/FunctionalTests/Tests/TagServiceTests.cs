@@ -7,12 +7,14 @@ using QuestionService.Domain.Dtos.ExternalEntity;
 using QuestionService.Domain.Dtos.Tag;
 using QuestionService.Domain.Results;
 using QuestionService.Tests.FunctionalTests.Base;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
 [Collection(nameof(TagServiceTests))]
+[FunctionalTest]
 public class TagServiceTests : SequentialFunctionalTest
 {
     public TagServiceTests(FunctionalTestWebAppFactory factory) : base(factory)
@@ -25,9 +27,8 @@ public class TagServiceTests : SequentialFunctionalTest
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task CreateTag_ShouldBe_Created()
+    public async Task CreateTag_ValidTag_ReturnsCreated()
     {
         //Arrange
         var dto = new CreateTagDto("NewTag", "NewTagDescription");
@@ -43,9 +44,8 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task CreateTag_ShouldBe_BadRequest()
+    public async Task CreateTag_TagNameTooLong_ReturnsBadRequest()
     {
         //Arrange
         var dto = new CreateTagDto("TooLongTagNameTooLongTagNameTooLongTagName", "NewTagDescription");
@@ -62,9 +62,8 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task UpdateTag_ShouldBe_Ok()
+    public async Task UpdateTag_ExistingTag_ReturnsOk()
     {
         //Arrange
         var dto = new TagDto(1, "NewTag", "NewTagDescription");
@@ -80,9 +79,8 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task UpdateTag_ShouldBe_NotFound()
+    public async Task UpdateTag_NonExistentTag_ReturnsNotFound()
     {
         //Arrange
         var dto = new TagDto(0, "NewTag", "NewTagDescription");
@@ -99,9 +97,8 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task DeleteTag_ShouldBe_Ok()
+    public async Task DeleteTag_ExistingTag_ReturnsOk()
     {
         //Arrange
         const long tagId = 3;
@@ -117,9 +114,8 @@ public class TagServiceTests : SequentialFunctionalTest
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task DeleteTag_ShouldBe_NotFound()
+    public async Task DeleteTag_NonExistentTag_ReturnsNotFound()
     {
         //Arrange
         const long tagId = 0;

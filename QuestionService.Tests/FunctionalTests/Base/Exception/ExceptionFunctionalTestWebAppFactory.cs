@@ -8,7 +8,7 @@ using QuestionService.Domain.Interfaces.Database;
 using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository;
 using QuestionService.Outbox.Interfaces.TopicProducer;
-using QuestionService.Tests.Configurations;
+using QuestionService.Tests.Support;
 
 namespace QuestionService.Tests.FunctionalTests.Base.Exception;
 

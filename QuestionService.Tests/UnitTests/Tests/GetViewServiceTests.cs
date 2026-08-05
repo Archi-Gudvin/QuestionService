@@ -1,17 +1,18 @@
 using QuestionService.Application.Resources;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class GetViewServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetAll_ShouldBe_Success()
+    public async Task GetAllAsync_ExistingViews_ReturnsSuccess()
     {
         //Arrange
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetAllAsync();
@@ -21,13 +22,12 @@ public class GetViewServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_Success()
+    public async Task GetByIdsAsync_ExistingIds_ReturnsSuccess()
     {
         //Arrange
         var viewIds = new List<long> { 1, 2, 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetByIdsAsync(viewIds);
@@ -37,13 +37,12 @@ public class GetViewServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_ViewNotFound()
+    public async Task GetByIdsAsync_SingleNonExistentId_ReturnsViewNotFound()
     {
         //Arrange
         var viewIds = new List<long> { 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetByIdsAsync(viewIds);
@@ -54,13 +53,12 @@ public class GetViewServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_ViewsNotFound()
+    public async Task GetByIdsAsync_MultipleNonExistentIds_ReturnsViewsNotFound()
     {
         //Arrange
         var viewIds = new List<long> { 0, 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetByIdsAsync(viewIds);
@@ -71,13 +69,12 @@ public class GetViewServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetUsersViews_ShouldBe_Success()
+    public async Task GetUsersViewsAsync_ExistingUserIds_ReturnsSuccess()
     {
         //Arrange
         var userIds = new List<long> { 1, 2, 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetUsersViewsAsync(userIds);
@@ -87,13 +84,12 @@ public class GetViewServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetUsersViews_ShouldBe_ViewsNotFound()
+    public async Task GetUsersViewsAsync_NonExistentUserId_ReturnsViewsNotFound()
     {
         //Arrange
         var userIds = new List<long> { 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetUsersViewsAsync(userIds);
@@ -104,13 +100,12 @@ public class GetViewServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsViews_ShouldBe_Success()
+    public async Task GetQuestionsViewsAsync_ExistingQuestionIds_ReturnsSuccess()
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetQuestionsViewsAsync(questionIds);
@@ -120,13 +115,12 @@ public class GetViewServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsViews_ShouldBe_ViewsNotFound()
+    public async Task GetQuestionsViewsAsync_NonExistentQuestionId_ReturnsViewsNotFound()
     {
         //Arrange
         var questionIds = new List<long> { 0 };
-        var getViewService = new CacheGetViewServiceFactory().GetService();
+        var getViewService = new CacheGetViewServiceSut().GetService();
 
         //Act
         var result = await getViewService.GetQuestionsViewsAsync(questionIds);

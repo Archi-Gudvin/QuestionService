@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using QuestionService.DAL;
 using QuestionService.Domain.Entities;
-using QuestionService.Tests.Configurations;
+using QuestionService.Tests.TestData;
 
 namespace QuestionService.Tests.FunctionalTests.Configurations;
 
@@ -11,7 +11,7 @@ internal static class PrepDb
 {
     public static void PrepPopulation(this IServiceScope serviceScope)
     {
-        var questions = MockRepositoriesGetters.GetQuestions()
+        var questions = QuestionMother.GetQuestions()
             // Real question always has at least 1 tag
             .Where(x => x.Tags.Count >= 1)
             .Select(x => new Question
@@ -24,11 +24,11 @@ internal static class PrepDb
                 Enabled = x.Enabled
             });
 
-        var tags = MockRepositoriesGetters.GetTags();
-        var questionTags = MockRepositoriesGetters.GetQuestionTags();
-        var votes = MockRepositoriesGetters.GetVotes();
-        var voteTypes = MockRepositoriesGetters.GetVoteTypes();
-        var views = MockRepositoriesGetters.GetViews();
+        var tags = TagMother.GetTags();
+        var questionTags = TagMother.GetQuestionTags();
+        var votes = VoteMother.GetVotes();
+        var voteTypes = VoteTypeMother.GetVoteTypes();
+        var views = ViewMother.GetViews();
 
         views.ForEach(x => x.Id = 0);
         tags.ForEach(x => x.Id = 0);

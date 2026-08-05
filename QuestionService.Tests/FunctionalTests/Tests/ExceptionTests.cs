@@ -9,11 +9,13 @@ using QuestionService.Domain.Dtos.Question;
 using QuestionService.Domain.Results;
 using QuestionService.Tests.FunctionalTests.Base.Exception;
 using QuestionService.Tests.FunctionalTests.Configurations.GraphQl.Responses;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class ExceptionTests : ExceptionFunctionalTest
 {
     public ExceptionTests(ExceptionFunctionalTestWebAppFactory factory) : base(factory)
@@ -25,9 +27,8 @@ public class ExceptionTests : ExceptionFunctionalTest
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task AskQuestion_ShouldBe_InternalServerError()
+    public async Task AskQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         var dto = new AskQuestionDto("NewQuestion", "NewQuestionNewQuestionNewQuestion", [".NET"]);
@@ -44,9 +45,8 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task EditQuestion_ShouldBe_InternalServerError()
+    public async Task EditQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 1;
@@ -64,9 +64,8 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task DeleteQuestion_ShouldBe_InternalServerError()
+    public async Task DeleteQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 1;
@@ -83,9 +82,8 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task DownvoteQuestion_ShouldBe_InternalServerError()
+    public async Task DownvoteQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 2;
@@ -102,9 +100,8 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task UpvoteQuestion_ShouldBe_InternalServerError()
+    public async Task UpvoteQuestion_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 3;
@@ -121,9 +118,8 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task RemoveQuestionVote_ShouldBe_InternalServerError()
+    public async Task RemoveQuestionVote_TransactionCommitFailure_ReturnsInternalServerError()
     {
         //Arrange
         const long questionId = 2;
@@ -140,9 +136,8 @@ public class ExceptionTests : ExceptionFunctionalTest
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Ok()
+    public async Task GetQuestionById_CacheReadFailure_ReturnsOk()
     {
         //Arrange
         var requestBody = new { query = GraphQlHelper.RequestQuestionByIdQuery(2) };

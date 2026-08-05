@@ -4,11 +4,13 @@ using Newtonsoft.Json;
 using QuestionService.Domain.Dtos.ExternalEntity;
 using QuestionService.Domain.Results;
 using QuestionService.Tests.FunctionalTests.Base;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class ViewServiceTests : BaseFunctionalTest
 {
     public ViewServiceTests(FunctionalTestWebAppFactory factory) : base(factory)
@@ -20,9 +22,8 @@ public class ViewServiceTests : BaseFunctionalTest
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_NoContent()
+    public async Task IncrementViews_ValidRequest_ReturnsNoContent()
     {
         //Arrange
         const long questionId = 1;
@@ -38,9 +39,8 @@ public class ViewServiceTests : BaseFunctionalTest
         Assert.True(string.IsNullOrEmpty(body));
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_BadRequest_When_IpIsNull()
+    public async Task IncrementViews_MissingIpHeader_ReturnsBadRequest()
     {
         //Arrange
         const long questionId = 1;
@@ -55,9 +55,8 @@ public class ViewServiceTests : BaseFunctionalTest
         Assert.Equal("IP Address is not provided", body);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_BadRequest_When_FingerprintIsNull()
+    public async Task IncrementViews_MissingFingerprintHeader_ReturnsBadRequest()
     {
         //Arrange
         const long questionId = 1;
@@ -72,9 +71,8 @@ public class ViewServiceTests : BaseFunctionalTest
         Assert.Equal("Fingerprint is not provided", body);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_BadRequest()
+    public async Task IncrementViews_FingerprintTooLong_ReturnsBadRequest()
     {
         //Arrange
         const long questionId = 1;

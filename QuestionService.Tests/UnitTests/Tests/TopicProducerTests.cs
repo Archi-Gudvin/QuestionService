@@ -1,14 +1,15 @@
 using QuestionService.Outbox.Events;
 using QuestionService.Outbox.TopicProducers;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class TopicProducerTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task Produce_ShouldBe_ArgumentException()
+    public async Task ProduceAsync_NonBaseEventArgument_ThrowsArgumentException()
     {
         //Arrange
         var producer = new TopicProducer<BaseEvent>(null); //passing null for exception

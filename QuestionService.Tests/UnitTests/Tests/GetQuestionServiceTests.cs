@@ -1,17 +1,18 @@
 using QuestionService.Application.Resources;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class GetQuestionServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetAll_ShouldBe_Success()
+    public async Task GetAllAsync_ExistingQuestions_ReturnsSuccess()
     {
         //Arrange
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetAllAsync();
@@ -22,13 +23,12 @@ public class GetQuestionServiceTests
     }
 
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_Success()
+    public async Task GetByIdsAsync_ExistingIds_ReturnsSuccess()
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetByIdsAsync(questionIds);
@@ -38,13 +38,12 @@ public class GetQuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_QuestionNotFound()
+    public async Task GetByIdsAsync_SingleNonExistentId_ReturnsQuestionNotFound()
     {
         //Arrange
         var questionIds = new List<long> { 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetByIdsAsync(questionIds);
@@ -55,13 +54,12 @@ public class GetQuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_QuestionsNotFound()
+    public async Task GetByIdsAsync_MultipleNonExistentIds_ReturnsQuestionsNotFound()
     {
         //Arrange
         var questionIds = new List<long> { 0, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetByIdsAsync(questionIds);
@@ -72,13 +70,12 @@ public class GetQuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsWithTags_ShouldBe_Success()
+    public async Task GetQuestionsWithTagsAsync_ExistingTagIds_ReturnsSuccess()
     {
         //Arrange
         var tagIds = new List<long> { 1, 2, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetQuestionsWithTagsAsync(tagIds);
@@ -88,13 +85,12 @@ public class GetQuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsWithTags_ShouldBe_QuestionsNotFound()
+    public async Task GetQuestionsWithTagsAsync_NonExistentTagIds_ReturnsQuestionsNotFound()
     {
         //Arrange
         var tagIds = new List<long> { 0, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetQuestionsWithTagsAsync(tagIds);
@@ -105,13 +101,12 @@ public class GetQuestionServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetUsersQuestions_ShouldBe_Success()
+    public async Task GetUsersQuestionsAsync_ExistingUserIds_ReturnsSuccess()
     {
         //Arrange
         var userIds = new List<long> { 1, 2, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetUsersQuestionsAsync(userIds);
@@ -121,13 +116,12 @@ public class GetQuestionServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetUsersQuestions_ShouldBe_QuestionsNotFound()
+    public async Task GetUsersQuestionsAsync_NonExistentUserIds_ReturnsQuestionsNotFound()
     {
         //Arrange
         var userIds = new List<long> { 0, 0 };
-        var getQuestionService = new CacheGetQuestionServiceFactory().GetService();
+        var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
         var result = await getQuestionService.GetUsersQuestionsAsync(userIds);

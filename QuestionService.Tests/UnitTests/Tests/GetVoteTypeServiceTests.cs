@@ -1,17 +1,18 @@
 using QuestionService.Application.Resources;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class GetVoteTypeServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetAll_ShouldBe_Success()
+    public async Task GetAllAsync_ExistingVoteTypes_ReturnsSuccess()
     {
         //Arrange
-        var getVoteTypeService = new CacheGetVoteTypeServiceFactory().GetService();
+        var getVoteTypeService = new CacheGetVoteTypeServiceSut().GetService();
 
         //Act
         var result = await getVoteTypeService.GetAllAsync();
@@ -21,13 +22,12 @@ public class GetVoteTypeServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_Success()
+    public async Task GetByIdsAsync_ExistingIds_ReturnsSuccess()
     {
         // Arrange
         var ids = new List<long> { 1, 2, 0 };
-        var getVoteTypeService = new CacheGetVoteTypeServiceFactory().GetService();
+        var getVoteTypeService = new CacheGetVoteTypeServiceSut().GetService();
 
         // Act
         var result = await getVoteTypeService.GetByIdsAsync(ids);
@@ -37,13 +37,12 @@ public class GetVoteTypeServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_VoteTypeNotFound()
+    public async Task GetByIdsAsync_SingleNonExistentId_ReturnsVoteTypeNotFound()
     {
         // Arrange
         var ids = new List<long> { 0 };
-        var getVoteTypeService = new CacheGetVoteTypeServiceFactory().GetService();
+        var getVoteTypeService = new CacheGetVoteTypeServiceSut().GetService();
 
         // Act
         var result = await getVoteTypeService.GetByIdsAsync(ids);
@@ -54,13 +53,12 @@ public class GetVoteTypeServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_VoteTypesNotFound()
+    public async Task GetByIdsAsync_MultipleNonExistentIds_ReturnsVoteTypesNotFound()
     {
         // Arrange
         var ids = new List<long> { 0, 0 };
-        var getVoteTypeService = new CacheGetVoteTypeServiceFactory().GetService();
+        var getVoteTypeService = new CacheGetVoteTypeServiceSut().GetService();
 
         // Act
         var result = await getVoteTypeService.GetByIdsAsync(ids);

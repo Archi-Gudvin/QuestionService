@@ -1,17 +1,18 @@
 using QuestionService.Application.Resources;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class GetTagServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetAll_ShouldBe_Success()
+    public async Task GetAllAsync_ExistingTags_ReturnsSuccess()
     {
         //Arrange
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetAllAsync();
@@ -21,13 +22,12 @@ public class GetTagServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByNames_ShouldBe_Success()
+    public async Task GetByIdsAsync_ExistingIds_ReturnsSuccess()
     {
         //Arrange
         var tagIds = new List<long> { 1, 2, 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetByIdsAsync(tagIds);
@@ -37,13 +37,12 @@ public class GetTagServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_TagNotFound()
+    public async Task GetByIdsAsync_SingleNonExistentId_ReturnsTagNotFound()
     {
         //Arrange
         var tagIds = new List<long> { 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetByIdsAsync(tagIds);
@@ -54,13 +53,12 @@ public class GetTagServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetByIds_ShouldBe_TagsNotFound()
+    public async Task GetByIdsAsync_MultipleNonExistentIds_ReturnsTagsNotFound()
     {
         //Arrange
         var tagIds = new List<long> { 0, 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetByIdsAsync(tagIds);
@@ -71,13 +69,12 @@ public class GetTagServiceTests
         Assert.Null(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsTags_ShouldBe_Success()
+    public async Task GetQuestionsTagsAsync_ExistingQuestionIds_ReturnsSuccess()
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetQuestionsTagsAsync(questionIds);
@@ -87,13 +84,12 @@ public class GetTagServiceTests
         Assert.NotNull(result.Data);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task GetQuestionsTags_ShouldBe_TagsNotFound()
+    public async Task GetQuestionsTagsAsync_NonExistentQuestionIds_ReturnsTagsNotFound()
     {
         //Arrange
         var questionIds = new List<long> { 0 };
-        var getTagService = new CacheGetTagServiceFactory().GetService();
+        var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
         var result = await getTagService.GetQuestionsTagsAsync(questionIds);

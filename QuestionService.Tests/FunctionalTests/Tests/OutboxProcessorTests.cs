@@ -8,14 +8,15 @@ using QuestionService.Outbox.Interfaces.Service;
 using QuestionService.Tests.FunctionalTests.Base.Exception;
 using Xunit;
 using OutboxMessage = QuestionService.Outbox.Messages.OutboxMessage;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class OutboxProcessorTests(ExceptionFunctionalTestWebAppFactory factory) : ExceptionFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task ProcessOutboxMessages_ShouldBe_Ok()
+    public async Task ProcessOutboxMessages_EventTypeWithoutRegisteredProducer_ReturnsFailedMessages()
     {
         //Arrange
         const long userId = 1;
@@ -40,9 +41,8 @@ public class OutboxProcessorTests(ExceptionFunctionalTestWebAppFactory factory) 
         Assert.True(unprocessedMessages.All(x => x.ErrorMessage != null));
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task ProcessOutboxMessages_ShouldBe_Ok_With_LastRetry()
+    public async Task ProcessOutboxMessages_MaxRetriesReached_ReturnsDeadStatus()
     {
         // Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
