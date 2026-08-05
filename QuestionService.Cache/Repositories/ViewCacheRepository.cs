@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using Serilog;
 using QuestionService.Cache.Helpers;
 using QuestionService.Cache.Interfaces;
 using QuestionService.Cache.Repositories.Base;
@@ -12,14 +13,16 @@ public class ViewCacheRepository : IViewCacheRepository
 {
     private readonly IBaseCacheRepository<View, long> _repository;
 
-    public ViewCacheRepository(ICacheProvider cacheProvider, IOptions<RedisSettings> redisSettings)
+    public ViewCacheRepository(ICacheProvider cacheProvider, IOptions<RedisSettings> redisSettings,
+        ILogger logger)
     {
         var settings = redisSettings.Value;
         _repository = new BaseCacheRepository<View, long>(
             cacheProvider,
             new CacheViewMapping(),
             settings.TimeToLiveInSeconds,
-            settings.NullTimeToLiveInSeconds
+            settings.NullTimeToLiveInSeconds,
+            logger
         );
     }
 

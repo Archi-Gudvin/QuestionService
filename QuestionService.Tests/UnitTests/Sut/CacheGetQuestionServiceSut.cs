@@ -1,9 +1,10 @@
 using Microsoft.Extensions.Options;
+using Moq;
+using Serilog;
 using QuestionService.Application.Services;
 using QuestionService.Application.Services.Cache;
 using QuestionService.Cache.Providers;
 using QuestionService.Cache.Repositories;
-using QuestionService.Cache.Settings;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 using QuestionService.Domain.Interfaces.Service;
 using QuestionService.Tests.UnitTests.Fixtures;
@@ -20,9 +21,8 @@ internal class CacheGetQuestionServiceSut
     public readonly IQuestionCacheRepository QuestionCacheRepository =
         new QuestionCacheRepository(
             new RedisCacheProvider(RedisDatabaseFixture.GetRedisDatabaseConfiguration()),
-            Options.Create(RedisSettingsFixture.GetRedisSettingsConfiguration()));
-
-    public readonly RedisSettings RedisSettings = RedisSettingsFixture.GetRedisSettingsConfiguration();
+            Options.Create(RedisSettingsFixture.GetRedisSettingsConfiguration()),
+            new Mock<ILogger>().Object);
 
     public CacheGetQuestionServiceSut()
     {
