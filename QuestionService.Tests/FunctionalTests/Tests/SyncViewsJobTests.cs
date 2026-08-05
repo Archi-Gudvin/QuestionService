@@ -5,17 +5,18 @@ using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository;
 using QuestionService.Tests.FunctionalTests.Base;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
 [Collection(nameof(SyncViewsJobTests))]
+[FunctionalTest]
 public class SyncViewsJobTests(FunctionalTestWebAppFactory factory) : SequentialFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task RunReputationResetJob_ShouldBe_Ok()
+    public async Task RunAsync_PendingViewsInCache_ReturnsSuccess()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -33,9 +34,8 @@ public class SyncViewsJobTests(FunctionalTestWebAppFactory factory) : Sequential
         Assert.Equal(11, count); // Total 11 views including new ones (consider views of the disabled questions)
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task RunReputationResetJob_ShouldBe_NoSyncedViews()
+    public async Task RunAsync_InvalidCachedViews_ReturnsNoSyncedViews()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();

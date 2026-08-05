@@ -7,14 +7,15 @@ using QuestionService.Outbox.Interfaces.Service;
 using QuestionService.Outbox.Messages;
 using QuestionService.Tests.FunctionalTests.Base;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class OutboxBackgroundServiceTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task ExecuteBackgroundJob_ShouldBe_Ok()
+    public async Task ExecuteBackgroundJob_PendingOutboxMessage_ProcessesMessage()
     {
         //Arrange
         const long userId = 1;

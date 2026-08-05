@@ -1,18 +1,18 @@
-using QuestionService.Tests.FunctionalTests.Configurations.TestServices;
-using QuestionService.Tests.UnitTests.Configurations;
+using QuestionService.Tests.UnitTests.Fixtures;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class OutboxBackgroundServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task ExecuteBackgroundJob_ShouldBe_NoException()
+    public async Task ExecuteAsync_NullException_DoesNotThrow()
     {
         //Arrange
         var outboxService =
-            new TestableOutboxBackgroundService(LoggerConfiguration.GetLogger(), null!); // passing null for exception
+            new TestableOutboxBackgroundService(LoggerFixture.GetLogger(), null!); // passing null for exception
 
         //Act
         await outboxService.ExecuteAsync();

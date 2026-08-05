@@ -6,21 +6,22 @@ using QuestionService.Application.Services;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Configurations.GraphQl.Responses;
-using QuestionService.Tests.FunctionalTests.Helper;
+using QuestionService.Tests.FunctionalTests.Helpers;
 using StackExchange.Redis;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
     // Only functional tests are provided for cache services' success scenarios.
     // This is because cache data mirrors the database, and manually copying test DB data into multiple cache keys/values is impractical and confusing.
     // In functional tests, data is automatically copied from the DB to the cache as needed, following all key/value rules.
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Ok()
+    public async Task GetQuestionById_CacheHit_ReturnsQuestionWithTags()
     {
         //Arrange
         var requestBody = new { query = GraphQlHelper.RequestQuestionByIdQuery(2) };
@@ -39,9 +40,8 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
         Assert.NotNull(result.Data.Question.Tags);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Null()
+    public async Task GetQuestionById_NonExistentIdCacheHit_ReturnsNull()
     {
         //Arrange
         var requestBody = new { query = GraphQlHelper.RequestQuestionByIdQuery(0) };
@@ -59,9 +59,8 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
         Assert.Null(result!.Data.Question);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Ok_With_WrongEntryInCache()
+    public async Task GetQuestionById_CorruptedCacheEntry_ReturnsQuestionWithTags()
     {
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
@@ -84,9 +83,8 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
         Assert.NotNull(result.Data.Question.Tags);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetGroupedById_ShouldBe_Null()
+    public async Task GetQuestionsTagsAsync_NonExistentQuestionId_ReturnsEmptyCollection()
     {
         //Arrange
         const long questionId = 0;

@@ -3,14 +3,15 @@ using Grpc.Net.Client;
 using QuestionService.Application.Resources;
 using QuestionService.Tests.FunctionalTests.Base;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
+[FunctionalTest]
 public class GrpcTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest(factory)
 {
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_Ok()
+    public async Task GetQuestionById_ExistingQuestionId_ReturnsQuestion()
     {
         //Arrange
         const long questionId = 1;
@@ -25,9 +26,8 @@ public class GrpcTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest
         Assert.NotNull(question);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionById_ShouldBe_QuestionNotFound()
+    public async Task GetQuestionById_NonExistentQuestionId_ThrowsRpcException()
     {
         //Arrange
         const long questionId = 0;
@@ -44,9 +44,8 @@ public class GrpcTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest
         Assert.Equal(ErrorMessage.QuestionNotFound, exception.Status.Detail);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionsById_ShouldBe_Ok()
+    public async Task GetQuestionsById_MixOfExistingAndNonExistentIds_ReturnsExistingQuestions()
     {
         //Arrange
         var questionIds = new List<long> { 1, 2, 0 };
@@ -65,9 +64,8 @@ public class GrpcTests(FunctionalTestWebAppFactory factory) : BaseFunctionalTest
         Assert.Equal(2, response.Questions.Count);
     }
 
-    [Trait("Category", "Functional")]
     [Fact]
-    public async Task GetQuestionsById_ShouldBe_QuestionsNotFound()
+    public async Task GetQuestionsById_AllNonExistentIds_ThrowsRpcException()
     {
         //Arrange
         var questionIds = new List<long> { 0, -1 };

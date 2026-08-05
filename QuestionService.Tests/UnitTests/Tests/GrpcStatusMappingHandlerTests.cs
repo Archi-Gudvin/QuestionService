@@ -1,14 +1,15 @@
 using System.Net;
-using QuestionService.Tests.UnitTests.Configurations;
+using QuestionService.Tests.UnitTests.Fixtures;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class GrpcStatusMappingHandlerTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task Send_ShouldBe_Ok()
+    public async Task SendAsync_GrpcStatusOk_ReturnsOk()
     {
         //Arrange
         var handler = new TestableGrpcStatusMappingHandler();
@@ -21,9 +22,8 @@ public class GrpcStatusMappingHandlerTests
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task Send_ShouldBe_BadRequest()
+    public async Task SendAsync_GrpcStatusInvalidArgument_ReturnsBadRequest()
     {
         //Arrange
         var handler = new TestableGrpcStatusMappingHandler("3");

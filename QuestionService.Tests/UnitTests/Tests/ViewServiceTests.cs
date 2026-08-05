@@ -1,20 +1,21 @@
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.View;
-using QuestionService.Tests.UnitTests.Configurations;
-using QuestionService.Tests.UnitTests.Factories;
+using QuestionService.Tests.UnitTests.Fixtures;
+using QuestionService.Tests.UnitTests.Sut;
 using Xunit;
+using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.UnitTests.Tests;
 
+[UnitTest]
 public class ViewServiceTests
 {
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_Success()
+    public async Task IncrementViewsAsync_ValidIpAddress_ReturnsSuccess()
     {
         //Arrange
         var dto = new IncrementViewsDto(1, null, "0.0.0.0", "someFingerprint");
-        var viewService = new ViewServiceFactory().GetService();
+        var viewService = new ViewServiceSut().GetService();
 
         //Act
         var result = await viewService.IncrementViewsAsync(dto);
@@ -23,13 +24,12 @@ public class ViewServiceTests
         Assert.True(result.IsSuccess);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task IncrementViews_ShouldBe_InvalidDataFormat()
+    public async Task IncrementViewsAsync_InvalidIpAddress_ReturnsInvalidDataFormat()
     {
         //Arrange
         var dto = new IncrementViewsDto(1, null, "WrongIp", "someFingerprint");
-        var viewService = new ViewServiceFactory().GetService();
+        var viewService = new ViewServiceSut().GetService();
 
         //Act
         var result = await viewService.IncrementViewsAsync(dto);
@@ -39,12 +39,11 @@ public class ViewServiceTests
         Assert.Equal(ErrorMessage.InvalidDataFormat, result.ErrorMessage);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_Success()
+    public async Task SyncViewsToDatabaseAsync_ExistingViews_ReturnsSuccess()
     {
         //Arrange
-        var viewService = new ViewServiceFactory().GetDatabaseService();
+        var viewService = new ViewServiceSut().GetDatabaseService();
 
         //Act
         var result = await viewService.SyncViewsToDatabaseAsync();
@@ -54,12 +53,11 @@ public class ViewServiceTests
         Assert.Equal(7, result.Data.SyncedViewsCount); // There are 7 new views in total
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_NoSyncedViews()
+    public async Task SyncViewsToDatabaseAsync_EmptySetValues_ReturnsNoSyncedViews()
     {
         //Arrange
-        var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetEmptySetValuesDatabaseConfiguration())
+        var viewService = new ViewServiceSut(RedisDatabaseFixture.GetEmptySetValuesDatabaseConfiguration())
             .GetDatabaseService();
 
         //Act
@@ -70,12 +68,11 @@ public class ViewServiceTests
         Assert.Equal(0, result.Data.SyncedViewsCount);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_NoSyncedViews_When_KeysInvalid()
+    public async Task SyncViewsToDatabaseAsync_InvalidSetKeys_ReturnsNoSyncedViews()
     {
         //Arrange
-        var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetInvalidSetKeysDatabaseConfiguration())
+        var viewService = new ViewServiceSut(RedisDatabaseFixture.GetInvalidSetKeysDatabaseConfiguration())
             .GetDatabaseService();
 
         //Act
@@ -86,12 +83,11 @@ public class ViewServiceTests
         Assert.Equal(0, result.Data.SyncedViewsCount);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_NoSyncedViews_When_ValuesInvalid()
+    public async Task SyncViewsToDatabaseAsync_InvalidSetValues_ReturnsNoSyncedViews()
     {
         //Arrange
-        var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetInvalidSetValuesDatabaseConfiguration())
+        var viewService = new ViewServiceSut(RedisDatabaseFixture.GetInvalidSetValuesDatabaseConfiguration())
             .GetDatabaseService();
 
         //Act
@@ -102,12 +98,11 @@ public class ViewServiceTests
         Assert.Equal(0, result.Data.SyncedViewsCount);
     }
 
-    [Trait("Category", "Unit")]
     [Fact]
-    public async Task SyncViewsToDatabase_ShouldBe_SpamFiltered()
+    public async Task SyncViewsToDatabaseAsync_SpamViews_ReturnsFilteredSyncedViews()
     {
         //Arrange
-        var viewService = new ViewServiceFactory(RedisDatabaseConfiguration.GetSpamDatabaseConfiguration())
+        var viewService = new ViewServiceSut(RedisDatabaseFixture.GetSpamDatabaseConfiguration())
             .GetDatabaseService();
 
         //Act
