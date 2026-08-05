@@ -44,24 +44,16 @@ public class QuestionService(
         if (tags.Count != dto.TagNames.Count())
             return BaseResult<QuestionDto>.Failure(ErrorMessage.TagsNotFound, (int)ErrorCodes.TagsNotFound);
 
-        Question question;
         await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            question = mapper.Map<Question>(dto);
-            question.UserId = initiatorId;
-            question.Tags = tags;
 
-            await unitOfWork.Questions.CreateAsync(question, cancellationToken);
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+        var question = mapper.Map<Question>(dto);
+        question.UserId = initiatorId;
+        question.Tags = tags;
 
-            await transaction.CommitAsync(cancellationToken);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackAsync(CancellationToken.None);
-            throw;
-        }
+        await unitOfWork.Questions.CreateAsync(question, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await transaction.CommitAsync(cancellationToken);
 
         var questionDto = mapper.Map<QuestionDto>(question);
         return BaseResult<QuestionDto>.Success(questionDto);
@@ -93,21 +85,14 @@ public class QuestionService(
             return BaseResult<QuestionDto>.Failure(ErrorMessage.TagsNotFound, (int)ErrorCodes.TagsNotFound);
 
         await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            mapper.Map(dto, question);
-            question.Tags = tags;
 
-            unitOfWork.Questions.Update(question);
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+        mapper.Map(dto, question);
+        question.Tags = tags;
 
-            await transaction.CommitAsync(cancellationToken);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackAsync(CancellationToken.None);
-            throw;
-        }
+        unitOfWork.Questions.Update(question);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await transaction.CommitAsync(cancellationToken);
 
         return BaseResult<QuestionDto>.Success(mapper.Map<QuestionDto>(question));
     }
@@ -128,23 +113,15 @@ public class QuestionService(
             return BaseResult<QuestionDto>.Failure(ErrorMessage.OperationForbidden, (int)ErrorCodes.OperationForbidden);
 
         await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            question.Enabled = false;
-            unitOfWork.Questions.Update(question);
-            await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            await producer.ProduceAsync(question.UserId, initiator.Id, question.Id, BaseEventType.EntityDeleted,
-                cancellationToken);
+        question.Enabled = false;
+        unitOfWork.Questions.Update(question);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            await transaction.CommitAsync(cancellationToken);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackAsync(CancellationToken.None);
-            throw;
-        }
+        await producer.ProduceAsync(question.UserId, initiator.Id, question.Id, BaseEventType.EntityDeleted,
+            cancellationToken);
 
+        await transaction.CommitAsync(cancellationToken);
 
         return BaseResult<QuestionDto>.Success(mapper.Map<QuestionDto>(question));
     }
@@ -179,41 +156,34 @@ public class QuestionService(
                 (int)ErrorCodes.OperationForbidden);
 
         await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
-        try
+
+        if (vote == null)
         {
-            if (vote == null)
+            vote = new Vote
             {
-                vote = new Vote
-                {
-                    QuestionId = question.Id,
-                    UserId = initiator.Id,
-                    VoteType = voteType
-                };
+                QuestionId = question.Id,
+                UserId = initiator.Id,
+                VoteType = voteType
+            };
 
-                await unitOfWork.Votes.CreateAsync(vote, cancellationToken);
-            }
-            else
-            {
-                if (vote.VoteType.Id == voteType.Id)
-                    return BaseResult<VoteQuestionDto>.Failure(ErrorMessage.VoteAlreadyGiven,
-                        (int)ErrorCodes.VoteAlreadyGiven);
-
-                vote.VoteType = voteType;
-                unitOfWork.Votes.Update(vote);
-            }
-
-            await unitOfWork.SaveChangesAsync(cancellationToken);
-
-            await producer.ProduceAsync(question.UserId, initiator.Id, question.Id, BaseEventType.EntityUpvoted,
-                cancellationToken);
-
-            await transaction.CommitAsync(cancellationToken);
+            await unitOfWork.Votes.CreateAsync(vote, cancellationToken);
         }
-        catch (Exception)
+        else
         {
-            await transaction.RollbackAsync(CancellationToken.None);
-            throw;
+            if (vote.VoteType.Id == voteType.Id)
+                return BaseResult<VoteQuestionDto>.Failure(ErrorMessage.VoteAlreadyGiven,
+                    (int)ErrorCodes.VoteAlreadyGiven);
+
+            vote.VoteType = voteType;
+            unitOfWork.Votes.Update(vote);
         }
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await producer.ProduceAsync(question.UserId, initiator.Id, question.Id, BaseEventType.EntityUpvoted,
+            cancellationToken);
+
+        await transaction.CommitAsync(cancellationToken);
 
         var dto = mapper.Map<VoteQuestionDto>(question);
 
@@ -250,41 +220,34 @@ public class QuestionService(
                 (int)ErrorCodes.OperationForbidden);
 
         await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
-        try
+
+        if (vote == null)
         {
-            if (vote == null)
+            vote = new Vote
             {
-                vote = new Vote
-                {
-                    QuestionId = question.Id,
-                    UserId = initiator.Id,
-                    VoteType = voteType
-                };
+                QuestionId = question.Id,
+                UserId = initiator.Id,
+                VoteType = voteType
+            };
 
-                await unitOfWork.Votes.CreateAsync(vote, cancellationToken);
-            }
-            else
-            {
-                if (vote.VoteType.Id == voteType.Id)
-                    return BaseResult<VoteQuestionDto>.Failure(ErrorMessage.VoteAlreadyGiven,
-                        (int)ErrorCodes.VoteAlreadyGiven);
-
-                vote.VoteType = voteType;
-                unitOfWork.Votes.Update(vote);
-            }
-
-            await unitOfWork.SaveChangesAsync(cancellationToken);
-
-            await producer.ProduceAsync(question.UserId, initiator.Id, question.Id, BaseEventType.EntityDownvoted,
-                cancellationToken);
-
-            await transaction.CommitAsync(cancellationToken);
+            await unitOfWork.Votes.CreateAsync(vote, cancellationToken);
         }
-        catch (Exception)
+        else
         {
-            await transaction.RollbackAsync(CancellationToken.None);
-            throw;
+            if (vote.VoteType.Id == voteType.Id)
+                return BaseResult<VoteQuestionDto>.Failure(ErrorMessage.VoteAlreadyGiven,
+                    (int)ErrorCodes.VoteAlreadyGiven);
+
+            vote.VoteType = voteType;
+            unitOfWork.Votes.Update(vote);
         }
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await producer.ProduceAsync(question.UserId, initiator.Id, question.Id, BaseEventType.EntityDownvoted,
+            cancellationToken);
+
+        await transaction.CommitAsync(cancellationToken);
 
         var dto = mapper.Map<VoteQuestionDto>(question);
 
@@ -309,21 +272,14 @@ public class QuestionService(
             return BaseResult<VoteQuestionDto>.Failure(ErrorMessage.VoteNotFound, (int)ErrorCodes.VoteNotFound);
 
         await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            unitOfWork.Votes.Remove(vote);
-            await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            await producer.ProduceAsync(question.UserId, initiator.Id, question.Id, BaseEventType.EntityVoteRemoved,
-                cancellationToken);
+        unitOfWork.Votes.Remove(vote);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            await transaction.CommitAsync(cancellationToken);
-        }
-        catch (Exception)
-        {
-            await transaction.RollbackAsync(CancellationToken.None);
-            throw;
-        }
+        await producer.ProduceAsync(question.UserId, initiator.Id, question.Id, BaseEventType.EntityVoteRemoved,
+            cancellationToken);
+
+        await transaction.CommitAsync(cancellationToken);
 
         var dto = mapper.Map<VoteQuestionDto>(question);
 
