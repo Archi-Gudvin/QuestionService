@@ -13,12 +13,12 @@ public class CacheGetVoteService(IVoteCacheRepository cacheRepository, IGetVoteS
     public Task<QueryableResult<Vote>> GetAllAsync(CancellationToken cancellationToken = default) =>
         inner.GetAllAsync(cancellationToken);
 
-    public async Task<CollectionResult<Vote>> GetByDtosAsync(IEnumerable<VoteDto> dtos,
+    public async Task<CollectionResult<Vote>> GetByDtosAsync(IReadOnlyCollection<VoteDto> dtos,
         CancellationToken cancellationToken = default)
     {
         var dtosArray = dtos.ToArray();
         var votes = (await cacheRepository.GetByDtosAsync(dtosArray,
-            async (dtosToFetch, ct) => (await inner.GetByDtosAsync(dtosToFetch, ct)).Data ?? [],
+            async (dtosToFetch, ct) => (await inner.GetByDtosAsync(dtosToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (votes.Length == 0)
@@ -32,10 +32,10 @@ public class CacheGetVoteService(IVoteCacheRepository cacheRepository, IGetVoteS
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetQuestionsVotesAsync(
-        IEnumerable<long> questionIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default)
     {
         var groupedVotes = (await cacheRepository.GetQuestionsVotesAsync(questionIds,
-            async (idsToFetch, ct) => (await inner.GetQuestionsVotesAsync(idsToFetch, ct)).Data ?? [],
+            async (idsToFetch, ct) => (await inner.GetQuestionsVotesAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (groupedVotes.Length == 0)
@@ -46,11 +46,11 @@ public class CacheGetVoteService(IVoteCacheRepository cacheRepository, IGetVoteS
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetUsersVotesAsync(
-        IEnumerable<long> userIds,
+        IReadOnlyCollection<long> userIds,
         CancellationToken cancellationToken = default)
     {
         var groupedVotes = (await cacheRepository.GetUsersVotesAsync(userIds,
-            async (idsToFetch, ct) => (await inner.GetUsersVotesAsync(idsToFetch, ct)).Data ?? [],
+            async (idsToFetch, ct) => (await inner.GetUsersVotesAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (groupedVotes.Length == 0)
@@ -61,10 +61,10 @@ public class CacheGetVoteService(IVoteCacheRepository cacheRepository, IGetVoteS
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetVoteTypesVotesAsync(
-        IEnumerable<long> voteTypeIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> voteTypeIds, CancellationToken cancellationToken = default)
     {
         var groupedVotes = (await cacheRepository.GetVoteTypesVotesAsync(voteTypeIds,
-            async (idsToFetch, ct) => (await inner.GetVoteTypesVotesAsync(idsToFetch, ct)).Data ?? [],
+            async (idsToFetch, ct) => (await inner.GetVoteTypesVotesAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (groupedVotes.Length == 0)

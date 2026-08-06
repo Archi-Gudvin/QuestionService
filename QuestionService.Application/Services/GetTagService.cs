@@ -20,7 +20,7 @@ public class GetTagService(IBaseRepository<Tag> tagRepository, IBaseRepository<Q
         return Task.FromResult(QueryableResult<Tag>.Success(tags));
     }
 
-    public async Task<CollectionResult<Tag>> GetByIdsAsync(IEnumerable<long> ids,
+    public async Task<CollectionResult<Tag>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
         var tags = await tagRepository.GetAll()
@@ -28,7 +28,7 @@ public class GetTagService(IBaseRepository<Tag> tagRepository, IBaseRepository<Q
             .ToArrayAsync(cancellationToken);
 
         if (tags.Length == 0)
-            return ids.Count() switch
+            return ids.Count switch
             {
                 <= 1 => CollectionResult<Tag>.Failure(ErrorMessage.TagNotFound, (int)ErrorCodes.TagNotFound),
                 > 1 => CollectionResult<Tag>.Failure(ErrorMessage.TagsNotFound, (int)ErrorCodes.TagsNotFound)
@@ -38,7 +38,7 @@ public class GetTagService(IBaseRepository<Tag> tagRepository, IBaseRepository<Q
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Tag>>>> GetQuestionsTagsAsync(
-        IEnumerable<long> questionIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default)
     {
         var groupedTags = await questionRepository.GetAll()
             .Where(x => questionIds.Contains(x.Id))

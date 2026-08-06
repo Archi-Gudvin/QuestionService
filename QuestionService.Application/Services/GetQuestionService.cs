@@ -23,14 +23,14 @@ public class GetQuestionService(
         return Task.FromResult(QueryableResult<Question>.Success(questions));
     }
 
-    public async Task<CollectionResult<Question>> GetByIdsAsync(IEnumerable<long> ids,
+    public async Task<CollectionResult<Question>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
         var questions = await questionRepository.GetAll().Where(x => ids.Contains(x.Id))
             .ToArrayAsync(cancellationToken);
 
         if (questions.Length == 0)
-            return ids.Count() switch
+            return ids.Count switch
             {
                 <= 1 => CollectionResult<Question>.Failure(ErrorMessage.QuestionNotFound,
                     (int)ErrorCodes.QuestionNotFound),
@@ -42,7 +42,7 @@ public class GetQuestionService(
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Question>>>> GetQuestionsWithTagsAsync(
-        IEnumerable<long> tagIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> tagIds, CancellationToken cancellationToken = default)
     {
         var groupedQuestions = await tagRepository.GetAll()
             .Where(x => tagIds.Contains(x.Id))
@@ -58,7 +58,7 @@ public class GetQuestionService(
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Question>>>> GetUsersQuestionsAsync(
-        IEnumerable<long> userIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> userIds, CancellationToken cancellationToken = default)
     {
         var questions = (await questionRepository.GetAll()
                 .Where(x => userIds.Contains(x.UserId))

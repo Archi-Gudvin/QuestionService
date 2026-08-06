@@ -12,12 +12,12 @@ public class CacheGetViewService(IViewCacheRepository cacheRepository, IGetViewS
     public Task<QueryableResult<View>> GetAllAsync(CancellationToken cancellationToken = default) =>
         inner.GetAllAsync(cancellationToken);
 
-    public async Task<CollectionResult<View>> GetByIdsAsync(IEnumerable<long> ids,
+    public async Task<CollectionResult<View>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
         var idsArray = ids.ToArray();
         var views = (await cacheRepository.GetByIdsAsync(idsArray,
-            async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch, ct)).Data ?? [],
+            async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (views.Length == 0)
@@ -31,11 +31,11 @@ public class CacheGetViewService(IViewCacheRepository cacheRepository, IGetViewS
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<View>>>> GetUsersViewsAsync(
-        IEnumerable<long> userIds,
+        IReadOnlyCollection<long> userIds,
         CancellationToken cancellationToken = default)
     {
         var groupedViews = (await cacheRepository.GetUsersViewsAsync(userIds,
-            async (idsToFetch, ct) => (await inner.GetUsersViewsAsync(idsToFetch, ct)).Data ?? [],
+            async (idsToFetch, ct) => (await inner.GetUsersViewsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (groupedViews.Length == 0)
@@ -46,10 +46,10 @@ public class CacheGetViewService(IViewCacheRepository cacheRepository, IGetViewS
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<View>>>> GetQuestionsViewsAsync(
-        IEnumerable<long> questionIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default)
     {
         var groupedViews = (await cacheRepository.GetQuestionsViewsAsync(questionIds,
-            async (idsToFetch, ct) => (await inner.GetQuestionsViewsAsync(idsToFetch, ct)).Data ?? [],
+            async (idsToFetch, ct) => (await inner.GetQuestionsViewsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (groupedViews.Length == 0)

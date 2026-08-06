@@ -12,7 +12,7 @@ public interface IGetQuestionService : IGetService<Question>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<CollectionResult<KeyValuePair<long, IEnumerable<Question>>>> GetQuestionsWithTagsAsync(
-        IEnumerable<long> tagIds, CancellationToken cancellationToken = default);
+        IReadOnlyCollection<long> tagIds, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Gets questions of users by their ids
@@ -20,6 +20,6 @@ public interface IGetQuestionService : IGetService<Question>
     /// <param name="userIds"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CollectionResult<KeyValuePair<long, IEnumerable<Question>>>> GetUsersQuestionsAsync(IEnumerable<long> userIds,
-        CancellationToken cancellationToken = default);
+    Task<CollectionResult<KeyValuePair<long, IEnumerable<Question>>>> GetUsersQuestionsAsync(
+        IReadOnlyCollection<long> userIds, CancellationToken cancellationToken = default);
 }

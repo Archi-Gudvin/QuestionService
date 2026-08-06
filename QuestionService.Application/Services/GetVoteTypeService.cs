@@ -19,7 +19,7 @@ public class GetVoteTypeService(IBaseRepository<VoteType> voteTypeRepository) : 
         return Task.FromResult(QueryableResult<VoteType>.Success(voteTypes));
     }
 
-    public async Task<CollectionResult<VoteType>> GetByIdsAsync(IEnumerable<long> ids,
+    public async Task<CollectionResult<VoteType>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
         var voteTypes = await voteTypeRepository.GetAll()
@@ -27,7 +27,7 @@ public class GetVoteTypeService(IBaseRepository<VoteType> voteTypeRepository) : 
             .ToArrayAsync(cancellationToken);
 
         if (voteTypes.Length == 0)
-            return ids.Count() switch
+            return ids.Count switch
             {
                 <= 1 => CollectionResult<VoteType>.Failure(ErrorMessage.VoteTypeNotFound,
                     (int)ErrorCodes.VoteTypeNotFound),

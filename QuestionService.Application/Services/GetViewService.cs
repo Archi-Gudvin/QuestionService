@@ -20,13 +20,13 @@ public class GetViewService(IBaseRepository<View> viewRepository) : IGetViewServ
     }
 
 
-    public async Task<CollectionResult<View>> GetByIdsAsync(IEnumerable<long> ids,
+    public async Task<CollectionResult<View>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
         var views = await viewRepository.GetAll().Where(x => ids.Contains(x.Id)).ToArrayAsync(cancellationToken);
 
         if (views.Length == 0)
-            return ids.Count() switch
+            return ids.Count switch
             {
                 <= 1 => CollectionResult<View>.Failure(ErrorMessage.ViewNotFound, (int)ErrorCodes.ViewNotFound),
                 > 1 => CollectionResult<View>.Failure(ErrorMessage.ViewsNotFound, (int)ErrorCodes.ViewsNotFound),
@@ -36,7 +36,7 @@ public class GetViewService(IBaseRepository<View> viewRepository) : IGetViewServ
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<View>>>> GetUsersViewsAsync(
-        IEnumerable<long> userIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> userIds, CancellationToken cancellationToken = default)
     {
         var views = (await viewRepository.GetAll()
                 .Where(x => x.UserId.HasValue && userIds.Contains(x.UserId.Value))
@@ -54,7 +54,7 @@ public class GetViewService(IBaseRepository<View> viewRepository) : IGetViewServ
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<View>>>> GetQuestionsViewsAsync(
-        IEnumerable<long> questionIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default)
     {
         var views = (await viewRepository.GetAll()
                 .Where(x => questionIds.Contains(x.QuestionId))
