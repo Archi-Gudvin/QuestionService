@@ -1,9 +1,9 @@
 using System.Net;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestionService.Api.Controllers.Base;
 using QuestionService.Api.Dtos;
+using QuestionService.Domain.Extensions;
 using QuestionService.Domain.Dtos.Question;
 using QuestionService.Domain.Interfaces.Service;
 using QuestionService.Domain.Results;
@@ -14,7 +14,8 @@ namespace QuestionService.Api.Controllers;
 ///     Question controller
 /// </summary>
 [Authorize]
-public class QuestionController(IQuestionService questionService) : BaseController
+public class QuestionController(IQuestionService questionService, IQuestionVoteService questionVoteService)
+    : BaseController
 {
     /// <summary>
     ///     Creates a question
@@ -46,7 +47,7 @@ public class QuestionController(IQuestionService questionService) : BaseControll
     public async Task<ActionResult<BaseResult<QuestionDto>>> AskQuestion(AskQuestionDto dto,
         CancellationToken cancellationToken)
     {
-        var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userId = User.GetUserId();
 
         var result = await questionService.AskQuestionAsync(userId, dto, cancellationToken);
 
@@ -76,7 +77,7 @@ public class QuestionController(IQuestionService questionService) : BaseControll
     public async Task<ActionResult<BaseResult<QuestionDto>>> DeleteQuestion(long questionId,
         CancellationToken cancellationToken)
     {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var userId = User.GetUserId();
 
         var result = await questionService.DeleteQuestionAsync(userId, questionId, cancellationToken);
 
@@ -117,7 +118,7 @@ public class QuestionController(IQuestionService questionService) : BaseControll
         RequestEditQuestionDto requestDto,
         CancellationToken cancellationToken)
     {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var userId = User.GetUserId();
 
         var dto = new EditQuestionDto(questionId, requestDto.Title, requestDto.Body, requestDto.TagNames);
 
@@ -151,9 +152,9 @@ public class QuestionController(IQuestionService questionService) : BaseControll
     public async Task<ActionResult<BaseResult<VoteQuestionDto>>> DownvoteQuestion(long questionId,
         CancellationToken cancellationToken)
     {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var userId = User.GetUserId();
 
-        var result = await questionService.DownvoteQuestionAsync(userId, questionId, cancellationToken);
+        var result = await questionVoteService.DownvoteAsync(userId, questionId, cancellationToken);
 
         return HandleBaseResult(result);
     }
@@ -183,9 +184,9 @@ public class QuestionController(IQuestionService questionService) : BaseControll
     public async Task<ActionResult<BaseResult<VoteQuestionDto>>> UpvoteQuestion(long questionId,
         CancellationToken cancellationToken)
     {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var userId = User.GetUserId();
 
-        var result = await questionService.UpvoteQuestionAsync(userId, questionId, cancellationToken);
+        var result = await questionVoteService.UpvoteAsync(userId, questionId, cancellationToken);
 
         return HandleBaseResult(result);
     }
@@ -211,9 +212,9 @@ public class QuestionController(IQuestionService questionService) : BaseControll
     public async Task<ActionResult<BaseResult<VoteQuestionDto>>> RemoveQuestionVote(long questionId,
         CancellationToken cancellationToken)
     {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var userId = User.GetUserId();
 
-        var result = await questionService.RemoveQuestionVoteAsync(userId, questionId, cancellationToken);
+        var result = await questionVoteService.RemoveVoteAsync(userId, questionId, cancellationToken);
 
         return HandleBaseResult(result);
     }

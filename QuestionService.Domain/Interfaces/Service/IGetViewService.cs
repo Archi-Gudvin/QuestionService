@@ -11,8 +11,8 @@ public interface IGetViewService : IGetService<View>
     /// <param name="userIds"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CollectionResult<KeyValuePair<long, IEnumerable<View>>>> GetUsersViewsAsync(IEnumerable<long> userIds,
-        CancellationToken cancellationToken = default);
+    Task<CollectionResult<KeyValuePair<long, IEnumerable<View>>>> GetUsersViewsAsync(
+        IReadOnlyCollection<long> userIds, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Gets views of questions by their ids
@@ -20,6 +20,6 @@ public interface IGetViewService : IGetService<View>
     /// <param name="questionIds"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CollectionResult<KeyValuePair<long, IEnumerable<View>>>> GetQuestionsViewsAsync(IEnumerable<long> questionIds,
-        CancellationToken cancellationToken = default);
+    Task<CollectionResult<KeyValuePair<long, IEnumerable<View>>>> GetQuestionsViewsAsync(
+        IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default);
 }

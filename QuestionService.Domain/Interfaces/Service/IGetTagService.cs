@@ -11,6 +11,6 @@ public interface IGetTagService : IGetService<Tag>
     /// <param name="questionIds"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CollectionResult<KeyValuePair<long, IEnumerable<Tag>>>> GetQuestionsTagsAsync(IEnumerable<long> questionIds,
-        CancellationToken cancellationToken = default);
+    Task<CollectionResult<KeyValuePair<long, IEnumerable<Tag>>>> GetQuestionsTagsAsync(
+        IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default);
 }

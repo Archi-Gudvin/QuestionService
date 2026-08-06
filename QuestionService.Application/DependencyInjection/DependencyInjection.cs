@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using QuestionService.Application.Mappings;
 using QuestionService.Application.Services.Cache;
+using QuestionService.Application.Services.Decorators;
 using QuestionService.Domain.Interfaces.Service;
 
 namespace QuestionService.Application.DependencyInjection;
@@ -29,5 +30,7 @@ public static class DependencyInjection
         services.Decorate<IGetVoteTypeService, CacheGetVoteTypeService>();
         services.Decorate<IGetTagService, CacheGetTagService>();
         services.Decorate<IGetViewService, CacheGetViewService>();
+
+        services.Decorate<IQuestionService, ValidatingQuestionService>();
     }
 }

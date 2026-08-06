@@ -1,5 +1,5 @@
 using QuestionService.Cache.Helpers;
-using QuestionService.Domain.Interfaces.Provider;
+using QuestionService.Cache.Interfaces;
 using QuestionService.Tests.TestData;
 using StackExchange.Redis;
 

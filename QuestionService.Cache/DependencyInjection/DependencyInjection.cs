@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using QuestionService.Cache.Interfaces;
 using QuestionService.Cache.Providers;
 using QuestionService.Cache.Repositories;
 using QuestionService.Cache.Settings;
-using QuestionService.Domain.Interfaces.Provider;
 using StackExchange.Redis;
 
 namespace QuestionService.Cache.DependencyInjection;

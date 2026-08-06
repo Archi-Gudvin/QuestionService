@@ -19,7 +19,7 @@ public interface IGetVoteService
     /// <param name="dtos"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CollectionResult<Vote>> GetByDtosAsync(IEnumerable<VoteDto> dtos,
+    Task<CollectionResult<Vote>> GetByDtosAsync(IReadOnlyCollection<VoteDto> dtos,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -28,8 +28,8 @@ public interface IGetVoteService
     /// <param name="questionIds"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetQuestionsVotesAsync(IEnumerable<long> questionIds,
-        CancellationToken cancellationToken = default);
+    Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetQuestionsVotesAsync(
+        IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Gets votes of users by their ids
@@ -37,8 +37,8 @@ public interface IGetVoteService
     /// <param name="userIds"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetUsersVotesAsync(IEnumerable<long> userIds,
-        CancellationToken cancellationToken = default);
+    Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetUsersVotesAsync(
+        IReadOnlyCollection<long> userIds, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Gets votes of vote types by their ids
@@ -46,6 +46,6 @@ public interface IGetVoteService
     /// <param name="voteTypeIds"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetVoteTypesVotesAsync(IEnumerable<long> voteTypeIds,
-        CancellationToken cancellationToken = default);
+    Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetVoteTypesVotesAsync(
+        IReadOnlyCollection<long> voteTypeIds, CancellationToken cancellationToken = default);
 }

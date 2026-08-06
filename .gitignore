@@ -3,3 +3,12 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+.env
+QuestionService.Api/Logs/
+replay_pid*.log
+*.DotSettings.user
+.idea/.idea.QuestionService/.idea/sonarlint.xml
+.idea/.idea.QuestionService/.idea/dataSources.xml
+.idea/.idea.QuestionService/.idea/httpClient.xml
+.idea/.idea.QuestionService/.idea/GitCommitMessageStorage.xml
+.idea/.idea.QuestionService/.idea/copilot.data.migration.*.xml

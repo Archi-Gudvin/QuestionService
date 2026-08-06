@@ -3,12 +3,11 @@ using QuestionService.Outbox.Interfaces.TopicProducer;
 
 namespace QuestionService.Outbox.TopicProducers;
 
-public class TopicProducerResolver(IServiceScopeFactory scopeFactory) : ITopicProducerResolver
+public class TopicProducerResolver : ITopicProducerResolver
 {
-    public ITopicProducer GetProducerForType(Type messageType)
+    public ITopicProducer GetProducerForType(IServiceProvider serviceProvider, Type messageType)
     {
-        using var scope = scopeFactory.CreateAsyncScope();
-        var producers = scope.ServiceProvider.GetRequiredService<IEnumerable<ITopicProducer>>();
+        var producers = serviceProvider.GetRequiredService<IEnumerable<ITopicProducer>>();
 
         return producers.FirstOrDefault(x => x.CanProduce(messageType)) ??
                throw new InvalidOperationException($"No producer found for type {messageType}.");

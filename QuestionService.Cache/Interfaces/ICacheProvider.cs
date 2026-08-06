@@ -1,4 +1,4 @@
-namespace QuestionService.Domain.Interfaces.Provider;
+namespace QuestionService.Cache.Interfaces;
 
 public interface ICacheProvider
 {

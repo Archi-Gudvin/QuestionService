@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Options;
+using Moq;
+using Serilog;
 using QuestionService.Application.Services;
 using QuestionService.Application.Services.Cache;
 using QuestionService.Cache.Providers;
@@ -19,7 +21,8 @@ internal class CacheGetVoteServiceSut
     public readonly IVoteCacheRepository VoteCacheRepository =
         new VoteCacheRepository(
             new RedisCacheProvider(RedisDatabaseFixture.GetRedisDatabaseConfiguration()),
-            Options.Create(RedisSettingsFixture.GetRedisSettingsConfiguration()));
+            Options.Create(RedisSettingsFixture.GetRedisSettingsConfiguration()),
+            new Mock<ILogger>().Object);
 
     public CacheGetVoteServiceSut()
     {

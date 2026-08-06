@@ -1,6 +1,6 @@
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using QuestionService.Application.Enum;
+using QuestionService.Application.Enums;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.Vote;
 using QuestionService.Domain.Entities;
@@ -22,7 +22,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
         return Task.FromResult(QueryableResult<Vote>.Success(votes));
     }
 
-    public async Task<CollectionResult<Vote>> GetByDtosAsync(IEnumerable<VoteDto> dtos,
+    public async Task<CollectionResult<Vote>> GetByDtosAsync(IReadOnlyCollection<VoteDto> dtos,
         CancellationToken cancellationToken = default)
     {
         var keys = dtos.ToArray();
@@ -48,7 +48,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetQuestionsVotesAsync(
-        IEnumerable<long> questionIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default)
     {
         var votes = (await voteRepository.GetAll()
                 .Where(x => questionIds.Contains(x.QuestionId))
@@ -66,7 +66,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetUsersVotesAsync(
-        IEnumerable<long> userIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> userIds, CancellationToken cancellationToken = default)
     {
         var votes = (await voteRepository.GetAll()
                 .Where(x => userIds.Contains(x.UserId))
@@ -83,7 +83,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Vote>>>> GetVoteTypesVotesAsync(
-        IEnumerable<long> voteTypeIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> voteTypeIds, CancellationToken cancellationToken = default)
     {
         var votes = (await voteRepository.GetAll()
                 .Where(x => voteTypeIds.Contains(x.VoteTypeId))

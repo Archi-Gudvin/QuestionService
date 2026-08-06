@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Options;
+using Moq;
+using Serilog;
 using QuestionService.Application.Services.Cache;
 using QuestionService.Cache.Providers;
 using QuestionService.Cache.Repositories;
@@ -18,7 +20,8 @@ internal class CacheGetTagServiceSut
     public readonly ITagCacheRepository TagCacheRepository =
         new TagCacheRepository(
             new RedisCacheProvider(RedisDatabaseFixture.GetRedisDatabaseConfiguration()),
-            Options.Create(RedisSettingsFixture.GetRedisSettingsConfiguration()));
+            Options.Create(RedisSettingsFixture.GetRedisSettingsConfiguration()),
+            new Mock<ILogger>().Object);
 
     public CacheGetTagServiceSut()
     {

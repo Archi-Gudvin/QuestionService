@@ -1,4 +1,4 @@
-using QuestionService.Application.Enum;
+using QuestionService.Application.Enums;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository.Cache;
@@ -12,12 +12,12 @@ public class CacheGetTagService(ITagCacheRepository cacheRepository, IGetTagServ
     public Task<QueryableResult<Tag>> GetAllAsync(CancellationToken cancellationToken = default) =>
         inner.GetAllAsync(cancellationToken);
 
-    public async Task<CollectionResult<Tag>> GetByIdsAsync(IEnumerable<long> ids,
+    public async Task<CollectionResult<Tag>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
         var idsArray = ids.ToArray();
         var tags = (await cacheRepository.GetByIdsAsync(idsArray,
-            async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch, ct)).Data ?? [],
+            async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (tags.Length == 0)
@@ -31,10 +31,10 @@ public class CacheGetTagService(ITagCacheRepository cacheRepository, IGetTagServ
     }
 
     public async Task<CollectionResult<KeyValuePair<long, IEnumerable<Tag>>>> GetQuestionsTagsAsync(
-        IEnumerable<long> questionIds, CancellationToken cancellationToken = default)
+        IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default)
     {
         var groupedTags = (await cacheRepository.GetQuestionsTagsAsync(questionIds,
-            async (idsToFetch, ct) => (await inner.GetQuestionsTagsAsync(idsToFetch, ct)).Data ?? [],
+            async (idsToFetch, ct) => (await inner.GetQuestionsTagsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (groupedTags.Length == 0)

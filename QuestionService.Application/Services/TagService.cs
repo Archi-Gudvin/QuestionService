@@ -1,7 +1,7 @@
 using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using QuestionService.Application.Enum;
+using QuestionService.Application.Enums;
 using QuestionService.Application.Helpers;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.Tag;

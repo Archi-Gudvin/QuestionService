@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Service;
+using QuestionService.Domain.Results;
+using QuestionService.GraphQl.DataLoaders.Base;
 
 namespace QuestionService.GraphQl.DataLoaders;
 
@@ -11,24 +13,9 @@ public class GroupUserQuestionDataLoader(
     IBatchScheduler batchScheduler,
     DataLoaderOptions options,
     IServiceScopeFactory scopeFactory)
-    : GroupedDataLoader<long, Question>(batchScheduler, options)
+    : GroupedEntityDataLoader<Question, long>(batchScheduler, options, scopeFactory)
 {
-    protected override async Task<ILookup<long, Question>> LoadGroupedBatchAsync(IReadOnlyList<long> keys,
-        CancellationToken cancellationToken)
-    {
-        await using var scope = scopeFactory.CreateAsyncScope();
-        var questionService = scope.ServiceProvider.GetRequiredService<IGetQuestionService>();
-
-        var result = await questionService.GetUsersQuestionsAsync(keys, cancellationToken);
-
-        if (!result.IsSuccess)
-            return Enumerable.Empty<IGrouping<long, Question>>()
-                .ToLookup(_ => 0L, _ => default(Question)!); // Empty lookup
-
-        var lookup = result.Data
-            .SelectMany(x => x.Value.Select(y => new { x.Key, Question = y }))
-            .ToLookup(x => x.Key, x => x.Question);
-
-        return lookup;
-    }
+    protected override Task<CollectionResult<KeyValuePair<long, IEnumerable<Question>>>> FetchAsync(
+        IServiceProvider serviceProvider, IReadOnlyList<long> keys, CancellationToken cancellationToken) =>
+        serviceProvider.GetRequiredService<IGetQuestionService>().GetUsersQuestionsAsync(keys, cancellationToken);
 }

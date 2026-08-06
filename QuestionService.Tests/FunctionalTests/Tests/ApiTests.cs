@@ -1,6 +1,9 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Net.Mime;
+using System.Security.Claims;
 using QuestionService.Domain.Dtos.ExternalEntity;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Helpers;

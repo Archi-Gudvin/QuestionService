@@ -57,7 +57,7 @@ public class OutboxProcessor(
                            .First(x => x.Name == message.Type); // Name
             var content = JsonConvert.DeserializeObject(message.Content, type)!;
 
-            var producer = producerResolver.GetProducerForType(type);
+            var producer = producerResolver.GetProducerForType(scope.ServiceProvider, type);
 
             await producer.ProduceAsync(content, cancellationToken);
 

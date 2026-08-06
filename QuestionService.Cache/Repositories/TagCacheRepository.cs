@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Options;
+using Serilog;
 using QuestionService.Cache.Helpers;
 using QuestionService.Cache.Interfaces;
 using QuestionService.Cache.Repositories.Base;
 using QuestionService.Cache.Settings;
 using QuestionService.Domain.Entities;
-using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 
 namespace QuestionService.Cache.Repositories;
@@ -13,14 +13,16 @@ public class TagCacheRepository : ITagCacheRepository
 {
     private readonly IBaseCacheRepository<Tag, long> _repository;
 
-    public TagCacheRepository(ICacheProvider cacheProvider, IOptions<RedisSettings> redisSettings)
+    public TagCacheRepository(ICacheProvider cacheProvider, IOptions<RedisSettings> redisSettings,
+        ILogger logger)
     {
         var settings = redisSettings.Value;
         _repository = new BaseCacheRepository<Tag, long>(
             cacheProvider,
             new CacheTagMapping(),
             settings.TimeToLiveInSeconds,
-            settings.NullTimeToLiveInSeconds
+            settings.NullTimeToLiveInSeconds,
+            logger
         );
     }
 

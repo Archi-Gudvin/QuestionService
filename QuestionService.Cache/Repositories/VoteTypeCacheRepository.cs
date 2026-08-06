@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Options;
+using Serilog;
 using QuestionService.Cache.Helpers;
 using QuestionService.Cache.Interfaces;
 using QuestionService.Cache.Repositories.Base;
 using QuestionService.Cache.Settings;
 using QuestionService.Domain.Entities;
-using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 
 namespace QuestionService.Cache.Repositories;
@@ -13,14 +13,16 @@ public class VoteTypeCacheRepository : IVoteTypeCacheRepository
 {
     private readonly IBaseCacheRepository<VoteType, long> _repository;
 
-    public VoteTypeCacheRepository(ICacheProvider cacheProvider, IOptions<RedisSettings> redisSettings)
+    public VoteTypeCacheRepository(ICacheProvider cacheProvider, IOptions<RedisSettings> redisSettings,
+        ILogger logger)
     {
         var settings = redisSettings.Value;
         _repository = new BaseCacheRepository<VoteType, long>(
             cacheProvider,
             new CacheVoteTypeMapping(),
             settings.TimeToLiveInSeconds,
-            settings.NullTimeToLiveInSeconds
+            settings.NullTimeToLiveInSeconds,
+            logger
         );
     }
 

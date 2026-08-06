@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Service;
+using QuestionService.Domain.Results;
+using QuestionService.GraphQl.DataLoaders.Base;
 
 namespace QuestionService.GraphQl.DataLoaders;
 
@@ -8,23 +10,11 @@ public class VoteTypeDataLoader(
     IBatchScheduler batchScheduler,
     DataLoaderOptions options,
     IServiceScopeFactory scopeFactory)
-    : BatchDataLoader<long, VoteType>(batchScheduler, options)
+    : EntityBatchDataLoader<VoteType, long>(batchScheduler, options, scopeFactory)
 {
-    protected override async Task<IReadOnlyDictionary<long, VoteType>> LoadBatchAsync(IReadOnlyList<long> keys,
-        CancellationToken cancellationToken)
-    {
-        await using var scope = scopeFactory.CreateAsyncScope();
-        var voteTypeService = scope.ServiceProvider.GetRequiredService<IGetVoteTypeService>();
+    protected override Task<CollectionResult<VoteType>> FetchAsync(IServiceProvider serviceProvider,
+        IReadOnlyList<long> keys, CancellationToken cancellationToken) =>
+        serviceProvider.GetRequiredService<IGetVoteTypeService>().GetByIdsAsync(keys, cancellationToken);
 
-        var result = await voteTypeService.GetByIdsAsync(keys, cancellationToken);
-
-        var dictionary = new Dictionary<long, VoteType>();
-
-        if (!result.IsSuccess)
-            return dictionary.AsReadOnly();
-
-        dictionary = result.Data.ToDictionary(x => x.Id, x => x);
-
-        return dictionary.AsReadOnly();
-    }
+    protected override long GetId(VoteType entity) => entity.Id;
 }

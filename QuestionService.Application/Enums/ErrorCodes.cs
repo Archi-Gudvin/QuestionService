@@ -1,4 +1,4 @@
-namespace QuestionService.Application.Enum;
+namespace QuestionService.Application.Enums;
 
 public enum ErrorCodes
 {

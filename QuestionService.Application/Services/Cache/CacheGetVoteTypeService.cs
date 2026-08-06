@@ -1,4 +1,4 @@
-using QuestionService.Application.Enum;
+using QuestionService.Application.Enums;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository.Cache;
@@ -15,12 +15,12 @@ public class CacheGetVoteTypeService(IVoteTypeCacheRepository cacheRepository, I
         return inner.GetAllAsync(cancellationToken);
     }
 
-    public async Task<CollectionResult<VoteType>> GetByIdsAsync(IEnumerable<long> ids,
+    public async Task<CollectionResult<VoteType>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
         var idsArray = ids.ToArray();
         var voteTypes = (await cacheRepository.GetByIdsAsync(idsArray,
-            async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch, ct)).Data ?? [],
+            async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
         if (voteTypes.Length == 0)

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using QuestionService.BackgroundJobs.Jobs;
+using QuestionService.Cache.Interfaces;
 using QuestionService.Domain.Entities;
-using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Helpers;

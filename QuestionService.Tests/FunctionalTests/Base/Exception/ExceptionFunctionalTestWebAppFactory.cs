@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
+using QuestionService.Cache.Interfaces;
 using QuestionService.DAL.Repositories;
 using QuestionService.Domain.Interfaces.Database;
-using QuestionService.Domain.Interfaces.Provider;
 using QuestionService.Domain.Interfaces.Repository;
 using QuestionService.Outbox.Interfaces.TopicProducer;
 using QuestionService.Tests.Support;
+using RedisException = StackExchange.Redis.RedisException;
 
 namespace QuestionService.Tests.FunctionalTests.Base.Exception;
 
@@ -44,13 +45,16 @@ public class ExceptionFunctionalTestWebAppFactory : FunctionalTestWebAppFactory
     {
         var mockDatabase = new Mock<ICacheProvider>();
 
+        mockDatabase.Setup(x => x.GetNullKeysAsync(It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new RedisException(TestException.ErrorMessage));
+
         mockDatabase.Setup(x => x.StringSetAsync(It.IsAny<IEnumerable<KeyValuePair<string, It.IsAnyType>>>(),
                 It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new TestException());
+            .ThrowsAsync(new RedisException(TestException.ErrorMessage));
 
         mockDatabase.Setup(x =>
                 x.GetJsonParsedAsync<It.IsAnyType>(It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new TestException());
+            .ThrowsAsync(new RedisException(TestException.ErrorMessage));
 
         return mockDatabase;
     }
@@ -59,7 +63,8 @@ public class ExceptionFunctionalTestWebAppFactory : FunctionalTestWebAppFactory
     {
         var mockResolver = new Mock<ITopicProducerResolver>();
 
-        mockResolver.Setup(x => x.GetProducerForType(It.IsAny<Type>())).Throws(new TestException());
+        mockResolver.Setup(x => x.GetProducerForType(It.IsAny<IServiceProvider>(), It.IsAny<Type>()))
+            .Throws(new TestException());
 
         return mockResolver;
     }
