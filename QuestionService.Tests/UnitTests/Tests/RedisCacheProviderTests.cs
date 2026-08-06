@@ -10,7 +10,7 @@ namespace QuestionService.Tests.UnitTests.Tests;
 public class RedisCacheProviderTests
 {
     [Fact]
-    public async Task SetsAddAsync_FalseRedisResponse_ThrowsRedisException()
+    public async Task SetsAddAsync_KeyExpireReturnsFalse_ThrowsRedisException()
     {
         //Arrange
         var cache = new RedisCacheProvider(
@@ -30,7 +30,7 @@ public class RedisCacheProviderTests
     }
 
     [Fact]
-    public async Task StringSetAsync_FalseRedisResponse_ThrowsRedisException()
+    public async Task StringSetAsync_StringSetReturnsFalse_ThrowsRedisException()
     {
         //Arrange
         var cache = new RedisCacheProvider(

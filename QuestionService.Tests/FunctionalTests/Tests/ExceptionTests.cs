@@ -16,7 +16,7 @@ using QuestionService.Tests.Traits;
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
 [FunctionalTest]
-public class ExceptionTests : ExceptionFunctionalTest
+public class ExceptionTests : ExceptionBaseFunctionalTest
 {
     public ExceptionTests(ExceptionFunctionalTestWebAppFactory factory) : base(factory)
     {

@@ -13,7 +13,7 @@ using QuestionService.Tests.Traits;
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
 [FunctionalTest]
-public class OutboxProcessorTests(ExceptionFunctionalTestWebAppFactory factory) : ExceptionFunctionalTest(factory)
+public class OutboxProcessorTests(ExceptionFunctionalTestWebAppFactory factory) : ExceptionBaseFunctionalTest(factory)
 {
     [Fact]
     public async Task ProcessOutboxMessages_EventTypeWithoutRegisteredProducer_ReturnsFailedMessages()

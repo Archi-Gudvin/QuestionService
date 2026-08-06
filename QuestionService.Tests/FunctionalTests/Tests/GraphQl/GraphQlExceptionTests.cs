@@ -11,11 +11,11 @@ using QuestionService.Tests.Traits;
 namespace QuestionService.Tests.FunctionalTests.Tests.GraphQl;
 
 [FunctionalTest]
-public class GraphQlExceptionTests(GraphQlExceptionFunctionalTestWebAppFactory factory)
-    : GraphQlExceptionFunctionalTest(factory)
+public class GraphQlExceptionTests(ExceptionGraphQlFunctionalTestWebAppFactory factory)
+    : ExceptionGraphQlFunctionalTest(factory)
 {
     [Fact]
-    public async Task GetAll_UnhandledServiceException_ReturnsInternalServerError()
+    public async Task GetAll_RepositoryThrows_ReturnsServerError()
     {
         //Arrange
         var requestBody = new { query = GraphQlHelper.RequestAllQuery };
