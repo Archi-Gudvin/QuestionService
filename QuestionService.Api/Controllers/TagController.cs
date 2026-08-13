@@ -41,7 +41,7 @@ public class TagController(ITagService tagService) : BaseController
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<BaseResult<TagDto>>> CreateTag([FromBody] CreateTagDto dto,
+    public async Task<ActionResult<BaseResult<TagDto>>> CreateTagAsync([FromBody] CreateTagDto dto,
         CancellationToken cancellationToken)
     {
         var result = await tagService.CreateTagAsync(dto, cancellationToken);
@@ -76,7 +76,7 @@ public class TagController(ITagService tagService) : BaseController
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BaseResult<TagDto>>> UpdateTag([FromBody] TagDto dto,
+    public async Task<ActionResult<BaseResult<TagDto>>> UpdateTagAsync([FromBody] TagDto dto,
         CancellationToken cancellationToken)
     {
         var result = await tagService.UpdateTagAsync(dto, cancellationToken);
@@ -104,7 +104,7 @@ public class TagController(ITagService tagService) : BaseController
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BaseResult<TagDto>>> DeleteTag(long id,
+    public async Task<ActionResult<BaseResult<TagDto>>> DeleteTagAsync(long id,
         CancellationToken cancellationToken)
     {
         var result = await tagService.DeleteTagAsync(id, cancellationToken);

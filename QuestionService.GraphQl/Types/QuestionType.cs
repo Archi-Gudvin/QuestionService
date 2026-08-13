@@ -46,7 +46,7 @@ public class QuestionType : ObjectType<Question>
 
 
         descriptor.Key(nameof(Question.Id).LowercaseFirstLetter())
-            .ResolveReferenceWith(_ => Resolvers.GetQuestionById(default!, default!, default!));
+            .ResolveReferenceWith(_ => Resolvers.GetQuestionByIdAsync(default!, default!, default!));
     }
 
     private sealed class Resolvers
@@ -79,7 +79,7 @@ public class QuestionType : ObjectType<Question>
             return views;
         }
 
-        public static async Task<Question> GetQuestionById(long id, QuestionDataLoader questionLoader,
+        public static async Task<Question> GetQuestionByIdAsync(long id, QuestionDataLoader questionLoader,
             CancellationToken cancellationToken)
         {
             var question = await questionLoader.LoadRequiredAsync(id, cancellationToken);

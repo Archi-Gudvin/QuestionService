@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestionService.Api.Controllers.Base;
 using QuestionService.Api.Dtos;
-using QuestionService.Domain.Extensions;
 using QuestionService.Domain.Dtos.Question;
+using QuestionService.Domain.Extensions;
 using QuestionService.Domain.Interfaces.Service;
 using QuestionService.Domain.Results;
 
@@ -44,7 +44,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BaseResult<QuestionDto>>> AskQuestion(AskQuestionDto dto,
+    public async Task<ActionResult<BaseResult<QuestionDto>>> AskQuestionAsync(AskQuestionDto dto,
         CancellationToken cancellationToken)
     {
         var userId = User.GetUserId();
@@ -74,7 +74,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BaseResult<QuestionDto>>> DeleteQuestion(long questionId,
+    public async Task<ActionResult<BaseResult<QuestionDto>>> DeleteQuestionAsync(long questionId,
         CancellationToken cancellationToken)
     {
         var userId = User.GetUserId();
@@ -114,7 +114,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BaseResult<QuestionDto>>> EditQuestion(long questionId,
+    public async Task<ActionResult<BaseResult<QuestionDto>>> EditQuestionAsync(long questionId,
         RequestEditQuestionDto requestDto,
         CancellationToken cancellationToken)
     {
@@ -149,7 +149,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<BaseResult<VoteQuestionDto>>> DownvoteQuestion(long questionId,
+    public async Task<ActionResult<BaseResult<VoteQuestionDto>>> DownvoteQuestionAsync(long questionId,
         CancellationToken cancellationToken)
     {
         var userId = User.GetUserId();
@@ -181,7 +181,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<BaseResult<VoteQuestionDto>>> UpvoteQuestion(long questionId,
+    public async Task<ActionResult<BaseResult<VoteQuestionDto>>> UpvoteQuestionAsync(long questionId,
         CancellationToken cancellationToken)
     {
         var userId = User.GetUserId();
@@ -209,7 +209,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BaseResult<VoteQuestionDto>>> RemoveQuestionVote(long questionId,
+    public async Task<ActionResult<BaseResult<VoteQuestionDto>>> RemoveQuestionVoteAsync(long questionId,
         CancellationToken cancellationToken)
     {
         var userId = User.GetUserId();

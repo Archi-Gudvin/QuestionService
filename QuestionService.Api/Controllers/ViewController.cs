@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc;
 using QuestionService.Api.Controllers.Base;
-using QuestionService.Domain.Extensions;
 using QuestionService.Domain.Dtos.View;
+using QuestionService.Domain.Extensions;
 using QuestionService.Domain.Interfaces.Service;
 using QuestionService.Domain.Results;
 
@@ -32,7 +32,8 @@ public class ViewController(IViewService viewService) : BaseController
     [HttpPost("{questionId:long}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<BaseResult>> IncrementViews(long questionId, CancellationToken cancellationToken,
+    public async Task<ActionResult<BaseResult>> IncrementViewsAsync(long questionId,
+        CancellationToken cancellationToken,
         [FromHeader(Name = FingerprintHeaderName)]
         string? fingerprint = null)
     {
