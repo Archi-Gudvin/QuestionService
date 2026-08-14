@@ -97,12 +97,6 @@ jobs:
           name: coverage-functional
           path: coverage/coverage-functional.xml
   
-  trigger-qodana:
-    name: Trigger Qodana Analysis
-    needs: [ unit-tests, functional-tests ]
-    uses: ./.github/workflows/qodana_code_quality.yml
-    secrets: inherit
-
   trigger-docker:
     name: Trigger Docker Build and Push
     needs: [ unit-tests, functional-tests ]

@@ -73,7 +73,6 @@ HotChocolate 15 in `QuestionService.GraphQl`. Root queries in `Queries.cs`; obje
 ## Conventions
 
 - Nullable reference types and implicit usings are **on** everywhere; file-scoped namespaces throughout.
-- Test naming: `Method_Scenario_ExpectedResult`. Private fields: `_camelCase`.
-- Unit tests build their subjects via SUT classes in `Tests/UnitTests/Sut/`; mock repos/loggers/mappers come from `Tests/UnitTests/Fixtures/` and `Tests/Mocks/`.
-- `QuestionService.cs` owns question CRUD only; voting lives in `QuestionVoteService` behind `IQuestionVoteService`. Both are wrapped by decorators registered via `services.Decorate<>()` in `Application/DependencyInjection/DependencyInjection.cs` — `ValidatingQuestionService` (validation) and the `CacheGet*` family (read caching) — so don't expect a single class to own the full behavior of either interface.
-- No `.editorconfig`/`.DotSettings` enforced in-repo; quality gates run in CI via **SonarQube** and **Qodana** (`.github/workflows/`). CI runs Unit and Functional categories separately with Coverlet coverage.
+- Test naming: `MethodName_ShouldBe_Expectation`. Private fields: `_camelCase`.
+- Unit tests build their subjects via factory classes in `Tests/UnitTests/Factories/`; mock repos/loggers/mappers come from `Tests/UnitTests/Configurations/`.
+- No `.editorconfig`/`.DotSettings` enforced in-repo; quality gates run in CI via **SonarQube** (`.github/workflows/`). CI runs Unit and Functional categories separately with Coverlet coverage.
