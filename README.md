@@ -63,7 +63,7 @@ editing, retrieval, and moderation. It handles question-related business logic, 
 * **Monitoring & Visualization** — Dashboards in Grafana, Kibana, and Aspire
 * **Health Checks** — Status endpoints to monitor service availability and dependencies
 * **xUnit & Coverlet** — Automated unit and integration testing with code coverage
-* **SonarQube & Qodana** — Code quality and coverage analysis
+* **SonarQube** — Code quality and coverage analysis
 
 ## Architecture and Design
 This service follows the principles of Clean Architecture. The solution is split into multiple projects that correspond to each architectural layer.
