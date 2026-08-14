@@ -59,8 +59,12 @@ jobs:
         if: github.event_name == 'pull_request_target'
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          PR_KEY: ${{ github.event.pull_request.number }}
+          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+          PR_BASE: ${{ github.event.pull_request.base.ref }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          ./.sonar/scanner/dotnet-sonarscanner begin /k:"flow-OverStack_QuestionService" /o:"flow-overstack" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="coverage/coverage-unit.xml,coverage/coverage-functional.xml" /d:sonar.pullrequest.key="${{ github.event.pull_request.number }}" /d:sonar.pullrequest.branch="${{ github.event.pull_request.head.ref }}" /d:sonar.pullrequest.base="${{ github.event.pull_request.base.ref }}"
+          ./.sonar/scanner/dotnet-sonarscanner begin /k:"flow-OverStack_QuestionService" /o:"flow-overstack" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="coverage/coverage-unit.xml,coverage/coverage-functional.xml" /d:sonar.pullrequest.key="$PR_KEY" /d:sonar.pullrequest.branch="$PR_BRANCH" /d:sonar.pullrequest.base="$PR_BASE" /d:sonar.scm.revision="$PR_SHA"
           dotnet build
           ./.sonar/scanner/dotnet-sonarscanner end
       - name: Build and analyze (branch)
