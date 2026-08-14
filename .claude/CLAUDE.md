@@ -75,4 +75,4 @@ HotChocolate 15 in `QuestionService.GraphQl`. Root queries in `Queries.cs`; obje
 - Nullable reference types and implicit usings are **on** everywhere; file-scoped namespaces throughout.
 - Test naming: `MethodName_ShouldBe_Expectation`. Private fields: `_camelCase`.
 - Unit tests build their subjects via factory classes in `Tests/UnitTests/Factories/`; mock repos/loggers/mappers come from `Tests/UnitTests/Configurations/`.
-- No `.editorconfig`/`.DotSettings` enforced in-repo; quality gates run in CI via **SonarQube** and **Qodana** (`.github/workflows/`). CI runs Unit and Functional categories separately with Coverlet coverage.
+- No `.editorconfig`/`.DotSettings` enforced in-repo; quality gates run in CI via **SonarQube** (`.github/workflows/`). CI runs Unit and Functional categories separately with Coverlet coverage.
