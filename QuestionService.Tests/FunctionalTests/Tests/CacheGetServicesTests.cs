@@ -3,13 +3,14 @@ using System.Net.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using QuestionService.Application.Services;
+using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 using QuestionService.Tests.FunctionalTests.Base;
 using QuestionService.Tests.FunctionalTests.Configurations.GraphQl.Responses;
 using QuestionService.Tests.FunctionalTests.Helpers;
+using QuestionService.Tests.Traits;
 using StackExchange.Redis;
 using Xunit;
-using QuestionService.Tests.Traits;
 
 namespace QuestionService.Tests.FunctionalTests.Tests;
 
@@ -92,8 +93,8 @@ public class CacheGetServicesTests(FunctionalTestWebAppFactory factory) : BaseFu
         var repository = scope.ServiceProvider.GetRequiredService<ITagCacheRepository>();
         // Inner service is not in the DI
         var inner = ActivatorUtilities.CreateInstance<GetTagService>(scope.ServiceProvider);
-        var fetch = async (IEnumerable<long> idsToFetch, CancellationToken ct) =>
-            (await inner.GetQuestionsTagsAsync(idsToFetch.ToArray(), ct)).Data ?? [];
+        Func<IEnumerable<long>, CancellationToken, Task<IEnumerable<KeyValuePair<long, IEnumerable<Tag>>>>> fetch =
+            async (idsToFetch, ct) => (await inner.GetQuestionsTagsAsync(idsToFetch.ToArray(), ct)).Data ?? [];
 
         //Act
         // The first call marks the user as null in the cache
