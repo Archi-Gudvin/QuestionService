@@ -8,6 +8,6 @@ public class QuestionTagConfiguration : IEntityTypeConfiguration<QuestionTag>
 {
     public void Configure(EntityTypeBuilder<QuestionTag> builder)
     {
-        builder.HasIndex(x => new { x.TagId, x.QuestionId }).IsUnique();
+        builder.HasIndex(x => new { x.TagId, x.QuestionId });
     }
 }
