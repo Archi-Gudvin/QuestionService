@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestionService.Api.Controllers.Base;
 using QuestionService.Api.Dtos;
+using QuestionService.Api.Extensions;
 using QuestionService.Domain.Dtos.Question;
 using QuestionService.Domain.Extensions;
 using QuestionService.Domain.Interfaces.Service;
@@ -36,7 +37,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
 
         var result = await questionService.AskQuestionAsync(userId, dto, cancellationToken);
 
-        return HandleBaseResult(result, HttpStatusCode.Created);
+        return result.ToActionResult(HttpStatusCode.Created);
     }
 
     /// <summary>
@@ -56,7 +57,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
 
         var result = await questionService.DeleteQuestionAsync(userId, questionId, cancellationToken);
 
-        return HandleBaseResult(result);
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -81,7 +82,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
 
         var result = await questionService.EditQuestionAsync(userId, dto, cancellationToken);
 
-        return HandleBaseResult(result);
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -103,7 +104,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
 
         var result = await questionVoteService.DownvoteAsync(userId, questionId, cancellationToken);
 
-        return HandleBaseResult(result);
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -125,7 +126,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
 
         var result = await questionVoteService.UpvoteAsync(userId, questionId, cancellationToken);
 
-        return HandleBaseResult(result);
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -143,6 +144,6 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
 
         var result = await questionVoteService.RemoveVoteAsync(userId, questionId, cancellationToken);
 
-        return HandleBaseResult(result);
+        return result.ToActionResult();
     }
 }

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc;
 using QuestionService.Api.Controllers.Base;
+using QuestionService.Api.Extensions;
 using QuestionService.Domain.Dtos.View;
 using QuestionService.Domain.Extensions;
 using QuestionService.Domain.Interfaces.Service;
@@ -37,7 +38,7 @@ public class ViewController(IViewService viewService) : BaseController
 
         var result = await viewService.IncrementViewsAsync(dto, cancellationToken);
 
-        return HandleBaseResult(result);
+        return result.ToActionResult();
     }
 
     private long? GetUserIdIfExists()

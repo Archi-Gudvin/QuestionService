@@ -2,6 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestionService.Api.Controllers.Base;
+using QuestionService.Api.Extensions;
 using QuestionService.Domain.Dtos.Tag;
 using QuestionService.Domain.Enums;
 using QuestionService.Domain.Interfaces.Service;
@@ -34,7 +35,7 @@ public class TagController(ITagService tagService) : BaseController
     {
         var result = await tagService.CreateTagAsync(dto, cancellationToken);
 
-        return HandleBaseResult(result, HttpStatusCode.Created);
+        return result.ToActionResult(HttpStatusCode.Created);
     }
 
     /// <summary>
@@ -54,7 +55,7 @@ public class TagController(ITagService tagService) : BaseController
     {
         var result = await tagService.UpdateTagAsync(dto, cancellationToken);
 
-        return HandleBaseResult(result);
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -72,6 +73,6 @@ public class TagController(ITagService tagService) : BaseController
     {
         var result = await tagService.DeleteTagAsync(id, cancellationToken);
 
-        return HandleBaseResult(result);
+        return result.ToActionResult();
     }
 }
