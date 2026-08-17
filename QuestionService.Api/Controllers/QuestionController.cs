@@ -14,6 +14,8 @@ namespace QuestionService.Api.Controllers;
 ///     Question controller
 /// </summary>
 [Authorize]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+[ProducesResponseType(StatusCodes.Status404NotFound)]
 public class QuestionController(IQuestionService questionService, IQuestionVoteService questionVoteService)
     : BaseController
 {
@@ -27,8 +29,6 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BaseResult<QuestionDto>>> AskQuestionAsync(AskQuestionDto dto,
         CancellationToken cancellationToken)
     {
@@ -48,9 +48,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <response code="404">User or question not found</response>
     [HttpDelete("{questionId:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BaseResult<QuestionDto>>> DeleteQuestionAsync(long questionId,
         CancellationToken cancellationToken)
     {
@@ -72,9 +70,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     [HttpPut("{questionId:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BaseResult<QuestionDto>>> EditQuestionAsync(long questionId,
         RequestEditQuestionDto requestDto,
         CancellationToken cancellationToken)
@@ -98,9 +94,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <response code="409">User has already voted on this question</response>
     [HttpPatch("{questionId:long}/downvote")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<BaseResult<VoteQuestionDto>>> DownvoteQuestionAsync(long questionId,
         CancellationToken cancellationToken)
@@ -122,9 +116,7 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <response code="409">User has already voted on this question</response>
     [HttpPatch("{questionId:long}/upvote")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<BaseResult<VoteQuestionDto>>> UpvoteQuestionAsync(long questionId,
         CancellationToken cancellationToken)
@@ -144,8 +136,6 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <response code="404">User, question or vote not found</response>
     [HttpDelete("{questionId:long}/vote")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BaseResult<VoteQuestionDto>>> RemoveQuestionVoteAsync(long questionId,
         CancellationToken cancellationToken)
     {

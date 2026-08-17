@@ -13,6 +13,8 @@ namespace QuestionService.Api.Controllers;
 ///     Tag controller
 /// </summary>
 [Authorize(Roles = $"{nameof(Roles.Moderator)},{nameof(Roles.Admin)}")]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+[ProducesResponseType(StatusCodes.Status403Forbidden)]
 public class TagController(ITagService tagService) : BaseController
 {
     /// <summary>
@@ -26,8 +28,6 @@ public class TagController(ITagService tagService) : BaseController
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<BaseResult<TagDto>>> CreateTagAsync([FromBody] CreateTagDto dto,
         CancellationToken cancellationToken)
@@ -48,8 +48,6 @@ public class TagController(ITagService tagService) : BaseController
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BaseResult<TagDto>>> UpdateTagAsync([FromBody] TagDto dto,
         CancellationToken cancellationToken)
@@ -68,8 +66,6 @@ public class TagController(ITagService tagService) : BaseController
     /// <response code="404">Tag not found</response>
     [HttpDelete("{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BaseResult<TagDto>>> DeleteTagAsync(long id,
         CancellationToken cancellationToken)
