@@ -1,4 +1,5 @@
 using QuestionService.Application.Enums;
+using QuestionService.Application.Extensions;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository.Cache;
@@ -20,12 +21,7 @@ public class CacheGetViewService(IViewCacheRepository cacheRepository, IGetViewS
             async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (views.Length == 0)
-            return idsArray.Length switch
-            {
-                <= 1 => CollectionResult<View>.Failure(ErrorMessage.ViewNotFound, (int)ErrorCodes.ViewNotFound),
-                > 1 => CollectionResult<View>.Failure(ErrorMessage.ViewsNotFound, (int)ErrorCodes.ViewsNotFound)
-            };
+        if (views.Length == 0) return CollectionResult<View>.ViewsNotFound(idsArray.Length);
 
         return CollectionResult<View>.Success(views);
     }

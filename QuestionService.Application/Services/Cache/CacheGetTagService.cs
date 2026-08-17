@@ -1,4 +1,5 @@
 using QuestionService.Application.Enums;
+using QuestionService.Application.Extensions;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository.Cache;
@@ -20,12 +21,7 @@ public class CacheGetTagService(ITagCacheRepository cacheRepository, IGetTagServ
             async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (tags.Length == 0)
-            return idsArray.Length switch
-            {
-                <= 1 => CollectionResult<Tag>.Failure(ErrorMessage.TagNotFound, (int)ErrorCodes.TagNotFound),
-                > 1 => CollectionResult<Tag>.Failure(ErrorMessage.TagsNotFound, (int)ErrorCodes.TagsNotFound)
-            };
+        if (tags.Length == 0) return CollectionResult<Tag>.TagsNotFound(idsArray.Length);
 
         return CollectionResult<Tag>.Success(tags);
     }

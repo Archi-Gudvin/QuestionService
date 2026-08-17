@@ -1,6 +1,7 @@
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using QuestionService.Application.Enums;
+using QuestionService.Application.Extensions;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.Vote;
 using QuestionService.Domain.Entities;
@@ -37,12 +38,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
             .Where(predicate)
             .ToArrayAsync(cancellationToken);
 
-        if (votes.Length == 0)
-            return keys.Length switch
-            {
-                <= 1 => CollectionResult<Vote>.Failure(ErrorMessage.VoteNotFound, (int)ErrorCodes.VoteNotFound),
-                > 1 => CollectionResult<Vote>.Failure(ErrorMessage.VotesNotFound, (int)ErrorCodes.VotesNotFound)
-            };
+        if (votes.Length == 0) return CollectionResult<Vote>.VotesNotFound(dtos.Count);
 
         return CollectionResult<Vote>.Success(votes);
     }

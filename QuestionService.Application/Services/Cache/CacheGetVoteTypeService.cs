@@ -1,4 +1,5 @@
 using QuestionService.Application.Enums;
+using QuestionService.Application.Extensions;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository.Cache;
@@ -23,14 +24,7 @@ public class CacheGetVoteTypeService(IVoteTypeCacheRepository cacheRepository, I
             async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (voteTypes.Length == 0)
-            return idsArray.Length switch
-            {
-                <= 1 => CollectionResult<VoteType>.Failure(ErrorMessage.VoteTypeNotFound,
-                    (int)ErrorCodes.VoteTypeNotFound),
-                > 1 => CollectionResult<VoteType>.Failure(ErrorMessage.VoteTypesNotFound,
-                    (int)ErrorCodes.VoteTypesNotFound)
-            };
+        if (voteTypes.Length == 0) return CollectionResult<VoteType>.VoteTypesNotFound(idsArray.Length);
 
         return CollectionResult<VoteType>.Success(voteTypes);
     }

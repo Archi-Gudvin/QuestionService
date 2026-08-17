@@ -1,4 +1,5 @@
 using QuestionService.Application.Enums;
+using QuestionService.Application.Extensions;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Dtos.Vote;
 using QuestionService.Domain.Entities;
@@ -21,12 +22,7 @@ public class CacheGetVoteService(IVoteCacheRepository cacheRepository, IGetVoteS
             async (dtosToFetch, ct) => (await inner.GetByDtosAsync(dtosToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (votes.Length == 0)
-            return dtosArray.Length switch
-            {
-                <= 1 => CollectionResult<Vote>.Failure(ErrorMessage.VoteNotFound, (int)ErrorCodes.VoteNotFound),
-                > 1 => CollectionResult<Vote>.Failure(ErrorMessage.VotesNotFound, (int)ErrorCodes.VotesNotFound)
-            };
+        if (votes.Length == 0) return CollectionResult<Vote>.VotesNotFound(dtosArray.Length);
 
         return CollectionResult<Vote>.Success(votes);
     }

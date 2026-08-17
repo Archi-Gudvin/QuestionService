@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using QuestionService.Application.Enums;
+using QuestionService.Application.Extensions;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository;
@@ -27,12 +28,7 @@ public class GetTagService(IBaseRepository<Tag> tagRepository, IBaseRepository<Q
             .Where(x => ids.Contains(x.Id))
             .ToArrayAsync(cancellationToken);
 
-        if (tags.Length == 0)
-            return ids.Count switch
-            {
-                <= 1 => CollectionResult<Tag>.Failure(ErrorMessage.TagNotFound, (int)ErrorCodes.TagNotFound),
-                > 1 => CollectionResult<Tag>.Failure(ErrorMessage.TagsNotFound, (int)ErrorCodes.TagsNotFound)
-            };
+        if (tags.Length == 0) return CollectionResult<Tag>.TagsNotFound(ids.Count);
 
         return CollectionResult<Tag>.Success(tags);
     }

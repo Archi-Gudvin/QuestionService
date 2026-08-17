@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using QuestionService.Application.Enums;
+using QuestionService.Application.Extensions;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository;
@@ -25,12 +26,7 @@ public class GetViewService(IBaseRepository<View> viewRepository) : IGetViewServ
     {
         var views = await viewRepository.GetAll().Where(x => ids.Contains(x.Id)).ToArrayAsync(cancellationToken);
 
-        if (views.Length == 0)
-            return ids.Count switch
-            {
-                <= 1 => CollectionResult<View>.Failure(ErrorMessage.ViewNotFound, (int)ErrorCodes.ViewNotFound),
-                > 1 => CollectionResult<View>.Failure(ErrorMessage.ViewsNotFound, (int)ErrorCodes.ViewsNotFound),
-            };
+        if (views.Length == 0) return CollectionResult<View>.ViewsNotFound(ids.Count);
 
         return CollectionResult<View>.Success(views);
     }

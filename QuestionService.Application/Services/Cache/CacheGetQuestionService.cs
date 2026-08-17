@@ -1,4 +1,5 @@
 using QuestionService.Application.Enums;
+using QuestionService.Application.Extensions;
 using QuestionService.Application.Resources;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository.Cache;
@@ -21,14 +22,7 @@ public class CacheGetQuestionService(IQuestionCacheRepository cacheRepository, I
             async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (questions.Length == 0)
-            return idsArray.Length switch
-            {
-                <= 1 => CollectionResult<Question>.Failure(ErrorMessage.QuestionNotFound,
-                    (int)ErrorCodes.QuestionNotFound),
-                > 1 => CollectionResult<Question>.Failure(ErrorMessage.QuestionsNotFound,
-                    (int)ErrorCodes.QuestionsNotFound)
-            };
+        if (questions.Length == 0) return CollectionResult<Question>.QuestionsNotFound(idsArray.Length);
 
         return CollectionResult<Question>.Success(questions);
     }
