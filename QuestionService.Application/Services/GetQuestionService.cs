@@ -16,7 +16,7 @@ public class GetQuestionService(
 {
     public QueryableResult<Question> GetAll()
     {
-        var questions = questionRepository.GetAll();
+        var questions = questionRepository.GetAll().AsNoTracking();
 
         // Since there can be no questions, it is not exception to have no questions
         return QueryableResult<Question>.Success(questions);
@@ -25,7 +25,7 @@ public class GetQuestionService(
     public async Task<CollectionResult<Question>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
-        var questions = await questionRepository.GetAll().Where(x => ids.Contains(x.Id))
+        var questions = await questionRepository.GetAll().AsNoTracking().Where(x => ids.Contains(x.Id))
             .ToArrayAsync(cancellationToken);
 
         if (questions.Length == 0) return CollectionResult<Question>.QuestionsNotFound(ids.Count);
@@ -37,6 +37,7 @@ public class GetQuestionService(
         IReadOnlyCollection<long> tagIds, CancellationToken cancellationToken = default)
     {
         var groupedQuestions = await tagRepository.GetAll()
+            .AsNoTracking()
             .Where(x => tagIds.Contains(x.Id))
             .Include(x => x.Questions)
             .Select(x => new KeyValuePair<long, IEnumerable<Question>>(x.Id, x.Questions))
@@ -53,6 +54,7 @@ public class GetQuestionService(
         IReadOnlyCollection<long> userIds, CancellationToken cancellationToken = default)
     {
         var questions = (await questionRepository.GetAll()
+                .AsNoTracking()
                 .Where(x => userIds.Contains(x.UserId))
                 .GroupBy(x => x.UserId)
                 .ToArrayAsync(cancellationToken))

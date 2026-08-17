@@ -15,7 +15,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
 {
     public QueryableResult<Vote> GetAll()
     {
-        var votes = voteRepository.GetAll();
+        var votes = voteRepository.GetAll().AsNoTracking();
 
         // Since there can be no votes, it is not an exception to have no votes
         return QueryableResult<Vote>.Success(votes);
@@ -30,6 +30,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
                 current.Or(x => x.QuestionId == local.QuestionId && x.UserId == local.UserId));
 
         var votes = await voteRepository.GetAll()
+            .AsNoTracking()
             .AsExpandable()
             .Where(predicate)
             .ToArrayAsync(cancellationToken);
@@ -43,6 +44,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
         IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default)
     {
         var votes = (await voteRepository.GetAll()
+                .AsNoTracking()
                 .Where(x => questionIds.Contains(x.QuestionId))
                 .GroupBy(x => x.QuestionId)
                 .ToArrayAsync(cancellationToken))
@@ -61,6 +63,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
         IReadOnlyCollection<long> userIds, CancellationToken cancellationToken = default)
     {
         var votes = (await voteRepository.GetAll()
+                .AsNoTracking()
                 .Where(x => userIds.Contains(x.UserId))
                 .GroupBy(x => x.UserId)
                 .ToArrayAsync(cancellationToken))
@@ -78,6 +81,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
         IReadOnlyCollection<long> voteTypeIds, CancellationToken cancellationToken = default)
     {
         var votes = (await voteRepository.GetAll()
+                .AsNoTracking()
                 .Where(x => voteTypeIds.Contains(x.VoteTypeId))
                 .GroupBy(x => x.VoteTypeId)
                 .ToArrayAsync(cancellationToken))

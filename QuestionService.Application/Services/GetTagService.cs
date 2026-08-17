@@ -14,7 +14,7 @@ public class GetTagService(IBaseRepository<Tag> tagRepository, IBaseRepository<Q
 {
     public QueryableResult<Tag> GetAll()
     {
-        var tags = tagRepository.GetAll();
+        var tags = tagRepository.GetAll().AsNoTracking();
 
         return QueryableResult<Tag>.Success(tags);
     }
@@ -23,6 +23,7 @@ public class GetTagService(IBaseRepository<Tag> tagRepository, IBaseRepository<Q
         CancellationToken cancellationToken = default)
     {
         var tags = await tagRepository.GetAll()
+            .AsNoTracking()
             .Where(x => ids.Contains(x.Id))
             .ToArrayAsync(cancellationToken);
 
@@ -35,6 +36,7 @@ public class GetTagService(IBaseRepository<Tag> tagRepository, IBaseRepository<Q
         IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default)
     {
         var groupedTags = await questionRepository.GetAll()
+            .AsNoTracking()
             .Where(x => questionIds.Contains(x.Id))
             .Include(x => x.Tags)
             .Select(x => new KeyValuePair<long, IEnumerable<Tag>>(x.Id, x.Tags))

@@ -13,7 +13,7 @@ public class GetViewService(IBaseRepository<View> viewRepository) : IGetViewServ
 {
     public QueryableResult<View> GetAll()
     {
-        var views = viewRepository.GetAll();
+        var views = viewRepository.GetAll().AsNoTracking();
 
         return QueryableResult<View>.Success(views);
     }
@@ -22,7 +22,8 @@ public class GetViewService(IBaseRepository<View> viewRepository) : IGetViewServ
     public async Task<CollectionResult<View>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
-        var views = await viewRepository.GetAll().Where(x => ids.Contains(x.Id)).ToArrayAsync(cancellationToken);
+        var views = await viewRepository.GetAll().AsNoTracking().Where(x => ids.Contains(x.Id))
+            .ToArrayAsync(cancellationToken);
 
         if (views.Length == 0) return CollectionResult<View>.ViewsNotFound(ids.Count);
 
@@ -33,6 +34,7 @@ public class GetViewService(IBaseRepository<View> viewRepository) : IGetViewServ
         IReadOnlyCollection<long> userIds, CancellationToken cancellationToken = default)
     {
         var views = (await viewRepository.GetAll()
+                .AsNoTracking()
                 .Where(x => x.UserId.HasValue && userIds.Contains(x.UserId.Value))
                 .GroupBy(x => x.UserId)
                 .ToArrayAsync(cancellationToken))
@@ -51,6 +53,7 @@ public class GetViewService(IBaseRepository<View> viewRepository) : IGetViewServ
         IReadOnlyCollection<long> questionIds, CancellationToken cancellationToken = default)
     {
         var views = (await viewRepository.GetAll()
+                .AsNoTracking()
                 .Where(x => questionIds.Contains(x.QuestionId))
                 .GroupBy(x => x.QuestionId)
                 .ToArrayAsync(cancellationToken))

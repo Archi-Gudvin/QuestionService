@@ -13,7 +13,7 @@ public class GetVoteTypeService(IBaseRepository<VoteType> voteTypeRepository) : 
 {
     public QueryableResult<VoteType> GetAll()
     {
-        var voteTypes = voteTypeRepository.GetAll();
+        var voteTypes = voteTypeRepository.GetAll().AsNoTracking();
 
         return QueryableResult<VoteType>.Success(voteTypes);
     }
@@ -22,6 +22,7 @@ public class GetVoteTypeService(IBaseRepository<VoteType> voteTypeRepository) : 
         CancellationToken cancellationToken = default)
     {
         var voteTypes = await voteTypeRepository.GetAll()
+            .AsNoTracking()
             .Where(x => ids.Contains(x.Id))
             .ToArrayAsync(cancellationToken);
 
