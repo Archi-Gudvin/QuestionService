@@ -4,5 +4,5 @@ public interface IValidatableQuestion
 {
     public string Title { get; }
     public string Body { get; }
-    public IEnumerable<string> TagNames { get; }
+    public IReadOnlyCollection<string> TagNames { get; }
 }

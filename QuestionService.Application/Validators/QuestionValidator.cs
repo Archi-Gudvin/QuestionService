@@ -21,11 +21,7 @@ public class QuestionValidator : AbstractValidator<IValidatableQuestion>
 
         RuleFor(x => x.TagNames)
             .NotNull().WithMessage(ErrorMessage.InvalidTags)
-            .Must(x =>
-            {
-                var tags = x.ToArray();
-                return tags.Length is >= 1 and <= BusinessRules.MaxTagsCount;
-            })
+            .Must(x => x.Count is >= 1 and <= BusinessRules.MaxTagsCount)
             .WithMessage(ErrorMessage.InvalidTags);
     }
 }
