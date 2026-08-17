@@ -60,6 +60,22 @@ public class QuestionServiceTests
     }
 
     [Fact]
+    public async Task AskQuestionAsync_DuplicateExistingTag_ReturnsSuccess()
+    {
+        //Arrange
+        var questionService = new QuestionServiceSut().GetService();
+        const long initiatorId = 1;
+        var dto = new AskQuestionDto("NewQuestionTitle", "NewQuestionBodyNewQuestionBody", [".NET", ".NET"]);
+
+        //Act
+        var result = await questionService.AskQuestionAsync(initiatorId, dto);
+
+        //Assert
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Data);
+    }
+
+    [Fact]
     public async Task EditQuestionAsync_ValidData_ReturnsSuccess()
     {
         //Arrange
@@ -141,6 +157,22 @@ public class QuestionServiceTests
         Assert.False(result.IsSuccess);
         Assert.Equal(ErrorMessage.TagsNotFound, result.ErrorMessage);
         Assert.Null(result.Data);
+    }
+
+    [Fact]
+    public async Task EditQuestionAsync_DuplicateExistingTag_ReturnsSuccess()
+    {
+        //Arrange
+        var questionService = new QuestionServiceSut().GetService();
+        const long initiatorId = 1;
+        var dto = new EditQuestionDto(1, "NewQuestionTitle", "NewQuestionBodyNewQuestionBody", [".NET", ".NET"]);
+
+        //Act
+        var result = await questionService.EditQuestionAsync(initiatorId, dto);
+
+        //Assert
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Data);
     }
 
     [Fact]

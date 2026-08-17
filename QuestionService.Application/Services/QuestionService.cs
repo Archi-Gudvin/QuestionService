@@ -29,9 +29,10 @@ public class QuestionService(
         if (user == null)
             return BaseResult<QuestionDto>.Failure(ErrorMessage.UserNotFound, (int)ErrorCodes.UserNotFound);
 
-        var tags = await tagRepository.GetAll().Where(x => dto.TagNames.Contains(x.Name))
+        var tagNames = dto.TagNames.Distinct().ToArray();
+        var tags = await tagRepository.GetAll().Where(x => tagNames.Contains(x.Name))
             .ToListAsync(cancellationToken);
-        if (tags.Count != dto.TagNames.Count())
+        if (tags.Count != tagNames.Length)
             return BaseResult<QuestionDto>.Failure(ErrorMessage.TagsNotFound, (int)ErrorCodes.TagsNotFound);
 
         await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
@@ -65,9 +66,10 @@ public class QuestionService(
         if (!HasAccess(initiator, question))
             return BaseResult<QuestionDto>.Failure(ErrorMessage.OperationForbidden, (int)ErrorCodes.OperationForbidden);
 
-        var tags = await tagRepository.GetAll().Where(x => dto.TagNames.Contains(x.Name))
+        var tagNames = dto.TagNames.Distinct().ToArray();
+        var tags = await tagRepository.GetAll().Where(x => tagNames.Contains(x.Name))
             .ToListAsync(cancellationToken);
-        if (tags.Count != dto.TagNames.Count())
+        if (tags.Count != tagNames.Length)
             return BaseResult<QuestionDto>.Failure(ErrorMessage.TagsNotFound, (int)ErrorCodes.TagsNotFound);
 
         await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
