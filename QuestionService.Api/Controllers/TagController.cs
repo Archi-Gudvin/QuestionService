@@ -18,18 +18,6 @@ public class TagController(ITagService tagService) : BaseController
     /// <summary>
     ///     Creates a tag
     /// </summary>
-    /// <param name="dto"></param>
-    /// <param name="cancellationToken"></param>
-    /// <remarks>
-    /// Request to create a tag:
-    ///
-    ///     POST
-    ///     {
-    ///         "name":"string",
-    ///         "description":"string"
-    ///     }
-    /// </remarks>
-    /// <returns></returns>
     /// <response code="201">Tag was created successfully</response>
     /// <response code="400">Validation failed (invalid property)</response>
     /// <response code="401">User is not authenticated</response>
@@ -52,19 +40,6 @@ public class TagController(ITagService tagService) : BaseController
     /// <summary>
     ///     Updates a tag
     /// </summary>
-    /// <param name="dto"></param>
-    /// <param name="cancellationToken"></param>
-    /// <remarks>
-    /// Request to update a tag:
-    ///
-    ///     PUT
-    ///     {
-    ///         "id":1,
-    ///         "name":"string",
-    ///         "description":"string"
-    ///     }
-    /// </remarks>
-    /// <returns></returns>
     /// <response code="200">Tag was updated successfully</response>
     /// <response code="400">Validation failed (invalid property)</response>
     /// <response code="401">User is not authenticated</response>
@@ -87,14 +62,6 @@ public class TagController(ITagService tagService) : BaseController
     /// <summary>
     ///     Deletes a tag
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <remarks>
-    /// Request to delete a tag:
-    ///
-    ///     DELETE {id:long}
-    /// </remarks>
-    /// <returns></returns>
     /// <response code="200">Tag was deleted successfully</response>
     /// <response code="401">User is not authenticated</response>
     /// <response code="403">User does not have Moderator or Admin role</response>

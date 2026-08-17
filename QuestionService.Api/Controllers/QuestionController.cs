@@ -20,21 +20,6 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <summary>
     ///     Creates a question
     /// </summary>
-    /// <param name="dto"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <remarks>
-    /// Request to ask a question:
-    ///
-    ///     POST
-    ///     {
-    ///         "title":"string",
-    ///         "body":"string",
-    ///         "tagNames":[
-    ///            "string"
-    ///          ]
-    ///     }
-    /// </remarks>
     /// <response code="201">Question was created successfully</response>
     /// <response code="400">Validation failed (invalid property)</response>
     /// <response code="401">User is not authenticated</response>
@@ -57,14 +42,6 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <summary>
     ///     Deletes a question
     /// </summary>
-    /// <param name="questionId"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <remarks>
-    /// Request to delete a question:
-    ///
-    ///     DELETE {questionId}
-    /// </remarks>
     /// <response code="200">Question was deleted successfully</response>
     /// <response code="401">User is not authenticated</response>
     /// <response code="403">User is not the owner of the question</response>
@@ -87,22 +64,6 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <summary>
     ///     Edits a question
     /// </summary>
-    /// <param name="questionId"></param>
-    /// <param name="requestDto"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <remarks>
-    /// Request to edit a question:
-    ///
-    ///     PUT
-    ///     {
-    ///         "title":"string",
-    ///         "body":"string",
-    ///         "tagNames":[
-    ///            "string"
-    ///          ]
-    ///     }
-    /// </remarks>
     /// <response code="200">Question was edited successfully</response>
     /// <response code="400">Validation failed (invalid property)</response>
     /// <response code="401">User is not authenticated</response>
@@ -130,14 +91,6 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <summary>
     ///     Downvotes a question
     /// </summary>
-    /// <param name="questionId"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <remarks>
-    /// Request to downvote a question:
-    ///
-    ///     PATCH {questionId}/downvote
-    /// </remarks>
     /// <response code="200">Vote was cast successfully</response>
     /// <response code="401">User is not authenticated</response>
     /// <response code="403">User is voting on their own post or has insufficient reputation</response>
@@ -162,14 +115,6 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <summary>
     ///     Upvotes a question
     /// </summary>
-    /// <param name="questionId"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <remarks>
-    /// Request to upvote a question:
-    ///
-    ///     PATCH {questionId}/upvote
-    /// </remarks>
     /// <response code="200">Vote was cast successfully</response>
     /// <response code="401">User is not authenticated</response>
     /// <response code="403">User is voting on their own post or has insufficient reputation</response>
@@ -194,14 +139,6 @@ public class QuestionController(IQuestionService questionService, IQuestionVoteS
     /// <summary>
     ///     Removes user's vote from a question
     /// </summary>
-    /// <param name="questionId"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <remarks>
-    ///     Request to remove a vote from a question:
-    ///
-    ///     DELETE {questionId}/vote
-    /// </remarks>
     /// <response code="200">Vote was removed successfully</response>
     /// <response code="401">User is not authenticated</response>
     /// <response code="404">User, question or vote not found</response>

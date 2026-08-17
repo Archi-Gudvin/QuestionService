@@ -18,15 +18,6 @@ public class ViewController(IViewService viewService) : BaseController
     /// <summary>
     ///     Increments views of a question by its id
     /// </summary>
-    /// <param name="questionId"></param>
-    /// <param name="fingerprint"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <remarks>
-    /// Request to increment views of a question
-    ///
-    ///     POST {questionId}
-    /// </remarks>
     /// <response code="204">Views were incremented successfully</response>
     /// <response code="400">Invalid data format</response>
     [HttpPost("{questionId:long}")]
