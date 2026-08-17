@@ -11,8 +11,10 @@ namespace QuestionService.Application.Services.Cache;
 
 public class CacheGetVoteService(IVoteCacheRepository cacheRepository, IGetVoteService inner) : IGetVoteService
 {
-    public Task<QueryableResult<Vote>> GetAllAsync(CancellationToken cancellationToken = default) =>
-        inner.GetAllAsync(cancellationToken);
+    public QueryableResult<Vote> GetAll()
+    {
+        return inner.GetAll();
+    }
 
     public async Task<CollectionResult<Vote>> GetByUserAndQuestionAsync(IReadOnlyCollection<VoteKey> keys,
         CancellationToken cancellationToken = default)

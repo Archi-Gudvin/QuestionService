@@ -11,13 +11,11 @@ namespace QuestionService.Application.Services;
 
 public class GetVoteTypeService(IBaseRepository<VoteType> voteTypeRepository) : IGetVoteTypeService
 {
-    public Task<QueryableResult<VoteType>> GetAllAsync(CancellationToken cancellationToken = default)
+    public QueryableResult<VoteType> GetAll()
     {
-        cancellationToken.ThrowIfCancellationRequested();
-
         var voteTypes = voteTypeRepository.GetAll();
 
-        return Task.FromResult(QueryableResult<VoteType>.Success(voteTypes));
+        return QueryableResult<VoteType>.Success(voteTypes);
     }
 
     public async Task<CollectionResult<VoteType>> GetByIdsAsync(IReadOnlyCollection<long> ids,

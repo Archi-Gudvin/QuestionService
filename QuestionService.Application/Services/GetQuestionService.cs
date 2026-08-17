@@ -14,14 +14,12 @@ public class GetQuestionService(
     IBaseRepository<Tag> tagRepository)
     : IGetQuestionService
 {
-    public Task<QueryableResult<Question>> GetAllAsync(CancellationToken cancellationToken = default)
+    public QueryableResult<Question> GetAll()
     {
-        cancellationToken.ThrowIfCancellationRequested();
-
         var questions = questionRepository.GetAll();
 
         // Since there can be no questions, it is not exception to have no questions
-        return Task.FromResult(QueryableResult<Question>.Success(questions));
+        return QueryableResult<Question>.Success(questions);
     }
 
     public async Task<CollectionResult<Question>> GetByIdsAsync(IReadOnlyCollection<long> ids,

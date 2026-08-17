@@ -9,13 +9,13 @@ namespace QuestionService.Tests.UnitTests.Tests;
 public class GetQuestionServiceTests
 {
     [Fact]
-    public async Task GetAllAsync_ExistingQuestions_ReturnsSuccess()
+    public void GetAll_ExistingQuestions_ReturnsSuccess()
     {
         //Arrange
         var getQuestionService = new CacheGetQuestionServiceSut().GetService();
 
         //Act
-        var result = await getQuestionService.GetAllAsync();
+        var result = getQuestionService.GetAll();
 
         //Assert
         Assert.True(result.IsSuccess);

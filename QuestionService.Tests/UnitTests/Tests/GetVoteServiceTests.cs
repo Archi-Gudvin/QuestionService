@@ -10,13 +10,13 @@ namespace QuestionService.Tests.UnitTests.Tests;
 public class GetVoteServiceTests
 {
     [Fact]
-    public async Task GetAllAsync_ExistingVotes_ReturnsSuccess()
+    public void GetAll_ExistingVotes_ReturnsSuccess()
     {
         //Arrange
         var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
-        var result = await getVoteService.GetAllAsync();
+        var result = getVoteService.GetAll();
 
         //Assert
         Assert.True(result.IsSuccess);

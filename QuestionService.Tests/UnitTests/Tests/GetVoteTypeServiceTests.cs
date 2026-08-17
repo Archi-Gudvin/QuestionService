@@ -9,13 +9,13 @@ namespace QuestionService.Tests.UnitTests.Tests;
 public class GetVoteTypeServiceTests
 {
     [Fact]
-    public async Task GetAllAsync_ExistingVoteTypes_ReturnsSuccess()
+    public void GetAll_ExistingVoteTypes_ReturnsSuccess()
     {
         //Arrange
         var getVoteTypeService = new CacheGetVoteTypeServiceSut().GetService();
 
         //Act
-        var result = await getVoteTypeService.GetAllAsync();
+        var result = getVoteTypeService.GetAll();
 
         //Assert
         Assert.True(result.IsSuccess);

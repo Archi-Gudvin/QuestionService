@@ -13,14 +13,12 @@ namespace QuestionService.Application.Services;
 
 public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteService
 {
-    public Task<QueryableResult<Vote>> GetAllAsync(CancellationToken cancellationToken = default)
+    public QueryableResult<Vote> GetAll()
     {
-        cancellationToken.ThrowIfCancellationRequested();
-
         var votes = voteRepository.GetAll();
 
-        // Since there can be no votes, it is not an exception to have no votes 
-        return Task.FromResult(QueryableResult<Vote>.Success(votes));
+        // Since there can be no votes, it is not an exception to have no votes
+        return QueryableResult<Vote>.Success(votes);
     }
 
     public async Task<CollectionResult<Vote>> GetByUserAndQuestionAsync(IReadOnlyCollection<VoteKey> keys,

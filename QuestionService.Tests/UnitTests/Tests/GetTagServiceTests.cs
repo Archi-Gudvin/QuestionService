@@ -9,13 +9,13 @@ namespace QuestionService.Tests.UnitTests.Tests;
 public class GetTagServiceTests
 {
     [Fact]
-    public async Task GetAllAsync_ExistingTags_ReturnsSuccess()
+    public void GetAll_ExistingTags_ReturnsSuccess()
     {
         //Arrange
         var getTagService = new CacheGetTagServiceSut().GetService();
 
         //Act
-        var result = await getTagService.GetAllAsync();
+        var result = getTagService.GetAll();
 
         //Assert
         Assert.True(result.IsSuccess);

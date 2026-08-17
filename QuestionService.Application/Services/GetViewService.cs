@@ -11,13 +11,11 @@ namespace QuestionService.Application.Services;
 
 public class GetViewService(IBaseRepository<View> viewRepository) : IGetViewService
 {
-    public Task<QueryableResult<View>> GetAllAsync(CancellationToken cancellationToken = default)
+    public QueryableResult<View> GetAll()
     {
-        cancellationToken.ThrowIfCancellationRequested();
-
         var views = viewRepository.GetAll();
 
-        return Task.FromResult(QueryableResult<View>.Success(views));
+        return QueryableResult<View>.Success(views);
     }
 
 

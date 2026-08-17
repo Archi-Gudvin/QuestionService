@@ -1,6 +1,4 @@
-using QuestionService.Application.Enums;
 using QuestionService.Application.Extensions;
-using QuestionService.Application.Resources;
 using QuestionService.Domain.Entities;
 using QuestionService.Domain.Interfaces.Repository.Cache;
 using QuestionService.Domain.Interfaces.Service;
@@ -11,9 +9,9 @@ namespace QuestionService.Application.Services.Cache;
 public class CacheGetVoteTypeService(IVoteTypeCacheRepository cacheRepository, IGetVoteTypeService inner)
     : IGetVoteTypeService
 {
-    public Task<QueryableResult<VoteType>> GetAllAsync(CancellationToken cancellationToken = default)
+    public QueryableResult<VoteType> GetAll()
     {
-        return inner.GetAllAsync(cancellationToken);
+        return inner.GetAll();
     }
 
     public async Task<CollectionResult<VoteType>> GetByIdsAsync(IReadOnlyCollection<long> ids,

@@ -10,8 +10,10 @@ namespace QuestionService.Application.Services.Cache;
 
 public class CacheGetTagService(ITagCacheRepository cacheRepository, IGetTagService inner) : IGetTagService
 {
-    public Task<QueryableResult<Tag>> GetAllAsync(CancellationToken cancellationToken = default) =>
-        inner.GetAllAsync(cancellationToken);
+    public QueryableResult<Tag> GetAll()
+    {
+        return inner.GetAll();
+    }
 
     public async Task<CollectionResult<Tag>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)

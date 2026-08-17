@@ -12,13 +12,11 @@ namespace QuestionService.Application.Services;
 public class GetTagService(IBaseRepository<Tag> tagRepository, IBaseRepository<Question> questionRepository)
     : IGetTagService
 {
-    public Task<QueryableResult<Tag>> GetAllAsync(CancellationToken cancellationToken = default)
+    public QueryableResult<Tag> GetAll()
     {
-        cancellationToken.ThrowIfCancellationRequested();
-
         var tags = tagRepository.GetAll();
 
-        return Task.FromResult(QueryableResult<Tag>.Success(tags));
+        return QueryableResult<Tag>.Success(tags);
     }
 
     public async Task<CollectionResult<Tag>> GetByIdsAsync(IReadOnlyCollection<long> ids,

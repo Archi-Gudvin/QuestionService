@@ -10,8 +10,10 @@ namespace QuestionService.Application.Services.Cache;
 
 public class CacheGetViewService(IViewCacheRepository cacheRepository, IGetViewService inner) : IGetViewService
 {
-    public Task<QueryableResult<View>> GetAllAsync(CancellationToken cancellationToken = default) =>
-        inner.GetAllAsync(cancellationToken);
+    public QueryableResult<View> GetAll()
+    {
+        return inner.GetAll();
+    }
 
     public async Task<CollectionResult<View>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)

@@ -11,8 +11,10 @@ namespace QuestionService.Application.Services.Cache;
 public class CacheGetQuestionService(IQuestionCacheRepository cacheRepository, IGetQuestionService inner)
     : IGetQuestionService
 {
-    public Task<QueryableResult<Question>> GetAllAsync(CancellationToken cancellationToken = default) =>
-        inner.GetAllAsync(cancellationToken);
+    public QueryableResult<Question> GetAll()
+    {
+        return inner.GetAll();
+    }
 
     public async Task<CollectionResult<Question>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
