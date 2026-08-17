@@ -12,8 +12,8 @@ using QuestionService.DAL;
 namespace QuestionService.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260105075323_StatusColumnAddedToOutboxMessage")]
-    partial class StatusColumnAddedToOutboxMessage
+    [Migration("20260817093645_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,17 +35,24 @@ namespace QuestionService.DAL.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(30000)
+                        .HasColumnType("character varying(30000)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Enabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<DateTime>("LastModifiedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -65,8 +72,7 @@ namespace QuestionService.DAL.Migrations
 
                     b.HasKey("QuestionId", "TagId");
 
-                    b.HasIndex("TagId", "QuestionId")
-                        .IsUnique();
+                    b.HasIndex("TagId", "QuestionId");
 
                     b.ToTable("QuestionTag");
                 });
@@ -80,7 +86,6 @@ namespace QuestionService.DAL.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(400)
                         .HasColumnType("character varying(400)");
 
@@ -110,14 +115,16 @@ namespace QuestionService.DAL.Migrations
 
                     b.Property<string>("UserFingerprint")
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("character(64)")
+                        .IsFixedLength();
 
                     b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserIp")
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)");
+                        .HasMaxLength(39)
+                        .HasColumnType("character(39)")
+                        .IsFixedLength();
 
                     b.HasKey("Id");
 
@@ -155,6 +162,11 @@ namespace QuestionService.DAL.Migrations
                         .HasColumnType("bigint");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("MinReputationToVote")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
 
                     b.Property<string>("Name")
                         .IsRequired()

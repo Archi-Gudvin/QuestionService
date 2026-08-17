@@ -69,8 +69,7 @@ namespace QuestionService.DAL.Migrations
 
                     b.HasKey("QuestionId", "TagId");
 
-                    b.HasIndex("TagId", "QuestionId")
-                        .IsUnique();
+                    b.HasIndex("TagId", "QuestionId");
 
                     b.ToTable("QuestionTag");
                 });
