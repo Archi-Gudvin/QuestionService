@@ -26,10 +26,8 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
     public async Task<CollectionResult<Vote>> GetByUserAndQuestionAsync(IReadOnlyCollection<VoteKey> keys,
         CancellationToken cancellationToken = default)
     {
-        var keysArray = keys.ToArray();
-
         var predicate = PredicateBuilder.New<Vote>();
-        predicate = keysArray.Aggregate(predicate,
+        predicate = keys.Aggregate(predicate,
             (current, local) =>
                 current.Or(x => x.QuestionId == local.QuestionId && x.UserId == local.UserId));
 

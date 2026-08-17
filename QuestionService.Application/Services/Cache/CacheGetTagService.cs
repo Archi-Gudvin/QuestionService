@@ -16,12 +16,11 @@ public class CacheGetTagService(ITagCacheRepository cacheRepository, IGetTagServ
     public async Task<CollectionResult<Tag>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
-        var idsArray = ids.ToArray();
-        var tags = (await cacheRepository.GetByIdsAsync(idsArray,
+        var tags = (await cacheRepository.GetByIdsAsync(ids,
             async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (tags.Length == 0) return CollectionResult<Tag>.TagsNotFound(idsArray.Length);
+        if (tags.Length == 0) return CollectionResult<Tag>.TagsNotFound(ids.Count);
 
         return CollectionResult<Tag>.Success(tags);
     }

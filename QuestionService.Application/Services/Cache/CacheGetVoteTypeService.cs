@@ -19,12 +19,11 @@ public class CacheGetVoteTypeService(IVoteTypeCacheRepository cacheRepository, I
     public async Task<CollectionResult<VoteType>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
-        var idsArray = ids.ToArray();
-        var voteTypes = (await cacheRepository.GetByIdsAsync(idsArray,
+        var voteTypes = (await cacheRepository.GetByIdsAsync(ids,
             async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (voteTypes.Length == 0) return CollectionResult<VoteType>.VoteTypesNotFound(idsArray.Length);
+        if (voteTypes.Length == 0) return CollectionResult<VoteType>.VoteTypesNotFound(ids.Count);
 
         return CollectionResult<VoteType>.Success(voteTypes);
     }

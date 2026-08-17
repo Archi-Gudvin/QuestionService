@@ -16,12 +16,11 @@ public class CacheGetViewService(IViewCacheRepository cacheRepository, IGetViewS
     public async Task<CollectionResult<View>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
-        var idsArray = ids.ToArray();
-        var views = (await cacheRepository.GetByIdsAsync(idsArray,
+        var views = (await cacheRepository.GetByIdsAsync(ids,
             async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (views.Length == 0) return CollectionResult<View>.ViewsNotFound(idsArray.Length);
+        if (views.Length == 0) return CollectionResult<View>.ViewsNotFound(ids.Count);
 
         return CollectionResult<View>.Success(views);
     }

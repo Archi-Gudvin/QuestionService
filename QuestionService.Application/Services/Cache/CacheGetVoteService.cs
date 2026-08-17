@@ -17,12 +17,11 @@ public class CacheGetVoteService(IVoteCacheRepository cacheRepository, IGetVoteS
     public async Task<CollectionResult<Vote>> GetByUserAndQuestionAsync(IReadOnlyCollection<VoteKey> keys,
         CancellationToken cancellationToken = default)
     {
-        var keysArray = keys.ToArray();
-        var votes = (await cacheRepository.GetByUserAndQuestionAsync(keysArray,
+        var votes = (await cacheRepository.GetByUserAndQuestionAsync(keys,
             async (keysToFetch, ct) => (await inner.GetByUserAndQuestionAsync(keysToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (votes.Length == 0) return CollectionResult<Vote>.VotesNotFound(keysArray.Length);
+        if (votes.Length == 0) return CollectionResult<Vote>.VotesNotFound(keys.Count);
 
         return CollectionResult<Vote>.Success(votes);
     }

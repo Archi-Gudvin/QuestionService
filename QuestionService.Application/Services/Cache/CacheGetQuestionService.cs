@@ -17,12 +17,11 @@ public class CacheGetQuestionService(IQuestionCacheRepository cacheRepository, I
     public async Task<CollectionResult<Question>> GetByIdsAsync(IReadOnlyCollection<long> ids,
         CancellationToken cancellationToken = default)
     {
-        var idsArray = ids.ToArray();
-        var questions = (await cacheRepository.GetByIdsAsync(idsArray,
+        var questions = (await cacheRepository.GetByIdsAsync(ids,
             async (idsToFetch, ct) => (await inner.GetByIdsAsync(idsToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (questions.Length == 0) return CollectionResult<Question>.QuestionsNotFound(idsArray.Length);
+        if (questions.Length == 0) return CollectionResult<Question>.QuestionsNotFound(ids.Count);
 
         return CollectionResult<Question>.Success(questions);
     }
