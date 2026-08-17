@@ -16,10 +16,10 @@ public class VoteDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunc
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
         var dataLoader = scope.ServiceProvider.GetRequiredService<VoteDataLoader>();
-        var dto = new VoteDto(2, 1);
+        var key = new VoteKey(2, 1);
 
         //Act
-        var result = await dataLoader.LoadAsync(dto);
+        var result = await dataLoader.LoadAsync(key);
 
         //Assert
         Assert.NotNull(result);
@@ -31,10 +31,10 @@ public class VoteDataLoaderTests(FunctionalTestWebAppFactory factory) : BaseFunc
         //Arrange
         await using var scope = ServiceProvider.CreateAsyncScope();
         var dataLoader = scope.ServiceProvider.GetRequiredService<VoteDataLoader>();
-        var dto = new VoteDto(0, 0);
+        var key = new VoteKey(0, 0);
 
         //Act
-        var result = await dataLoader.LoadAsync(dto);
+        var result = await dataLoader.LoadAsync(key);
 
         //Assert
         Assert.Null(result);

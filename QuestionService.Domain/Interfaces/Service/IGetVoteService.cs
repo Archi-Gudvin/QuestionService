@@ -16,10 +16,10 @@ public interface IGetVoteService
     /// <summary>
     ///     Gets vote of questions by pairs of question id and user id
     /// </summary>
-    /// <param name="dtos"></param>
+    /// <param name="keys"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CollectionResult<Vote>> GetByDtosAsync(IReadOnlyCollection<VoteDto> dtos,
+    Task<CollectionResult<Vote>> GetByUserAndQuestionAsync(IReadOnlyCollection<VoteKey> keys,
         CancellationToken cancellationToken = default);
 
     /// <summary>

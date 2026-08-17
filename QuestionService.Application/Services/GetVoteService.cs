@@ -23,13 +23,13 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
         return Task.FromResult(QueryableResult<Vote>.Success(votes));
     }
 
-    public async Task<CollectionResult<Vote>> GetByDtosAsync(IReadOnlyCollection<VoteDto> dtos,
+    public async Task<CollectionResult<Vote>> GetByUserAndQuestionAsync(IReadOnlyCollection<VoteKey> keys,
         CancellationToken cancellationToken = default)
     {
-        var keys = dtos.ToArray();
+        var keysArray = keys.ToArray();
 
         var predicate = PredicateBuilder.New<Vote>();
-        predicate = keys.Aggregate(predicate,
+        predicate = keysArray.Aggregate(predicate,
             (current, local) =>
                 current.Or(x => x.QuestionId == local.QuestionId && x.UserId == local.UserId));
 
@@ -38,7 +38,7 @@ public class GetVoteService(IBaseRepository<Vote> voteRepository) : IGetVoteServ
             .Where(predicate)
             .ToArrayAsync(cancellationToken);
 
-        if (votes.Length == 0) return CollectionResult<Vote>.VotesNotFound(dtos.Count);
+        if (votes.Length == 0) return CollectionResult<Vote>.VotesNotFound(keys.Count);
 
         return CollectionResult<Vote>.Success(votes);
     }

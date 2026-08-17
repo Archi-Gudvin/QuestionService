@@ -14,15 +14,15 @@ public class CacheGetVoteService(IVoteCacheRepository cacheRepository, IGetVoteS
     public Task<QueryableResult<Vote>> GetAllAsync(CancellationToken cancellationToken = default) =>
         inner.GetAllAsync(cancellationToken);
 
-    public async Task<CollectionResult<Vote>> GetByDtosAsync(IReadOnlyCollection<VoteDto> dtos,
+    public async Task<CollectionResult<Vote>> GetByUserAndQuestionAsync(IReadOnlyCollection<VoteKey> keys,
         CancellationToken cancellationToken = default)
     {
-        var dtosArray = dtos.ToArray();
-        var votes = (await cacheRepository.GetByDtosAsync(dtosArray,
-            async (dtosToFetch, ct) => (await inner.GetByDtosAsync(dtosToFetch.ToArray(), ct)).Data ?? [],
+        var keysArray = keys.ToArray();
+        var votes = (await cacheRepository.GetByUserAndQuestionAsync(keysArray,
+            async (keysToFetch, ct) => (await inner.GetByUserAndQuestionAsync(keysToFetch.ToArray(), ct)).Data ?? [],
             cancellationToken)).ToArray();
 
-        if (votes.Length == 0) return CollectionResult<Vote>.VotesNotFound(dtosArray.Length);
+        if (votes.Length == 0) return CollectionResult<Vote>.VotesNotFound(keysArray.Length);
 
         return CollectionResult<Vote>.Success(votes);
     }

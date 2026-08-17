@@ -9,15 +9,15 @@ public interface IVoteCacheRepository
     ///     Retrieves a collection of votes from the cache by their identifiers.
     ///     If any votes are missing, they are fetched using <paramref name="fetch"/> and cached.
     /// </summary>
-    /// <param name="dtos">The identifiers of the votes to retrieve.</param>
+    /// <param name="keys">The identifiers of the votes to retrieve.</param>
     /// <param name="fetch">A fallback delegate that fetches missing votes by their identifiers.</param>
     /// <param name="cancellationToken">A cancellation token for the asynchronous operation.</param>
     /// <returns>
     ///     A <see cref="IEnumerable{Vote}" /> containing the combined results from the cache and the fallback fetch, if
     ///     needed.
     /// </returns>
-    Task<IEnumerable<Vote>> GetByDtosAsync(IEnumerable<VoteDto> dtos,
-        Func<IEnumerable<VoteDto>, CancellationToken, Task<IEnumerable<Vote>>> fetch,
+    Task<IEnumerable<Vote>> GetByUserAndQuestionAsync(IEnumerable<VoteKey> keys,
+        Func<IEnumerable<VoteKey>, CancellationToken, Task<IEnumerable<Vote>>> fetch,
         CancellationToken cancellationToken = default);
 
     /// <summary>

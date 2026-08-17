@@ -24,10 +24,10 @@ public class GetVoteServiceTests
     }
 
     [Fact]
-    public async Task GetByDtosAsync_ExistingDtos_ReturnsSuccess()
+    public async Task GetByUserAndQuestionAsync_ExistingKeys_ReturnsSuccess()
     {
         //Arrange
-        var dtos = new List<VoteDto>
+        var keys = new List<VoteKey>
         {
             new(1, 2),
             new(2, 3),
@@ -36,7 +36,7 @@ public class GetVoteServiceTests
         var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
-        var result = await getVoteService.GetByDtosAsync(dtos);
+        var result = await getVoteService.GetByUserAndQuestionAsync(keys);
 
         //Assert
         Assert.True(result.IsSuccess);
@@ -44,17 +44,17 @@ public class GetVoteServiceTests
     }
 
     [Fact]
-    public async Task GetByDtosAsync_SingleNonExistentDto_ReturnsVoteNotFound()
+    public async Task GetByUserAndQuestionAsync_SingleNonExistentKey_ReturnsVoteNotFound()
     {
         //Arrange
-        var dtos = new List<VoteDto>
+        var keys = new List<VoteKey>
         {
             new(0, 0)
         };
         var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
-        var result = await getVoteService.GetByDtosAsync(dtos);
+        var result = await getVoteService.GetByUserAndQuestionAsync(keys);
 
         //Assert
         Assert.False(result.IsSuccess);
@@ -63,10 +63,10 @@ public class GetVoteServiceTests
     }
 
     [Fact]
-    public async Task GetByDtosAsync_MultipleNonExistentDtos_ReturnsVotesNotFound()
+    public async Task GetByUserAndQuestionAsync_MultipleNonExistentKeys_ReturnsVotesNotFound()
     {
         //Arrange
-        var dtos = new List<VoteDto>
+        var keys = new List<VoteKey>
         {
             new(0, 0),
             new(0, 0)
@@ -74,7 +74,7 @@ public class GetVoteServiceTests
         var getVoteService = new CacheGetVoteServiceSut().GetService();
 
         //Act
-        var result = await getVoteService.GetByDtosAsync(dtos);
+        var result = await getVoteService.GetByUserAndQuestionAsync(keys);
 
         //Assert
         Assert.False(result.IsSuccess);
