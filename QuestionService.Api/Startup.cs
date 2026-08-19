@@ -23,6 +23,7 @@ using QuestionService.Cache.Settings;
 using QuestionService.DAL;
 using QuestionService.Messaging.Settings;
 using Serilog;
+using Serilog.Events;
 using Path = System.IO.Path;
 
 namespace QuestionService.Api;
@@ -379,6 +380,25 @@ public static class Startup
                 builder.AllowAnyMethod()
                     .AllowAnyHeader();
             });
+        });
+    }
+
+    /// <summary>
+    ///     Configures Serilog's per-request logging middleware, escalating the log level based on the response
+    ///     status code and any unhandled exception.
+    /// </summary>
+    /// <param name="app">The web application to which the request logging middleware is added.</param>
+    public static void UseRequestLogging(this WebApplication app)
+    {
+        app.UseSerilogRequestLogging(options =>
+        {
+            options.GetLevel = (httpContext, _, ex) => httpContext.Response.StatusCode switch
+            {
+                _ when ex is not null => LogEventLevel.Error,
+                >= 500 => LogEventLevel.Error,
+                >= 400 => LogEventLevel.Warning,
+                _ => LogEventLevel.Information
+            };
         });
     }
 
