@@ -24,6 +24,7 @@ jobs:
       contents: read
       pull-requests: read
       issues: read
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -48,4 +49,3 @@ jobs:
             file(s)/line(s), and the PR branch (head ref). Do not push or commit changes.
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://code.claude.com/docs/en/cli-reference for available options
-
