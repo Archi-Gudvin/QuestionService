@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		logstash.conf = logstash.conf
 		.github\workflows\sonarqube.yml = .github\workflows\sonarqube.yml
 		README.md = README.md
+		.github\workflows\claude.yml = .github\workflows\claude.yml
+		.github\workflows\claude-code-review.yml = .github\workflows\claude-code-review.yml
+		.github\workflows\issue-triage.yml = .github\workflows\issue-triage.yml
+		.github\workflows\test-failure-analysis.yml = .github\workflows\test-failure-analysis.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestionService.Domain", "QuestionService.Domain\QuestionService.Domain.csproj", "{50E32C02-7908-463C-AD43-9E7D2B0AFA04}"
