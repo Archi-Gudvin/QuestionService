@@ -10,40 +10,21 @@ editing, retrieval, and moderation. It handles question-related business logic, 
 
 ## 🚀 Quick Start a ready-made API
 
-1. Install [Docker Desktop](https://www.docker.com/)
-2. [Quick Start](https://github.com/flow-OverStack/UserService?tab=readme-ov-file#-quick-start-a-ready-made-api) the User Service.
-3. Copy [the docker-compose.yml](https://github.com/flow-OverStack/QuestionService/blob/master/docker-compose.yml) file
-   into one directory
-4. Copy (and reconfigure if needed) [logstash.conf](https://github.com/flow-OverStack/QuestionService/blob/master/logstash.conf) file in the same directory
-5. Create and configure `.env` file in the same directory:
-   ```env
-   QUESTION_DB_PASSWORD=db_password
-   REDIS_PASSWORD=redis_password
-   ```
-6. On the first run (or after updating migrations), apply EF Core migrations to the database:
+The entire flow OverStack platform - all five services plus Keycloak, Kafka, Postgres, Redis
+and the observability stack - comes up with one command via
+[flow-OverStack/Setup](https://github.com/flow-OverStack/Setup), pre-seeded with mock data:
 
-   **Option A — Automatic ✅ Recommended for Quick Start**
+```bash
+git clone --recurse-submodules --shallow-submodules https://github.com/flow-OverStack/Setup.git
+cd Setup
+./setup.sh
+```
 
-   In `docker-compose.yml`, temporarily add `ASPNETCORE_ENVIRONMENT: Development` to the `question-service` environment:
-   ```yaml
-   question-service:
-      # ... other variables
-      environment:
-        # ... other variables
-        ASPNETCORE_ENVIRONMENT: Development
-   ```
-   Start the services — migrations will be applied automatically on startup.
-   > ⚠️ After the first run, **remove** `ASPNETCORE_ENVIRONMENT: Development` from `docker-compose.yml` and restart the container.
+The [Setup README](https://github.com/flow-OverStack/Setup#readme) covers prerequisites,
+flags (`--lite`, `--reseed`, `--migrate`, `--reset`), teardown, and the published endpoints.
 
-   **Option B — Manual SQL script (Production)**
-
-   Generate a SQL script with `dotnet ef migrations script` and apply it to the database
-      manually ([Production approach](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli#sql-scripts))
-7. Start the service
-    ```bash
-   docker-compose -p questionservice -f docker-compose.yml up -d
-   ```
-8. Explore endpoints at `/swagger/v1/swagger.json` endpoint.
+To run QuestionService from source instead, see
+[Getting Started for developers](#getting-started-for-developers).
 
 ## Technologies and Patterns Used
 
